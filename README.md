@@ -1,13 +1,19 @@
-# @umi-material/fb-project-component
+# 工程组件
+
+把工程中公用的流程组件化
+
+<font color="red">不求多，不求多，不求多。**关键是可用性**，哪怕只有一个组件，能真正的能用起来就有价值</font>
 
 
+## 重点
++ 接口严谨
+  + 必须是强类型，不能使用any，一般要用any的地方，都可以用泛型处理
++ 文档清晰完成
+  + 组件功能描述清楚
+  + 示例完整
+  + 接口描述完整
 
-## Usage
 
-```sh
-umi block https://github.com//tree/master/fb-project-component
-```
+## 编写一个组件的具体要求
 
-## LICENSE
-
-MIT
+参考：[如何编写一个好组件](./如何编写一个好组件.md)
