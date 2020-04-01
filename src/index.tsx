@@ -1,21 +1,5 @@
-import React from 'react';
-import styles from './index.css';
+import ConfirmButton from './ConfirmButton';
 
-export interface ButtonProps {
-  size?: 'large' | 'default';
-}
-
-const Button: React.FC<ButtonProps> = function(props) {
-  return (
-    <button
-      className={styles.button}
-      style={{
-        fontSize: props.size === 'large' ? 40 : 20,
-      }}
-    >
-      {props.children}
-    </button>
-  );
+module.exports = {
+  ConfirmButton,
 };
-
-export default Button;

@@ -1,3 +1,10 @@
+---
+name: 如何创建一个好组件
+route: /HowToCreateComponent
+order: -1
+sidebar: true
+---
+
 # 如何创建一个好组件？
 
 ## 一点思考

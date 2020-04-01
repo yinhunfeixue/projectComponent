@@ -16,4 +16,4 @@
 
 ## 编写一个组件的具体要求
 
-参考：[如何编写一个好组件](./HowToCreateComponent.md)
+参考：[如何编写一个好组件](./HowToCreateComponent)

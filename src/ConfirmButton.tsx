@@ -35,6 +35,9 @@ interface IConfirmButtonProps extends IComponentProps {
   };
 }
 
+/**
+ * 确认按钮
+ */
 class ConfirmButton extends Component<IConfirmButtonProps, IConfirmButtonState> {
   public render(): ReactNode {
     const { className, style } = this.props;
