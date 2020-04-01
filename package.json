@@ -1,0 +1,24 @@
+{
+  "name": "fb-project-component",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "authors": {
+    "name": "xujunjie",
+    "email": "yinhunfeixue@163.com"
+  },
+  "repository": "/fb-project-component",
+  "scripts": {
+    "dev": "father doc dev",
+    "build": "father build"
+  },
+  "peerDependencies": {
+    "react": "16.x"
+  },
+  "devDependencies": {
+    "father": "^2.16.0",
+    "typescript": "^3.3.3"
+  },
+  "license": "MIT"
+}
