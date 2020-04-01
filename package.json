@@ -20,5 +20,9 @@
     "father": "^2.16.0",
     "typescript": "^3.3.3"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "antd": "^3.0.0",
+    "classnames": "^2.2.6"
+  }
 }

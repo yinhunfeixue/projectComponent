@@ -1,0 +1,185 @@
+{
+  // Place your HBSJ_INQUIRY2_WEB workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+  // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"scope": "javascript,typescript",
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  // 创建enum文件
+  "createEnum": {
+    "prefix": "newEnum",
+    "body": [
+      "enum ${TM_FILENAME_BASE} {",
+      "UNKNOW,",
+      "$1",
+      "};",
+      "",
+      "namespace ${TM_FILENAME_BASE} {",
+      "export function toString(value: ${TM_FILENAME_BASE}){",
+      "switch (value) {",
+      "case ${TM_FILENAME_BASE}.UNKNOW:",
+      "return '通过';",
+      "default:",
+      "return '';",
+      "}",
+      "}",
+      "}",
+      "export default ${TM_FILENAME_BASE};"
+    ],
+    "description": "创建Enum"
+  },
+  "createComponent": {
+    "prefix": "newCom",
+    "body": [
+      "import React, { Component, ReactNode } from 'react';",
+      "import IComponentProps from '@/base/interfaces/IComponentProps';",
+      "",
+      "interface I${TM_FILENAME_BASE}State {",
+      "",
+      "}",
+      "interface I${TM_FILENAME_BASE}Props extends IComponentProps {",
+      "",
+      "}",
+      "",
+      "class ${TM_FILENAME_BASE} extends Component<I${TM_FILENAME_BASE}Props, I${TM_FILENAME_BASE}State> {",
+      "public render():ReactNode {",
+      "return (",
+      "<div>",
+      "${TM_FILENAME_BASE}",
+      "</div>",
+      ");",
+      "}",
+      "}",
+      "",
+      "export default ${TM_FILENAME_BASE};"
+    ],
+    "description": "创建组件"
+  },
+  "createPage": {
+    "prefix": "newPage",
+    "body": [
+      "import React, { Component, ReactNode } from 'react';",
+      "import IPageProps from '@/base/interfaces/IPageProps';",
+      "",
+      "interface I${TM_FILENAME_BASE}Sate { }",
+      "",
+      "class ${TM_FILENAME_BASE} extends Component<IPageProps, I${TM_FILENAME_BASE}Sate> {",
+      "public render(): ReactNode {",
+      "return (",
+      "<div>",
+      "${TM_FILENAME_BASE}",
+      "</div>",
+      ");",
+      "}",
+      "}",
+      "",
+      "export default ${TM_FILENAME_BASE};"
+    ],
+    "description": "创建组件"
+  },
+  "createModel": {
+    "prefix": "newModel",
+    "body": [
+      "import { add,update,remove,select} from '@/services/${TM_DIRECTORY/^.+[\\/\\\\](.*)$/$1/}/${TM_FILENAME_BASE}';",
+      "import INormalModel from '@/base/interfaces/INormalModel';",
+      "import { AnyAction } from 'redux';",
+      "import { EffectsCommandMap } from 'dva';",
+      "import SystemUtil from '@/base/utils/SystemUtil';",
+      "",
+      "const ${TM_FILENAME_BASE}: INormalModel = {",
+      "namespace: '${TM_DIRECTORY/^.+[\\/\\\\](.*)$/$1/}_${TM_FILENAME_BASE}',",
+      "",
+      "state: {",
+      "",
+      "},",
+      "",
+      "effects: {",
+      "*add(action:AnyAction, effects:EffectsCommandMap) {",
+      "yield SystemUtil.NormalCallRequest(action, effects, add);",
+      "},",
+      "",
+      "*update(action:AnyAction, effects:EffectsCommandMap) {",
+      "yield SystemUtil.NormalCallRequest(action, effects, update);",
+      "},",
+      "",
+      "*remove(action:AnyAction, effects:EffectsCommandMap) {",
+      "yield SystemUtil.NormalCallRequest(action, effects, remove);",
+      "},",
+      "",
+      "*select(action:AnyAction, effects:EffectsCommandMap) {",
+      "yield SystemUtil.NormalCallRequest(action, effects, select);",
+      "},",
+      "},",
+      "};",
+      "",
+      "export default ${TM_FILENAME_BASE};"
+    ],
+    "description": "创建组件"
+  },
+  "creatService": {
+    "prefix": "newService",
+    "body": [
+      "import request from '@/utils/request';",
+      "",
+      "const URL = '/api/$1';",
+      "",
+      "export async function add(data: any): Promise<any> {",
+      "return request(URL, {",
+      "method: 'POST',",
+      "body: data,",
+      "});",
+      "}",
+      "",
+      "export async function update(id: string, data: any): Promise<any> {",
+      "return request(URL, {",
+      "method: 'POST',",
+      "body: {",
+      "...data,",
+      "id,",
+      "}",
+      "});",
+      "}",
+      "",
+      "export async function remove(id: string): Promise<any> {",
+      "return request(`\\${URL}/\\${id}`, {",
+      "method: 'DELETE',",
+      "});",
+      "}",
+      "",
+      "export async function select(id: string): Promise<any> {",
+      "return request(`\\${URL}/\\${id}`, {",
+      "method: 'get',",
+      "});",
+      "}"
+    ],
+    "description": "创建组件"
+  },
+  "Print to console": {
+    "prefix": "searchtable",
+    "body": [
+      "<SearchTable",
+      "searchCreater={(values: any, pageSize: number, current: number): any => {",
+      "return `/?pageSize=${pageSize}&current=${current}`;",
+      "}}",
+      "columns={[",
+      "{",
+      "title: 'testTitle',",
+      "dataIndex: 'label',",
+      "},",
+      "]}",
+      "formItems={null}",
+      "/>"
+    ],
+    "description": "Log output to console"
+  }
+}
