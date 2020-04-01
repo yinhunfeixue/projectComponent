@@ -1,7 +1,7 @@
-import IComponentProps from '@/interfaces/IComponentProps';
 import { Button, Modal } from 'antd';
 import React, { Component, ReactNode } from 'react';
 import './ConfirmButton.less';
+import IComponentProps from './interfaces/IComponentProps';
 
 const classnames = require('classnames');
 
