@@ -1,7 +1,7 @@
 import ConfirmButton from './components/ConfirmButton';
-import LimitUpload from './limitUpload/LimitUpload';
+// import LimitUpload from './limitUpload/LimitUpload';
 
 module.exports = {
   ConfirmButton,
-  LimitUpload,
+  // LimitUpload,
 };
