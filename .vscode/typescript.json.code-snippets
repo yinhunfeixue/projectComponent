@@ -42,7 +42,7 @@
     "prefix": "newCom",
     "body": [
       "import React, { Component, ReactNode } from 'react';",
-      "import IComponentProps from '@/base/interfaces/IComponentProps';",
+      "import IComponentProps from '../interfaces/IComponentProps';",
       "",
       "interface I${TM_FILENAME_BASE}State {",
       "",
