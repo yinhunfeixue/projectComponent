@@ -67,7 +67,7 @@ class ConfirmButton extends Component<IConfirmButtonProps, IConfirmButtonState> 
   };
 
   private defaultValidate(): Promise<boolean> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       Modal.confirm({
         title: '操作不可恢复',
         content: '此操作不可恢复，请确认是否继续',
