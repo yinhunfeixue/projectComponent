@@ -11,6 +11,7 @@
   "repository": "/fb-project-component",
   "scripts": {
     "dev": "father doc dev",
+    "buildDoc":"father doc builld",
     "build": "father build"
   },
   "peerDependencies": {
