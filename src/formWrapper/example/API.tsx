@@ -45,7 +45,8 @@ class PropsUse extends Component<IPageProps, IPropsUseSate> {
       {
         id: '8',
         name: 'option',
-        introduce: '当type为select、checkBox、radio、cascader时，组件的数据。',
+        introduce:
+          '当type为select、checkBox、radio、cascader时，组件的数据。数据字段用code和desp表示',
         type: 'Array',
         value: '',
       },
