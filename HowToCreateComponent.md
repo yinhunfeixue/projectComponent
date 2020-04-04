@@ -1,5 +1,5 @@
 ---
-name: 如何创建一个好组件
+name: 如何创建一好组件
 route: /HowToCreateComponent
 order: -1
 sidebar: true

@@ -1,4 +1,4 @@
-import ConfirmButton from './ConfirmButton';
+import ConfirmButton from './components/ConfirmButton';
 
 module.exports = {
   ConfirmButton,
