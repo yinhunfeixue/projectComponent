@@ -1,11 +1,11 @@
 ---
-name: 如何创建一好组件
+name: 如何创建一个组件
 route: /HowToCreateComponent
 order: -1
 sidebar: true
 ---
 
-# 如何创建一个好组件？
+# 如何创建一个组件？
 
 ## 一点思考
 ### 问题：组件是什么？
