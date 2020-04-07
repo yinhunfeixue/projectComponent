@@ -1,4 +1,5 @@
-import { Button, Icon, Upload } from 'antd';
+import { LoadingOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, message, Upload } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile, UploadProps } from 'antd/lib/upload/interface';
 import React, { Component, ReactNode } from 'react';
@@ -7,9 +8,22 @@ import UploadType from '../enums/UploadType';
 import IComponentProps from '../interfaces/IComponentProps';
 
 interface ILimitUploadState {
-  fileNumber: number;
+  loading: boolean;
+  fileList: UploadFile<any>[];
 }
 interface ILimitUploadProps extends IComponentProps {
+  /**
+   * 验证文件是否上传成功。
+   *
+   * @return 返回是否上传成功
+   */
+  validateFile: (file: UploadFile<any>) => boolean;
+
+  /**
+   * 上传出错的处理函数，不传则使用处理方法：message显示错误提示
+   */
+  onError?: (file: UploadFile<any>) => void;
+
   /**
    * 最大允许上传的文件数量
    */
@@ -30,7 +44,7 @@ interface ILimitUploadProps extends IComponentProps {
   /**
    * 文件发生变化时触发的事件
    */
-  onChange?: (value: UploadChangeParam<UploadFile<any>>) => void;
+  onChange?: (value: UploadFile<any>[]) => void;
 
   /**
    * 未操作时，默认的文件列表。
@@ -42,7 +56,7 @@ interface ILimitUploadProps extends IComponentProps {
   /**
    * 选择元素的渲染函数，如果没有，使用默认方案
    */
-  chooserRender?: () => ReactNode;
+  renderChooser?: () => ReactNode;
 
   /**
    * 可选的文件后缀。
@@ -76,7 +90,8 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
     super(props);
     const { defaultFileList } = props;
     this.state = {
-      fileNumber: defaultFileList ? defaultFileList.length : 0,
+      loading: false,
+      fileList: [],
     };
   }
 
@@ -94,9 +109,10 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   }
 
   private renderChooseer() {
-    const { fileNumber } = this.state;
-    const { maxNumber, chooserRender, type, disabled } = this.props;
+    const { loading, fileList } = this.state;
+    const { maxNumber, renderChooser: chooserRender, type, disabled, defaultFileList } = this.props;
 
+    const fileNumber = fileList.length + (defaultFileList ? defaultFileList.length : 0);
     const chooseEnable = !maxNumber || fileNumber < maxNumber;
     if (!chooseEnable) {
       return null;
@@ -110,37 +126,83 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
       case UploadType.IMAGE:
         return (
           <div>
-            <Icon type="plus" />
-            <div className="ant-upload-text">Upload</div>
+            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+            <div className="ant-upload-text">上传</div>
           </div>
         );
       default:
-        return <Button disabled={disabled}>Upload</Button>;
+        return (
+          <Button loading={loading} disabled={disabled} icon={<UploadOutlined />}>
+            上传
+          </Button>
+        );
     }
   }
 
+  private onChange = (info: UploadChangeParam<UploadFile<any>>) => {
+    const { validateFile } = this.props;
+    this.setState({ loading: false, fileList: info.fileList });
+
+    const file = info.file;
+
+    switch (file.status) {
+      case 'done':
+        const success = validateFile(file);
+        if (success) {
+          this.validateFileList();
+        } else {
+          this.onError(file);
+        }
+        break;
+      case 'uploading':
+        this.setState({ loading: true });
+        break;
+      case 'error':
+        this.validateFileList();
+        this.onError(file);
+        break;
+      case 'removed':
+        this.validateFileList();
+        break;
+      default:
+        break;
+    }
+  };
+
+  private onError(file: UploadFile<any>) {
+    const { onError } = this.props;
+    if (onError) {
+      onError(file);
+    } else {
+      message.error(`${file.name}上传失败`);
+    }
+  }
+
+  private validateFileList() {
+    const { validateFile, onChange } = this.props;
+    const { fileList } = this.state;
+    const newFileList = fileList.filter(file => {
+      return validateFile(file);
+    });
+
+    if (onChange) {
+      onChange(newFileList);
+    }
+    this.setState({ fileList: newFileList });
+  }
+
   public render(): ReactNode {
-    const {
-      type,
-      disabled,
-      onChange,
-      defaultFileList,
-      action,
-      uploadProps,
-      disableCredentials,
-    } = this.props;
+    const { type, disabled, defaultFileList, action, uploadProps, disableCredentials } = this.props;
+    const { fileList } = this.state;
     const props: UploadProps = {
+      fileList,
       disabled,
       defaultFileList,
       accept: this.getAccept(),
       action,
       withCredentials: !disableCredentials,
-      onChange: (info: UploadChangeParam<UploadFile<any>>) => {
-        this.setState({ fileNumber: info.fileList.length });
-        if (onChange) {
-          onChange(info);
-        }
-      },
+      onChange: this.onChange,
+      listType: type === UploadType.IMAGE ? 'picture-card' : 'text',
       ...uploadProps,
     };
 

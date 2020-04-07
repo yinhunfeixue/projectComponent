@@ -11,7 +11,7 @@
   "repository": "/fb-project-component",
   "scripts": {
     "dev": "father doc dev",
-    "buildDoc":"father doc builld",
+    "buildDoc": "father doc builld",
     "build": "father build"
   },
   "peerDependencies": {
@@ -23,9 +23,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "antd": "^3.0.0",
+    "@ant-design/icons": "^4.0.5",
+    "antd": "^4.0.0",
     "babel-plugin-import": "^1.13.0",
     "classnames": "^2.2.6",
-    "docz": "^2.2.0"
+    "docz": "^2.2.0",
+    "npm": "^6.14.4"
   }
 }
