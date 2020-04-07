@@ -19,7 +19,7 @@ import UploadAcceptType from '../enums/UploadAcceptType';
 
 ## 示例
 
-### 默认
+### 默认，请观察开发者工具的输出，当文件上传成功、移除时，会触发onChange
 <Playground>
   <LimitUpload 
     action="https://www.mocky.io/v2/5cc8019d300000980a055e76" 
@@ -42,7 +42,24 @@ import UploadAcceptType from '../enums/UploadAcceptType';
   <LimitUpload 
     action="./" 
     validateFile={(file)=>{
-      console.log(file);
+      if(file.response && file.response.status === 'done'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }}
+  />
+</Playground>
+
+### 自定义上传异常的提示方法
+<Playground>
+  <LimitUpload 
+    action="./" 
+    onError={(file)=>{
+      alert(`${file.name}上传失败`)
+    }}
+    validateFile={(file)=>{
       if(file.response && file.response.status === 'done'){
         return true;
       }
@@ -58,7 +75,6 @@ import UploadAcceptType from '../enums/UploadAcceptType';
   <LimitUpload 
     disabled action="./" 
     validateFile={(file)=>{
-      console.log(file);
       if(file.response && file.response.success){
         return true;
       }
@@ -78,7 +94,6 @@ import UploadAcceptType from '../enums/UploadAcceptType';
     maxNumber={2} 
     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
     validateFile={(file)=>{
-      console.log(file);
       if(file.response && file.response.status === 'done'){
         return true;
       }
@@ -96,7 +111,6 @@ import UploadAcceptType from '../enums/UploadAcceptType';
     type={UploadType.IMAGE} 
     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
     validateFile={(file)=>{
-        console.log(file);
         if(file.response && file.response.status === 'done'){
           return true;
         }
@@ -113,7 +127,6 @@ import UploadAcceptType from '../enums/UploadAcceptType';
     accept={UploadAcceptType.OFFICE}
     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
     validateFile={(file)=>{
-        console.log(file);
         if(file.response && file.response.status === 'done'){
           return true;
         }
@@ -132,7 +145,6 @@ import UploadAcceptType from '../enums/UploadAcceptType';
       return <span style={{borderLeft: '3px solid red', paddingLeft:10}}>点我上传</span>
       }}
     validateFile={(file)=>{
-        console.log(file);
         if(file.response && file.response.status === 'done'){
           return true;
         }
@@ -155,7 +167,6 @@ import UploadAcceptType from '../enums/UploadAcceptType';
     }}
     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
     validateFile={(file)=>{
-        console.log(file);
         if(file.response && file.response.status === 'done'){
           return true;
         }
