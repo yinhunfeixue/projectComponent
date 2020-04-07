@@ -1,7 +1,7 @@
 ---
 name: 如何创建一个组件
 route: /HowToCreateComponent
-order: -1
+order: -800
 sidebar: true
 ---
 
