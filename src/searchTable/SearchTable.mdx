@@ -1,0 +1,146 @@
+---
+name: SearchTable
+route: /SearchTable
+order: 0
+sidebar: true,
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import SearchTable from './SearchTable';
+import {Button} from 'antd';
+
+# SearchTable
+
+
+## 示例
+涉及网络操作，建议在开发者工具中限制后观察示例
+
+## 基本用法
+<Playground>
+  <SearchTable 
+    columns={[
+      {
+        title:'姓名',
+        dataIndex:'name'
+      }
+    ]}
+    getListFunction={()=>{
+     return fetch('./').then(()=>{
+        return {
+          total:1,
+          dataSource:[
+            {
+              id:1,
+              name:'a'
+            },
+            {
+              id:2,
+              name:'b'
+            },
+            {
+              id:3,
+              name:'c'
+            }
+          ]
+      }
+     })
+    }}
+  />
+</Playground>
+
+
+## 自定义pageSize
+<Playground>
+  <SearchTable 
+    pageSize={2}
+    columns={[
+      {
+        title:'姓名',
+        dataIndex:'name'
+      }
+    ]}
+    getListFunction={()=>{
+     return fetch('./').then(()=>{
+        return {
+          total:5,
+          dataSource:[
+            {
+              id:1,
+              name:'a'
+            },
+            {
+              id:2,
+              name:'b'
+            },
+            {
+              id:3,
+              name:'c'
+            }
+          ]
+      }
+     })
+    }}
+  />
+</Playground>
+
+
+## 添加附加操作
+<Playground>
+  <SearchTable
+    selectedEnable
+    renderExtra={(data)=>{
+      const {selectedRowKeys, selectedRows, loading, refresh} = data;
+      return (
+        <div style={{padding:'10px 0'}}>
+          <Button 
+            disabled={!selectedRowKeys || !selectedRowKeys.length}
+            style={{marginRight:10}}
+            loading={loading} 
+            type="danger"
+            onClick={()=>{
+              alert(selectedRowKeys?selectedRowKeys.join():'请选择要删除的行')
+            }}
+            >
+              删除全部
+          </Button>
+          <Button 
+            loading={loading} 
+            onClick={()=>{
+              refresh();
+            }}
+          >
+            刷新
+          </Button>
+        </div>
+      );
+    }}
+    columns={[
+      {
+        title:'姓名',
+        dataIndex:'name'
+      }
+    ]}
+    getListFunction={()=>{
+     return fetch('./').then(()=>{
+        return {
+          total:5,
+          dataSource:[
+            {
+              id:1,
+              name:'a'
+            },
+            {
+              id:2,
+              name:'b'
+            },
+            {
+              id:3,
+              name:'c'
+            }
+          ]
+      }
+     })
+    }}
+  />
+</Playground>
