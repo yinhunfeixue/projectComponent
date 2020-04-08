@@ -26,6 +26,7 @@
     "babel-plugin-import": "^1.13.0",
     "classnames": "^2.2.6",
     "docz": "^2.2.0",
-    "idcard": "^4.1.0"   
+    "idcard": "^4.1.0",
+    "lodash": "^4.17.10"  
   }
 }
