@@ -1,7 +1,9 @@
-import ConfirmButton from './ConfirmButton';
+import ConfirmButton from './confirmButton/ConfirmButton';
 import IdCardLink from './IdCardLink';
+import LimitUpload from './limitUpload/LimitUpload';
 
 module.exports = {
   ConfirmButton,
-  IdCardLink
+  LimitUpload,
+  IdCardLink,
 };

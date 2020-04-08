@@ -1,29 +1,34 @@
 ---
-name: 确认按钮
+name: ConfirmButton
 route: /ConfirmButton
-order: -1
-sidebar: true
+order: 0
+sidebar: true,
 ---
 
 import { Playground, Props } from 'docz';
 import 'antd/dist/antd.css';
 import ConfirmButton from './ConfirmButton';
 
-## 默认
+# ConfirmButton
+点击后，先经过确认过程，当确认通过时，再触发后续流程的按钮
+
+## 示例
+
+### 默认
 <Playground>
   <ConfirmButton onConfirm={()=>{
     alert('确认');
   }}/>
 </Playground>
 
-## 自定义显示元素
+### 自定义显示元素
 <Playground>
   <ConfirmButton onConfirm={()=>{
     alert('确认');
   }}><span style={{color:'red'}}>删除</span></ConfirmButton>
 </Playground>
 
-## 自定义验证方法
+### 自定义验证方法
 <Playground>
   <ConfirmButton
     validate={()=>{
@@ -40,6 +45,6 @@ import ConfirmButton from './ConfirmButton';
   </ConfirmButton>
 </Playground>
 
-<hr />
-
+## 属性
 <Props of={ConfirmButton} />
+
