@@ -8,7 +8,7 @@
     "name": "xujunjie",
     "email": "yinhunfeixue@163.com"
   },
-  "repository": "/fb-project-component",
+  "repository": "https://github.com/yinhunfeixue/projectComponent",
   "scripts": {
     "dev": "father doc dev",
     "buildDoc": "father doc build",
