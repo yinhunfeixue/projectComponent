@@ -48,7 +48,7 @@ class IdCardLink extends Component<IIdCardLinkProps, IIdCardLinkState> {
     const { className, style } = this.props;
     return (
       <span className={classnames('IdCardLink', className)} style={style}>
-        <Input onChange={this.onChange} value={this.props.value} />
+        <Input onChange={this.onChange} defaultValue={this.props.value} />
       </span>
     );
   }
