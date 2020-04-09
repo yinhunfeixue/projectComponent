@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import lodash from 'lodash';
 import React, { Component, ReactNode } from 'react';
-import IComponentProps from './interfaces/IComponentProps';
+import IComponentProps from '../interfaces/IComponentProps';
 
 const IdCard = require('idcard');
 const classnames = require('classnames');
