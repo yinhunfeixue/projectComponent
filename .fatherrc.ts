@@ -6,6 +6,7 @@ const options: IBundleOptions = {
   doc: {
     typescript: true,
     title: '烽火工程组件',
+    base: '/fb-project-component',
   },
 };
 
