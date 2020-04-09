@@ -14,9 +14,25 @@ import UploadAcceptType from '../enums/UploadAcceptType';
 
 
 # LimitUpload
-可设置最大上传文件数量的组件。
+可设置最大上传文件数量的组件，通常，在 **上传头像** 时，这个组件很有用。
 
-当设置type时，但未设置accept时，会自动设置accept
+### 主要做了以下工作
+
++ 可自定义最大允许上传的文件数量
++ 上传错误的处理
++ 根据type自动设置accept
++ 根据type自动设置显示元素
+
+### 你可以
+
++ 自定义显示元素
++ 自定义最大允许上传的数量
++ 自定义错误处理方式
++ 设置type
++ 设置accept
++ 设置已存在的文件
++ 给antd的Upload透传props
+
 
 ## 示例
 

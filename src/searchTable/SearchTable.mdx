@@ -11,6 +11,26 @@ import SearchTable from './SearchTable';
 import { Button, Form, Input } from 'antd';
 
 # SearchTable
+一个带搜索流程控制的表格组件
+
+### 主要做了以下工作
+
++ 处理分页操作
++ 处理了请求中动画
++ 处理了选择操作
++ 请求参数变化时，自动发出请求
+
+### 你可以
+
++ 全局设置pageSize，每个表格单独设置pageSize
++ 自定义一页的数量
++ 自定义请求方法
++ 自定义表格的附件元素，例如批量删除，搜索表单
++ 自定义搜索参数 
++ 自定义数据不满一页时，是否显示分页器
++ 自定义是否可选择
++ 自定义表格样式，类名
++ 透传props给antd的Table
 
 
 ## 示例

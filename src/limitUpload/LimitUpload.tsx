@@ -20,7 +20,7 @@ interface ILimitUploadProps extends IComponentProps {
   validateFile: (file: UploadFile<any>) => boolean;
 
   /**
-   * 上传出错的处理函数，不传则使用处理方法：message显示错误提示
+   * 上传出错的处理函数，不传则使用默认处理方法：message.error()显示错误提示
    */
   onError?: (file: UploadFile<any>) => void;
 
