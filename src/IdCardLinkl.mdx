@@ -11,4 +11,15 @@ import {Form} from 'antd';
 import IdCardLink from './IdCardLink';
 
 ## 默认
-<IdCardLink getIdCardInfo={values => console.log(values)} value="420115199305126210"/>
+<Playground>
+  <IdCardLink getIdCardInfo={values => console.log(values)} />
+</Playground>
+
+## 初始化
+<Playground>
+  <IdCardLink getIdCardInfo={values => console.log(values)} value="420115199305126210"/>
+</Playground>
+
+## 属性
+<Props of={IdCardLink} />
+

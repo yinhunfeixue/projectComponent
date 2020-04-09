@@ -1,13 +1,20 @@
 import { Input } from 'antd';
-import React, { Component, ReactNode } from 'react';
 import lodash from 'lodash';
+import React, { Component, ReactNode } from 'react';
 import IComponentProps from './interfaces/IComponentProps';
 
 const IdCard = require('idcard');
+const classnames = require('classnames');
 
 interface IIdCardLinkState {}
 interface IIdCardLinkProps extends IComponentProps {
+  /**
+   * 身份证初始值
+   */
   value?: string;
+  /**
+   * 输入正确身份证后的回调
+   */
   getIdCardInfo: (values: any) => void;
 }
 
@@ -38,7 +45,12 @@ class IdCardLink extends Component<IIdCardLinkProps, IIdCardLinkState> {
   };
 
   public render(): ReactNode {
-    return <Input onChange={this.onChange} />;
+    const { className, style } = this.props;
+    return (
+      <span className={classnames('IdCardLink', className)} style={style}>
+        <Input onChange={this.onChange} value={this.props.value} />
+      </span>
+    );
   }
 }
 
