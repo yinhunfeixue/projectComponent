@@ -8,7 +8,7 @@ sidebar: true,
 import { Playground, Props } from 'docz';
 import 'antd/dist/antd.css';
 import SearchTable from './SearchTable';
-import {Button} from 'antd';
+import { Button, Form, Input } from 'antd';
 
 # SearchTable
 
@@ -143,6 +143,130 @@ import {Button} from 'antd';
      })
     }}
   />
+</Playground>
+
+## 设置搜索参数，请点刷新按钮，在开发者工观察请求参数
+<Playground>
+  <SearchTable
+    searchParams={{x:1,y:2}}
+    renderExtra={(data)=>{
+      const {loading, refresh} = data;
+      return (
+        <div style={{padding:'10px 0'}}>
+          <Button 
+            loading={loading} 
+            onClick={()=>{
+              refresh();
+            }}
+          >
+            刷新
+          </Button>
+        </div>
+      );
+    }}
+    columns={[
+      {
+        title:'姓名',
+        dataIndex:'name'
+      }
+    ]}
+    getListFunction={(current, pageSize, params)=>{
+     return fetch(
+       `./?current=${current}&pageSize=${pageSize}`, 
+        {
+          method:'POST', 
+          body:JSON.stringify({
+            params
+          })
+        }).then(()=>{
+        return {
+          total:5,
+          dataSource:[
+            {
+              id:1,
+              name:'a'
+            },
+            {
+              id:2,
+              name:'b'
+            },
+            {
+              id:3,
+              name:'c'
+            }
+          ]
+      }
+     })
+    }}
+  />
+</Playground>
+
+## 结合form设置请求参数
+
+在输入框输入文字，然后点击搜索按钮，观察请求参数
+<Playground>
+{
+  class Demo extends React.Component{
+    constructor(props) {
+      super(props);
+      this.state = {
+        formValue: null,
+        tableLoading: false,
+      };
+    }
+
+    render(){
+      const { tableLoading, formValue } = this.state;
+      return (
+        <div>
+          <Form 
+            layout="inline"
+            onFinish={(value)=>{
+              this.setState({formValue: value});
+            }}
+            style={{marginBottom:10}}
+          >
+            <Form.Item label="用户名" name="userName"><Input /></Form.Item>
+              <Button type="primary" htmlType="submit" loading={tableLoading}>搜索</Button>
+          </Form>
+          <SearchTable
+            searchParams={formValue}
+            columns={[
+              {
+                title:'姓名',
+                dataIndex:'name'
+              }
+            ]}
+            onLoadingChange={(loading)=>{
+              this.setState({tableLoading:loading});
+            }}
+            getListFunction={(current, pageSize, params)=>{
+            return fetch(`./?current=${current}&pageSize=${pageSize}&key=${(params && params.userName)?params.userName:''}`).then(()=>{
+                return {
+                  total:5,
+                  dataSource:[
+                    {
+                      id:1,
+                      name:'a'
+                    },
+                    {
+                      id:2,
+                      name:'b'
+                    },
+                    {
+                      id:3,
+                      name:'c'
+                    }
+                  ]
+                }
+              })
+            }}
+          />
+        </div>
+      )
+    }
+  }
+}
 </Playground>
 
 ## 属性

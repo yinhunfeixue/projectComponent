@@ -102,6 +102,11 @@ interface ISearchTableProps<T> extends IComponentProps {
    * 是否可选中
    */
   selectedEnable?: boolean;
+
+  /**
+   * 加载状态变时触发的事件
+   */
+  onLoadingChange?: (loading: boolean) => void;
 }
 
 class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISearchTableState<T>> {
@@ -149,17 +154,25 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
     this.requestList();
   };
 
+  private setLoading(loading: boolean) {
+    const { onLoadingChange } = this.props;
+    this.setState({ loading });
+    if (onLoadingChange) {
+      onLoadingChange(loading);
+    }
+  }
+
   private async requestList() {
     const { getListFunction, searchParams } = this.props;
     const { current } = this.state;
 
-    this.setState({ loading: true });
+    this.setLoading(true);
     const res = await getListFunction(current, this.pageSize, searchParams);
+    this.setLoading(false);
     this.setState(
       {
         dataSource: res.dataSource,
         total: res.total,
-        loading: false,
       },
       () => {
         if (this.state.current > this.maxPageIndex) {
@@ -193,7 +206,6 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
 
     const pageSize = this.pageSize;
     const { selectedRowKeys, selectedRows, loading, dataSource, total, current } = this.state;
-
     const pageTotal: number = dataSource ? dataSource.length / pageSize : 0;
     return (
       <div className={className} style={style}>
