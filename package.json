@@ -8,12 +8,11 @@
     "name": "xujunjie",
     "email": "yinhunfeixue@163.com"
   },
-  "repository": "/fb-project-component",
+  "repository": "https://github.com/yinhunfeixue/projectComponent",
   "scripts": {
     "dev": "father doc dev",
-    "buildDoc": "father doc build",
     "build": "father build",
-    "deploy":"father doc deploy"
+    "public":"father doc build && father doc deploy"
   },
   "peerDependencies": {
     "react": "16.x"

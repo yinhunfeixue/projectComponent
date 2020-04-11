@@ -82,7 +82,7 @@ interface ILimitUploadProps extends IComponentProps {
    *
    * 例如：在此属性设置了accept，则优先使用此处设置的accept
    */
-  uploadProps: UploadProps;
+  uploadProps?: UploadProps;
 }
 
 class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
