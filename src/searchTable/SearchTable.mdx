@@ -117,14 +117,14 @@ import { Button, Form, Input } from 'antd';
         dataIndex:'name'
       }
     ]}
-    getListFunction={()=>{
+    getListFunction={(current)=>{
      return fetch('./').then(()=>{
         return {
           total:5,
           dataSource:[
             {
               id:1,
-              name:'a'
+              name:`${current}a`
             },
             {
               id:2,
