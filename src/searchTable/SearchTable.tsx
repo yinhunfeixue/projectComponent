@@ -1,5 +1,4 @@
 import Table, { ColumnsType, TableProps } from 'antd/lib/table';
-import lodash from 'lodash';
 import React, { Component, ReactNode } from 'react';
 import IComponentProps from '../interfaces/IComponentProps';
 
@@ -16,7 +15,15 @@ interface ISearchTableExtra<T> {
 
   loading: boolean;
 
+  /**
+   * 刷新
+   */
   refresh: () => void;
+
+  /**
+   * 设置搜索参数，此方法会把页码重置到第一页
+   */
+  setSearchParams: (params: any) => void;
 }
 
 interface ISearchTableState<T> {
@@ -26,6 +33,10 @@ interface ISearchTableState<T> {
   selectedRowKeys?: any[];
   selectedRows?: T[];
   loading: boolean;
+  /**
+   * 搜索参数
+   */
+  searchParams?: any;
 }
 interface ISearchTableProps<T> extends IComponentProps {
   /**
@@ -57,13 +68,6 @@ interface ISearchTableProps<T> extends IComponentProps {
   renderExtra?: (extraData: ISearchTableExtra<T>) => ReactNode;
 
   /**
-   * 搜索参数
-   *
-   * 组件会对此参数进行深度比较，如果参数有改变，会重置页码
-   */
-  searchParams?: any;
-
-  /**
    * 是否显示快速跳转页码的输入框
    */
   showQuickJumper?: boolean;
@@ -89,9 +93,9 @@ interface ISearchTableProps<T> extends IComponentProps {
   pageSize?: number;
 
   /**
-   * 当不满一页时，是否自动隐藏分面器
+   * 是否禁用： 当不满一页时，是否自动隐藏分面器
    */
-  autoHidePage?: boolean;
+  disableAutoHidePage?: boolean;
 
   /**
    * 需要额外设置给Table的props
@@ -102,11 +106,6 @@ interface ISearchTableProps<T> extends IComponentProps {
    * 是否可选中
    */
   selectedEnable?: boolean;
-
-  /**
-   * 加载状态变时触发的事件
-   */
-  onLoadingChange?: (loading: boolean) => void;
 }
 
 class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISearchTableState<T>> {
@@ -155,15 +154,18 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
   };
 
   private setLoading(loading: boolean) {
-    const { onLoadingChange } = this.props;
     this.setState({ loading });
-    if (onLoadingChange) {
-      onLoadingChange(loading);
-    }
   }
 
+  private setSearchParams = (searchParams: any) => {
+    this.setState({ searchParams }, () => {
+      this.changePage(1);
+    });
+  };
+
   private async requestList() {
-    const { getListFunction, searchParams } = this.props;
+    const { getListFunction } = this.props;
+    const { searchParams } = this.state;
     const { current } = this.state;
 
     this.setLoading(true);
@@ -182,13 +184,6 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
     );
   }
 
-  componentDidUpdate(prevProps: ISearchTableProps<T>) {
-    // 如果searchParams发生变化，重置表格
-    if (!lodash.isEqual(prevProps.searchParams, this.props.searchParams)) {
-      this.changePage(1);
-    }
-  }
-
   public render(): ReactNode {
     const {
       className,
@@ -199,7 +194,7 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
       columns,
       renderExtra,
       rowKey,
-      autoHidePage,
+      disableAutoHidePage,
       showTotal,
       selectedEnable,
     } = this.props;
@@ -210,7 +205,13 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
     return (
       <div className={className} style={style}>
         {renderExtra &&
-          renderExtra({ selectedRowKeys, selectedRows, loading, refresh: this.refresh })}
+          renderExtra({
+            selectedRowKeys,
+            selectedRows,
+            loading,
+            refresh: this.refresh,
+            setSearchParams: this.setSearchParams,
+          })}
         <Table<T>
           {...tableProps}
           rowKey={rowKey || 'id'}
@@ -221,7 +222,7 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
           loading={loading}
           dataSource={dataSource}
           pagination={
-            autoHidePage && pageTotal <= 1
+            !disableAutoHidePage && pageTotal <= 1
               ? false
               : {
                   total,
