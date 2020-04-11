@@ -6,8 +6,10 @@ import IComponentProps from '../interfaces/IComponentProps';
 const IdCard = require('idcard');
 const classnames = require('classnames');
 
-interface IIdCardLinkState {}
-interface IIdCardLinkProps extends IComponentProps {
+interface IIdCardInputState {
+  value: any;
+}
+interface IIdCardInputProps extends IComponentProps {
   /**
    * 身份证初始值
    */
@@ -15,43 +17,62 @@ interface IIdCardLinkProps extends IComponentProps {
   /**
    * 输入正确身份证后的回调
    */
-  getIdCardInfo: (values: any) => void;
+  onSuccess: (values: any) => void;
 }
 
-class IdCardLink extends Component<IIdCardLinkProps, IIdCardLinkState> {
+class IdCardInput extends Component<IIdCardInputProps, IIdCardInputState> {
+  state: IIdCardInputState = {
+    value: this.props.value,
+  };
   componentDidMount() {
     const { value } = this.props;
     this.setIdCardInfo(value);
   }
 
-  componentDidUpdate(prevProps: IIdCardLinkProps) {
+  componentDidUpdate(prevProps: IIdCardInputProps) {
     if (!lodash.isEqual(this.props.value, prevProps.value)) {
       const { value } = this.props;
+      this.setState({
+        value,
+      });
       this.setIdCardInfo(value);
     }
   }
 
   setIdCardInfo = (value: any) => {
-    const { getIdCardInfo } = this.props;
+    const { onSuccess } = this.props;
     if (value && IdCard.verify(value)) {
       const info = IdCard.info(value);
-      getIdCardInfo(info);
+      onSuccess(info);
+    } else {
+      onSuccess({
+        province: {},
+        city: {},
+        area: {},
+      });
     }
   };
 
   onChange = (e: { target: { value: any } }) => {
     const idCard = e.target.value;
-    this.setIdCardInfo(idCard);
+    this.setState(
+      {
+        value: idCard,
+      },
+      () => {
+        this.setIdCardInfo(idCard);
+      },
+    );
   };
 
   public render(): ReactNode {
     const { className, style } = this.props;
     return (
-      <span className={classnames('IdCardLink', className)} style={style}>
-        <Input onChange={this.onChange} defaultValue={this.props.value} />
+      <span className={classnames('IdCardInput', className)} style={style}>
+        <Input onChange={this.onChange} value={this.state.value} />
       </span>
     );
   }
 }
 
-export default IdCardLink;
+export default IdCardInput;
