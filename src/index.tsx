@@ -1,11 +1,11 @@
 import ConfirmButton from './confirmButton/ConfirmButton';
-import IdCardLink from './IdCardLink/IdCardLink';
+import IdCardInput from './IdCardInput/IdCardInput';
 import LimitUpload from './limitUpload/LimitUpload';
 import SearchTable from './searchTable/SearchTable';
 
 module.exports = {
   ConfirmButton,
   LimitUpload,
-  IdCardLink,
+  IdCardInput,
   SearchTable,
 };
