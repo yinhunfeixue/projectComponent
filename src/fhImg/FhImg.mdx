@@ -1,0 +1,38 @@
+---
+name: FhImg
+route: /FhImg
+order: -1
+sidebar: true
+menu: 组件
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import FhImg from './FhImg';
+import FhImgDemo from './FhImgDemo';
+
+# FhImg
+简单的图片封装，支持三种不拉伸的图片填充模式，图片预览
+
+### 主要做了以下工作
+
++ 屏蔽拉伸类不友好的图片填充模式
++ 图片地址及宽高用属性设置
++ 配置预览功能
+
+### 后期
+
+如果你需要更强大，定制的图片功能，请联系我
+
+## 示例
+
+### 默认
+<Playground>
+  <FhImgDemo/>
+</Playground>
+
+
+
+## 属性
+<Props of={FhImg} />
+
