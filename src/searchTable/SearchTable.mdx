@@ -72,6 +72,40 @@ import { Button, Form, Input } from 'antd';
   />
 </Playground>
 
+## 不自动隐藏分页器
+<Playground>
+  <SearchTable 
+    disableAutoHidePage
+    columns={[
+      {
+        title:'姓名',
+        dataIndex:'name'
+      }
+    ]}
+    getListFunction={()=>{
+     return fetch('./').then(()=>{
+        return {
+          total:1,
+          dataSource:[
+            {
+              id:1,
+              name:'a'
+            },
+            {
+              id:2,
+              name:'b'
+            },
+            {
+              id:3,
+              name:'c'
+            }
+          ]
+      }
+     })
+    }}
+  />
+</Playground>
+
 
 ## 自定义pageSize
 <Playground>
