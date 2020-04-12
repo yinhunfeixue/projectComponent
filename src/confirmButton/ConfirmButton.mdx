@@ -1,7 +1,9 @@
 ---
 name: ConfirmButton
 route: /ConfirmButton
+order: 0
 sidebar: true,
+menu: 组件
 ---
 
 import { Playground, Props } from 'docz';
@@ -9,7 +11,15 @@ import 'antd/dist/antd.css';
 import ConfirmButton from './ConfirmButton';
 
 # ConfirmButton
-点击后，先经过确认过程，当确认通过时，再触发后续流程的按钮
+带确认过程的按钮，确认成功时，才触发操作。通常用于删除等需要二次确认的操作
+
+### 主要做了以下工作
+
++ 点击后调用确认方法，确认通过后，触发确认事件
+
+### 你可以
++ 可自定义提示文字
++ 可自定义确认方法
 
 ## 示例
 

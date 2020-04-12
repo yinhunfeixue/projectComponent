@@ -1,3 +1,4 @@
+
 enum UploadType {
   /**
    * 文件
