@@ -1,6 +1,6 @@
 {
   "name": "fb-project-component",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -14,7 +14,7 @@
     "build": "father build",
     "publicGitHub": "father doc build && father doc deploy",
     "publicNpm": "npm run build && npm version patch && npm publish",
-    "publicAll":"npm run publicGitHub && npm run publicNpm"
+    "publicAll": "npm run publicGitHub && npm run publicNpm"
   },
   "peerDependencies": {
     "react": "16.x"
