@@ -14,7 +14,7 @@
     "build": "father build",
     "publicGitHub": "father doc build && father doc deploy",
     "publicNpm": "npm run build && npm version patch && npm publish",
-    "publicAll": "npm run publicGitHub && npm run publicNpm"
+    "publicAll": "father doc build && father doc deploy && npm run build && npm version patch && npm publish"
   },
   "peerDependencies": {
     "react": "16.x"
