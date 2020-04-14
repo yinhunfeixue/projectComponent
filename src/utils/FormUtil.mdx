@@ -1,0 +1,200 @@
+---
+name: FormUtil
+route: /FormUtil
+order: 0
+sidebar: true,
+menu: 辅助工具
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import FormUtil from './FormUtil';
+import {Input, Form, Button} from 'antd';
+
+# FormUtil
+表单的辅助工具
+
+## 示例
+
+### 渲染表单
+
+目标是解决表单对齐，间距的问题。
+规则如下：
++ 默认一行2列，标签和内容的宽度为：1:4
++ 标签文字大于6个字，独占一行
++ 可手动修改：默认的列数、标签宽度
++ 可单独设置每一个表单项宽度、表单项标签的宽度
+
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />
+        },
+        {
+          label:'四个文字',
+          content: <Input />
+        },
+        {
+          label:'这里六个文字',
+          content: <Input />
+        },
+        {
+          label:'我是标签字数超过7的项，会自动独占一行',
+          content: <Input />
+        },
+        {
+          label:'我也很长，但手动设置了',
+          span: 12,
+          content: <Input />
+        },
+        {
+          label:'标签',
+          span: 24,
+          labelSpan:3,
+          content: <Input value="我标签文字不长，但手动设置了独占一行"/>
+        },
+        {
+          content:<Button type="primary">保存，我是自动对齐</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 渲染表单项--表单项为奇数时，按钮换行
+
+额外添加一个空项
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          content: null,
+        },
+        {
+          content:<Button type="primary">保存，我是自动对齐</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 渲染表单项--三列
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          content:<Button type="primary">保存，我是自动对齐</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list, 8)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 渲染表单项--三列时，按钮另起一行
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          span:24,
+          labelSpan:2,
+          content:<Button type="primary">保存，我是手动设置才能对齐的</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list, 8)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
