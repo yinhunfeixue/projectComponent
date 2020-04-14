@@ -8,25 +8,45 @@ class FormUtil {
   /**
    * 渲染表单项
    * @param formItemList 表单数据源
+   *    * @param columnCount 列数，默认为2
    * @param defaultLabelSpan 每个表单项的标签默认占用的列数
-   * @param defaultSpan 默认span值 ，每项占用的列数（列的含义请参考antd, https://ant.design/components/grid-cn/)
    */
   static renderFormItems(
     formItemList: IFormItemData[],
-    defaultSpan?: number,
+    columnCount: number = 2,
     defaultLabelSpan = 6,
   ) {
     if (!formItemList || !formItemList.length) {
       return null;
     }
 
+    const defaultSpan = 24 / columnCount;
+
     const rows: { totalSpan: number; cols: { span: number; formItem: React.ReactNode }[] }[] = [];
     // 循环表单项
     for (let i = 0; i < formItemList.length; i++) {
       const item = formItemList[i];
+
+      // 获取一个表单项占多少span，优先级从高到低为
+      // 1. item.span
+      // 2. item.label.length > 6? 占一整行：defaultSpan
+      let span = item.span;
+      if (!span) {
+        if (item.label && item.label.length > 6) {
+          span = 24;
+        } else {
+          span = defaultSpan;
+        }
+      }
+      span = Math.min(24, span);
+
       // 创建formItem
-      // 获取 label占用的空间，优先用item设置的值
-      const labelSpan = Math.min(24, item.labelSpan ? item.labelSpan : defaultLabelSpan);
+      // 获取 label占用的空间，优先用item设置的值，未设置，则根据defaultSpan取一个合适的值，以确定对齐
+      // 例如：defaultSpan是12, defaultLabelSpan=6，而当前item.span = 8, 则当前item的labelspan= 12*6/8
+      const labelSpan = Math.min(
+        24,
+        item.labelSpan ? item.labelSpan : (defaultLabelSpan * defaultSpan) / span,
+      );
       // 如果表单项有label，则设置labelCol；否则，设置offsetCol，以确保表单元素是对齐的
       const itemProps: { labelCol?: ColProps; wrapperCol?: ColProps } = {};
       if (item.label) {
@@ -41,21 +61,6 @@ class FormUtil {
           {item.content}
         </FormItem>
       ) : null;
-
-      // 获取一个表单项占多少span，规则为
-      // 1. 优先item.span
-      // 2. 其次defaultSpan
-      // 3. 再次 item.label.length > 6? 占一整行：占半行
-      let span = item.span || defaultSpan;
-      if (!span) {
-        if (item.label && item.label.length > 6) {
-          span = 24;
-        } else {
-          span = 12;
-        }
-      }
-
-      span = Math.min(24, span);
 
       // 创建col
       const col = {
