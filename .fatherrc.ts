@@ -8,6 +8,16 @@ const options: IBundleOptions = {
     title: '烽火工程组件',
     base: '/projectComponent/',
   },
+  extraBabelPlugins: [
+    [
+      'babel-plugin-import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      },
+    ],
+  ],
 };
 
 export default options;
