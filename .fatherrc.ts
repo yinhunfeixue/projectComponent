@@ -1,8 +1,12 @@
 import { IBundleOptions } from 'father';
 
 const options: IBundleOptions = {
-  cjs: 'rollup',
-  esm: 'rollup',
+  cjs: {
+    type: 'babel',
+  },
+  esm: {
+    type: 'rollup',
+  },
   doc: {
     typescript: true,
     title: '烽火工程组件',

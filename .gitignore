@@ -4,3 +4,5 @@
 /.docz
 /node_modules
 .doc
+npmlib
+lib
