@@ -5,11 +5,4 @@ import LimitUpload from './limitUpload/LimitUpload';
 import SearchTable from './searchTable/SearchTable';
 import FormUtil from './utils/FormUtil';
 
-module.exports = {
-  ConfirmButton,
-  LimitUpload,
-  IdCardInput,
-  SearchTable,
-  FhImg,
-  FormUtil,
-};
+export { ConfirmButton, LimitUpload, IdCardInput, SearchTable, FhImg, FormUtil };
