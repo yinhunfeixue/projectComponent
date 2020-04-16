@@ -3,6 +3,7 @@ import FhImg from './fhImg/FhImg';
 import IdCardInput from './IdCardInput/IdCardInput';
 import LimitUpload from './limitUpload/LimitUpload';
 import SearchTable from './searchTable/SearchTable';
+import FormUtil from './utils/FormUtil';
 
 module.exports = {
   ConfirmButton,
@@ -10,4 +11,5 @@ module.exports = {
   IdCardInput,
   SearchTable,
   FhImg,
+  FormUtil,
 };
