@@ -6,9 +6,15 @@ import { ReactNode } from 'react';
  */
 export default interface IFormItemData {
   /**
+   * 字段
+   */
+  name?: string;
+
+  /**
    * 标签
    */
   label?: string;
+
   /**
    * 内容
    */

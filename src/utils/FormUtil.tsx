@@ -57,7 +57,7 @@ class FormUtil {
       }
 
       const formItem = item.content ? (
-        <FormItem label={item.label} {...itemProps} {...item.formItemProps}>
+        <FormItem label={item.label} name={item.name} {...itemProps} {...item.formItemProps}>
           {item.content}
         </FormItem>
       ) : null;
@@ -96,6 +96,20 @@ class FormUtil {
             );
           })}
         </Row>
+      );
+    });
+  }
+
+  static renderInlinFormItems(formItemList: IFormItemData[]) {
+    if (!formItemList || !formItemList.length) {
+      return null;
+    }
+
+    return formItemList.map(item => {
+      return (
+        <FormItem label={item.label} name={item.name} {...item.formItemProps}>
+          {item.content}
+        </FormItem>
       );
     });
   }
