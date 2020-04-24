@@ -6,7 +6,7 @@ import FhImg from './fhImg/FhImg';
 import IdCardInput from './IdCardInput/IdCardInput';
 import IFormItemData from './interfaces/IFormItemData';
 import LimitUpload from './limitUpload/LimitUpload';
-import SearchTable from './searchTable/SearchTable';
+import SearchTable, { ISearchTableExtra } from './searchTable/SearchTable';
 import FormUtil from './utils/FormUtil';
 
 export {
@@ -20,4 +20,5 @@ export {
   UploadAcceptType,
   UploadType,
   IFormItemData,
+  ISearchTableExtra,
 };

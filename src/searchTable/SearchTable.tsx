@@ -1,8 +1,9 @@
-import Table, { ColumnsType, TableProps } from 'antd/lib/table';
+import { Table } from 'antd';
+import { ColumnsType, TableProps } from 'antd/lib/table';
 import React, { Component, ReactNode } from 'react';
 import IComponentProps from '../interfaces/IComponentProps';
 
-interface ISearchTableExtra<T> {
+export interface ISearchTableExtra<T> {
   /**
    * 当前选中的key列表
    */
