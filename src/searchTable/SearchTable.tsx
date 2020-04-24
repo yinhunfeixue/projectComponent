@@ -56,7 +56,7 @@ interface ISearchTableProps<T> extends IComponentProps {
     pageSize: number,
     searchParams: any,
   ) => Promise<{
-    dataSource: [];
+    dataSource: T[];
     total: number;
   }>;
 
