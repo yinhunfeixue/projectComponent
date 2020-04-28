@@ -105,9 +105,9 @@ class FormUtil {
       return null;
     }
 
-    return formItemList.map(item => {
+    return formItemList.map((item, index) => {
       return (
-        <FormItem label={item.label} name={item.name} {...item.formItemProps}>
+        <FormItem key={index} label={item.label} name={item.name} {...item.formItemProps}>
           {item.content}
         </FormItem>
       );
