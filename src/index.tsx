@@ -7,7 +7,9 @@ import IdCardInput from './IdCardInput/IdCardInput';
 import IFormItemData from './interfaces/IFormItemData';
 import LimitUpload from './limitUpload/LimitUpload';
 import SearchTable, { ISearchTableExtra } from './searchTable/SearchTable';
+import AntdUtil from './utils/AntdUtil';
 import FormUtil from './utils/FormUtil';
+import HtmlUtil from './utils/HtmlUtil';
 
 export {
   ConfirmButton,
@@ -15,10 +17,12 @@ export {
   IdCardInput,
   SearchTable,
   FhImg,
-  FormUtil,
   ImageFitType,
   UploadAcceptType,
   UploadType,
   IFormItemData,
   ISearchTableExtra,
+  HtmlUtil,
+  FormUtil,
+  AntdUtil,
 };
