@@ -1,6 +1,7 @@
 import { Tree } from 'antd';
-import { AntTreeNodeProps, TreeProps } from 'antd/lib/tree';
-import React, { ReactElement } from 'react';
+import { TreeProps } from 'antd/lib/tree';
+import { DataNode } from 'rc-tree/lib/interface';
+import React, { ReactElement, ReactNode } from 'react';
 
 class AntdUtil {
   /**
@@ -19,14 +20,17 @@ class AntdUtil {
     getKey: ((item: T) => string) | string = 'id',
     getTitle: ((item: T) => ReactElement) | string = 'name',
     getChildren: ((item: T) => T[]) | string = 'children',
-    createNodeProps?: (item: T) => AntTreeNodeProps,
+    createNodeProps?: (item: T) => DataNode,
   ): ReactElement | null {
     if (dataSource) {
-      return (
-        <Tree {...treeProps}>
-          {AntdUtil.loopTreeNode<T>(dataSource, getKey, getTitle, getChildren, createNodeProps)}
-        </Tree>
+      const treeData = this.loopTreeNode(
+        dataSource,
+        getKey,
+        getTitle,
+        getChildren,
+        createNodeProps,
       );
+      return <Tree {...treeProps} treeData={treeData} />;
     }
     return null;
   }
@@ -34,24 +38,27 @@ class AntdUtil {
   private static loopTreeNode<T extends any>(
     treeData: T[],
     getKey: ((item: T) => string) | string = 'id',
-    getTitle: ((item: T) => ReactElement) | string = 'name',
+    getTitle: ((item: T) => ReactNode) | string = 'name',
     getChildren: ((item: T) => T[]) | string = 'children',
-    createNodeProps?: (item: T) => AntTreeNodeProps,
-  ): ReactElement[] {
-    const { TreeNode } = Tree;
-    return treeData.map(
-      (item, i): ReactElement => {
-        const children = typeof getChildren === 'string' ? item[getChildren] : getChildren(item);
-        const key = typeof getKey === 'string' ? item[getKey] : getKey(item);
-        const title = typeof getTitle === 'string' ? item[getTitle] : getTitle(item);
-        const otherProps = createNodeProps ? createNodeProps(item) : null;
-        return (
-          <TreeNode key={key} title={title} {...otherProps}>
-            {children ? AntdUtil.loopTreeNode(children, getKey, getTitle, getChildren) : null}
-          </TreeNode>
+    createNodeProps?: (item: T) => DataNode,
+  ): DataNode[] | undefined {
+    return treeData.map(item => {
+      const children = typeof getChildren === 'string' ? item[getChildren] : getChildren(item);
+      const key = typeof getKey === 'string' ? item[getKey] : getKey(item);
+      const title = typeof getTitle === 'string' ? (item[getTitle] as ReactNode) : getTitle(item);
+      const otherProps = createNodeProps ? createNodeProps(item) : null;
+      const result: DataNode = { key, title, ...otherProps };
+      if (children) {
+        result.children = this.loopTreeNode(
+          children,
+          getKey,
+          getTitle,
+          getChildren,
+          createNodeProps,
         );
-      },
-    );
+      }
+      return result;
+    });
   }
 }
 

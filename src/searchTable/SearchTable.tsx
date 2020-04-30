@@ -214,12 +214,12 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
             setSearchParams: this.setSearchParams,
           })}
         <Table<T>
+          className={tableClassName}
+          bordered
+          style={tableStyle}
           {...tableProps}
           rowKey={rowKey || 'id'}
-          scroll={{ x: 1000 }}
           columns={columns}
-          className={tableClassName}
-          style={tableStyle}
           loading={loading}
           dataSource={dataSource}
           pagination={
