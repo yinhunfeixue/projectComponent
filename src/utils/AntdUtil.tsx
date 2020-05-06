@@ -18,7 +18,7 @@ class AntdUtil {
     dataSource: T[],
     treeProps?: TreeProps,
     getKey: ((item: T) => string) | string = 'id',
-    getTitle: ((item: T) => ReactElement) | string = 'name',
+    getTitle: ((item: T) => ReactNode) | string = 'name',
     getChildren: ((item: T) => T[]) | string = 'children',
     createNodeProps?: (item: T) => DataNode,
   ): ReactElement | null {
@@ -47,7 +47,7 @@ class AntdUtil {
       const key = typeof getKey === 'string' ? item[getKey] : getKey(item);
       const title = typeof getTitle === 'string' ? (item[getTitle] as ReactNode) : getTitle(item);
       const otherProps = createNodeProps ? createNodeProps(item) : null;
-      const result: DataNode = { key, title, ...otherProps };
+      const result: DataNode = { key, title, ...otherProps, sourceData: item };
       if (children) {
         result.children = this.loopTreeNode(
           children,
