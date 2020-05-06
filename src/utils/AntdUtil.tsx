@@ -47,7 +47,7 @@ class AntdUtil {
       const key = typeof getKey === 'string' ? item[getKey] : getKey(item);
       const title = typeof getTitle === 'string' ? (item[getTitle] as ReactNode) : getTitle(item);
       const otherProps = createNodeProps ? createNodeProps(item) : null;
-      const result: DataNode = { key, title, ...otherProps, sourceData: item };
+      const result: DataNode = { key, title, ...otherProps };
       if (children) {
         result.children = this.loopTreeNode(
           children,
