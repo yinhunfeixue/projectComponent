@@ -13,7 +13,7 @@
     "dev": "father doc dev",
     "build": "father build",
     "publicGitHub": "father doc build && father doc deploy",
-    "publicNpm": "npm run build && npm version patch && cp package.json ./dist/package.json && cp README.md ./dist/README.md && cd dist && npm login && npm publish",
+    "publicNpm": "npm run build && npm version patch && cp package.json ./dist/package.json && cp README.md ./dist/README.md && cd dist && npm publish",
     "public": "npm run publicGitHub && npm run publicNpm"
   },
   "peerDependencies": {
