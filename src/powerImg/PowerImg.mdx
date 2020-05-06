@@ -1,6 +1,6 @@
 ---
-name: FhImg
-route: /FhImg
+name: PowerImg
+route: /PowerImg
 order: -1
 sidebar: true
 menu: 组件
@@ -8,12 +8,12 @@ menu: 组件
 
 import { Playground, Props } from 'docz';
 import 'antd/dist/antd.css';
-import FhImg from './FhImg';
+import PowerImg from './PowerImg';
 import { Select } from 'antd';
 import  { Component, ReactNode } from 'react';
 import ImageFitType from '../enums/ImageFitType';
 
-# FhImg
+# PowerImg
 简单的图片封装，支持三种不拉伸的图片填充模式，图片预览
 
 ### 主要做了以下工作
@@ -31,15 +31,15 @@ import ImageFitType from '../enums/ImageFitType';
 ### 默认
 <Playground>
 {
-  class FhImgDemo extends Component {
+  class PowerImgDemo extends Component {
 
     constructor(props) {
       super(props);
       this.state = {
         width: '120',
         height: '80',
-        objectFit: 'contain',
-        isPreview: ''
+        objectFit: 'cover',
+        isPreview: '1'
       };
       this.url = 'http://my-bucket-1111-1301126387.cos-website.ap-guangzhou.myqcloud.com/media/large/2d13d416f80245b8cdacb342954ee5a2.jpg';
 
@@ -56,14 +56,14 @@ import ImageFitType from '../enums/ImageFitType';
       ];
 
       this.objectFitPros = [
-        { key: '1', value: ImageFitType.CONTAIN },
-        { key: '2', value: ImageFitType.COVER },
+        { key: '1', value: ImageFitType.COVER },
+        { key: '2', value: ImageFitType.CONTAIN },
         { key: '3', value: ImageFitType.NONE },
       ];
 
       this.previewPros = [
-        { key: '1', value: '', label: '不预览' },
-        { key: '2', value: '1', label: '预览' },
+        { key: '1', value: '1', label: '预览' },
+        { key: '2', value: '', label: '不预览' },
       ];
     }
 
@@ -111,15 +111,15 @@ import ImageFitType from '../enums/ImageFitType';
             {this.heightPros.map(item => <Select.Option key={item.key} value={item.value}>{item.value}</Select.Option>)}
           </Select>
           填充模式
-          <Select defaultValue="contain" style={{ width: 120, marginRight: 15, marginLeft: 5 }} onChange={(value) => this.handleChange(value, 'objectFit')}>
+          <Select defaultValue="cover" style={{ width: 120, marginRight: 15, marginLeft: 5 }} onChange={(value) => this.handleChange(value, 'objectFit')}>
             {this.objectFitPros.map(item => <Select.Option key={item.key} value={item.value}>{item.value}</Select.Option>)}
           </Select>
           预览
-          <Select defaultValue="" style={{ width: 120, marginLeft: 5 }} onChange={(value) => this.handleChange(value, 'isPreview')}>
+          <Select defaultValue="1" style={{ width: 120, marginLeft: 5 }} onChange={(value) => this.handleChange(value, 'isPreview')}>
             {this.previewPros.map(item => <Select.Option key={item.key} value={item.value}>{item.label}</Select.Option>)}
           </Select>
           <div style={{ marginTop: 25 }}>
-            <FhImg
+            <PowerImg
               style={style}
               isPreview={!!isPreview}
               objectFit={objectFit}
@@ -137,5 +137,5 @@ import ImageFitType from '../enums/ImageFitType';
 
 
 ## 属性
-<Props of={FhImg} />
+<Props of={PowerImg} />
 

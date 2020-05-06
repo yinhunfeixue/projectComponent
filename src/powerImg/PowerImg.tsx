@@ -4,9 +4,9 @@ import ImageFitType from '../enums/ImageFitType';
 import IComponentProps from '../interfaces/IComponentProps';
 const classnames = require('classnames');
 
-interface IFhImgState {
+interface IPowerImgState {
 }
-interface IFhImgProps extends IComponentProps {
+interface IPowerImgProps extends IComponentProps {
   /**
    * 图片地址
    */
@@ -34,11 +34,11 @@ interface IFhImgProps extends IComponentProps {
 }
 
 
-class FhImg extends Component<IFhImgProps, IFhImgState> {
+class PowerImg extends Component<IPowerImgProps, IPowerImgState> {
 
   public static defaultProps = {
-    isPreview: false,
-    objectFit: ImageFitType.CONTAIN
+    isPreview: true,
+    objectFit: ImageFitType.COVER
   };
 
   private preview = (src: string) => {
@@ -60,7 +60,7 @@ class FhImg extends Component<IFhImgProps, IFhImgState> {
       <img
         src={src}
         onClick={this.onClick}
-        className={classnames('FhImg', className)}
+        className={classnames('PowerImg', className)}
         style={{
           ...style,
           objectFit,
@@ -74,4 +74,4 @@ class FhImg extends Component<IFhImgProps, IFhImgState> {
 
 }
 
-export default FhImg;
+export default PowerImg;
