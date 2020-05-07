@@ -202,7 +202,7 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
 
     const pageSize = this.pageSize;
     const { selectedRowKeys, selectedRows, loading, dataSource, total, current } = this.state;
-    const pageTotal: number = dataSource ? dataSource.length / pageSize : 0;
+    const pageTotal: number = total / pageSize;
     return (
       <div className={className} style={style}>
         {renderExtra &&

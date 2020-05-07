@@ -145,6 +145,7 @@ import { Button, Form, Input } from 'antd';
 ## 添加附加操作
 <Playground>
   <SearchTable
+    pageSize={3}
     selectedEnable
     renderExtra={(data)=>{
       const {selectedRowKeys, selectedRows, loading, refresh} = data;
