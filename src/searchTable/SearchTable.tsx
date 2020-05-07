@@ -1,9 +1,10 @@
-import Table, { ColumnsType, TableProps } from 'antd/lib/table';
+import { Table } from 'antd';
+import { ColumnsType, TableProps } from 'antd/lib/table';
 import React, { Component, ReactNode } from 'react';
 import IComponentProps from '../interfaces/IComponentProps';
 const { Column } = Table;
 
-interface ISearchTableExtra<T> {
+export interface ISearchTableExtra<T> {
   /**
    * 当前选中的key列表
    */
@@ -58,7 +59,7 @@ interface ISearchTableProps<T> extends IComponentProps {
     pageSize: number,
     searchParams: any,
   ) => Promise<{
-    dataSource: [];
+    dataSource: T[];
     total: number;
   }>;
 
@@ -247,11 +248,11 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
             setSearchParams: this.setSearchParams,
           })}
         <Table<T>
+          className={tableClassName}
+          bordered
+          style={tableStyle}
           {...tableProps}
           rowKey={rowKey || 'id'}
-          scroll={{ x: 1000 }}
-          className={tableClassName}
-          style={tableStyle}
           loading={loading}
           dataSource={dataSource}
           pagination={

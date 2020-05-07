@@ -26,17 +26,23 @@ import Text from './Text';
 ## 示例
 
 ### 基本用法
-<Text text="鼠标移上查看我完整的数据,12,3,456789" />
+<Playground>
+  <Text text="鼠标移上查看我完整的数据,12,3,456789" />
+</Playground>
 
 ### 自定义最大长度
-<Text text="最多显示7个文字，123456789" maxLen={7} />
-<br/>
-<Text text="不截取122134342354554646457567456756" maxLen={0} />
+<Playground>
+  <Text text="最多显示7个文字，123456789" maxLen={7} />
+  <br/>
+  <Text text="不截取122134342354554646457567456756" maxLen={0} />
+</Playground>
 
 ### 解析富文本
-<Text text="<span>我未解析富文本</span>" maxLen={0} />
-<br/>
-<Text plainHtml text="<span>我解析了富文本</span>" />
+<Playground>
+  <Text text="<span>我未解析富文本</span>" maxLen={0} />
+  <br/>
+  <Text plainHtml text="<span>我解析了富文本</span>" />
+</Playground>
 
 ## 属性
 <Props of={Text} />
