@@ -72,6 +72,47 @@ import { Button, Form, Input } from 'antd';
   />
 </Playground>
 
+## 设置表可拖动
+<Playground>
+  <SearchTable 
+    columns={[
+      {
+        title:'姓名',
+        dataIndex:'name'
+      },
+      {
+        title:'年龄',
+        dataIndex:'age'
+      }
+    ]}
+    isDrag
+    getListFunction={()=>{
+     return fetch('./').then(()=>{
+        return {
+          total:1,
+          dataSource:[
+            {
+              id:1,
+              name:'a',
+              age: 25
+            },
+            {
+              id:2,
+              name:'b',
+              age: 28
+            },
+            {
+              id:3,
+              name:'c',
+              age: 23
+            }
+          ]
+      }
+     })
+    }}
+  />
+</Playground>
+
 ## 不自动隐藏分页器
 <Playground>
   <SearchTable 

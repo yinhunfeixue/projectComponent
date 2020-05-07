@@ -1,6 +1,7 @@
 import Table, { ColumnsType, TableProps } from 'antd/lib/table';
 import React, { Component, ReactNode } from 'react';
 import IComponentProps from '../interfaces/IComponentProps';
+const { Column } = Table;
 
 interface ISearchTableExtra<T> {
   /**
@@ -33,6 +34,7 @@ interface ISearchTableState<T> {
   selectedRowKeys?: any[];
   selectedRows?: T[];
   loading: boolean;
+  newColumns: any[];
   /**
    * 搜索参数
    */
@@ -106,6 +108,11 @@ interface ISearchTableProps<T> extends IComponentProps {
    * 是否可选中
    */
   selectedEnable?: boolean;
+
+  /**
+   * 是否可拖动
+   */
+  isDrag?: boolean;
 }
 
 class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISearchTableState<T>> {
@@ -126,6 +133,7 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
       total: 0,
       current: 1,
       dataSource: [],
+      newColumns: this.props.columns,
       loading: false,
     };
   }
@@ -184,6 +192,23 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
     );
   }
 
+  setColumn = (source: any, target: any) => {
+    let { newColumns } = this.state;
+    const titleList = [];
+    const newColumns1 = [];
+    for (let i = 0; i < newColumns.length; i += 1) {
+      titleList.push(newColumns[i].title);
+      newColumns1.push(newColumns[i]);
+    }
+    let sourceIndex = titleList.indexOf(source.title);
+    let targetIndex = titleList.indexOf(target.title);
+    newColumns1[sourceIndex] = newColumns[targetIndex];
+    newColumns1[targetIndex] = newColumns[sourceIndex];
+    this.setState({
+      newColumns: newColumns1,
+    });
+  };
+
   public render(): ReactNode {
     const {
       className,
@@ -197,10 +222,19 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
       disableAutoHidePage,
       showTotal,
       selectedEnable,
+      isDrag,
     } = this.props;
 
     const pageSize = this.pageSize;
-    const { selectedRowKeys, selectedRows, loading, dataSource, total, current } = this.state;
+    const {
+      selectedRowKeys,
+      selectedRows,
+      loading,
+      dataSource,
+      total,
+      current,
+      newColumns,
+    } = this.state;
     const pageTotal: number = dataSource ? dataSource.length / pageSize : 0;
     return (
       <div className={className} style={style}>
@@ -216,7 +250,6 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
           {...tableProps}
           rowKey={rowKey || 'id'}
           scroll={{ x: 1000 }}
-          columns={columns}
           className={tableClassName}
           style={tableStyle}
           loading={loading}
@@ -244,7 +277,39 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
                 }
               : undefined
           }
-        />
+        >
+          {newColumns.map(item => (
+            <Column
+              title={
+                isDrag ? (
+                  <div
+                    draggable
+                    onDragStart={event => {
+                      event.dataTransfer.setData('item', JSON.stringify(item));
+                    }}
+                    style={{ cursor: 'move' }}
+                    data-set={JSON.stringify(item)}
+                    onDragOver={event => {
+                      event.preventDefault();
+                    }}
+                    onDrop={(event: any) => {
+                      const item = event.dataTransfer.getData('item');
+                      this.setColumn(JSON.parse(item), JSON.parse(event.target.dataset.set));
+                    }}
+                  >
+                    {item.title}
+                  </div>
+                ) : (
+                  <span>{item.title}</span>
+                )
+              }
+              dataIndex={item.dataIndex}
+              render={(value, record) =>
+                item.render ? item.render(value, record) : <span>{value}</span>
+              }
+            />
+          ))}
+        </Table>
       </div>
     );
   }
