@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 /**
  * 表单项
  */
-export default interface IFormItemData {
+interface IFormItemData {
   /**
    * 字段
    */
@@ -38,4 +38,6 @@ export default interface IFormItemData {
   formItemProps?: FormItemProps;
 }
 
-export const IFormItemDataC = (props: IFormItemData) => {};
+export default IFormItemData
+
+export const IFormItemDataC = (props: IFormItemData) => { };
