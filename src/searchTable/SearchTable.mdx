@@ -149,7 +149,7 @@ import { Button, Form, Input } from 'antd';
             disabled={!selectedRowKeys || !selectedRowKeys.length}
             style={{marginRight:10}}
             loading={loading} 
-            type="danger"
+            danger
             onClick={()=>{
               alert(selectedRowKeys?selectedRowKeys.join():'请选择要删除的行')
             }}

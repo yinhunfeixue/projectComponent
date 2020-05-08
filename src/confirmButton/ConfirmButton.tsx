@@ -94,7 +94,7 @@ class ConfirmButton extends Component<IConfirmButtonProps, IConfirmButtonState> 
   }
 
   private defaultValidate(): Promise<boolean> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const { modalContent } = this.props;
       Modal.confirm({
         title: modalContent ? modalContent.title : '操作不可恢复',
@@ -116,7 +116,7 @@ class ConfirmButton extends Component<IConfirmButtonProps, IConfirmButtonState> 
       return getElement(loading);
     }
     return (
-      <Button type="danger" ghost loading={loading}>
+      <Button danger ghost loading={loading}>
         {text || '删除'}
       </Button>
     );
