@@ -1,16 +1,16 @@
 import React, { Component, ReactNode } from 'react';
-import Zmage from 'react-zmage';
 import ImageFitType from '../enums/ImageFitType';
 import IComponentProps from '../interfaces/IComponentProps';
+
+const Zmage = require('react-zmage');
 const classnames = require('classnames');
 
-interface IPowerImgState {
-}
+interface IPowerImgState {}
 interface IPowerImgProps extends IComponentProps {
   /**
    * 图片地址
    */
-  src: string
+  src: string;
   /**
    * 图片填充模式
    */
@@ -30,32 +30,30 @@ interface IPowerImgProps extends IComponentProps {
   /**
    * 点击事件
    */
-  onClick?: () => void
+  onClick?: () => void;
 }
 
-
 class PowerImg extends Component<IPowerImgProps, IPowerImgState> {
-
   public static defaultProps = {
     isPreview: true,
-    objectFit: ImageFitType.COVER
+    objectFit: ImageFitType.COVER,
   };
 
   private preview = (src: string) => {
-    Zmage.browsing({ src })
-  }
+    Zmage.browsing({ src });
+  };
 
   onClick = () => {
-    const { isPreview, src, onClick } = this.props
+    const { isPreview, src, onClick } = this.props;
     if (isPreview) {
-      this.preview(src)
+      this.preview(src);
     } else {
-      onClick && onClick()
+      onClick && onClick();
     }
-  }
+  };
 
   public render(): ReactNode {
-    const { objectFit, src, style = {}, className, width, height } = this.props
+    const { objectFit, src, style = {}, className, width, height } = this.props;
     return (
       <img
         src={src}
@@ -65,13 +63,11 @@ class PowerImg extends Component<IPowerImgProps, IPowerImgState> {
           ...style,
           objectFit,
           width,
-          height
+          height,
         }}
       />
-
     );
   }
-
 }
 
 export default PowerImg;
