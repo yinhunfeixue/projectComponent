@@ -30,6 +30,7 @@ export interface ISearchTableExtra<T> {
 interface ISearchTableState<T> {
   total: number;
   current: number;
+  pageSize?: number;
   dataSource: T[];
   selectedRowKeys?: any[];
   selectedRows?: T[];
@@ -74,6 +75,11 @@ interface ISearchTableProps<T> extends IComponentProps {
   showQuickJumper?: boolean;
 
   /**
+   * 是否可切换每页显示的数量
+   */
+  showSizeChanger?: boolean;
+
+  /**
    * 显示总数量的方法
    */
   showTotal?: ((total: number, range: [number, number]) => React.ReactNode) | undefined;
@@ -110,10 +116,10 @@ interface ISearchTableProps<T> extends IComponentProps {
 }
 
 class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISearchTableState<T>> {
-  static defaultPageSize = 20;
+  static defaultPageSize = 10;
 
   private get pageSize() {
-    return this.props.pageSize || SearchTable.defaultPageSize || 10;
+    return this.state.pageSize || this.props.pageSize || SearchTable.defaultPageSize || 10;
   }
 
   private get maxPageIndex() {
@@ -198,6 +204,7 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
       disableAutoHidePage,
       showTotal,
       selectedEnable,
+      showSizeChanger = true,
     } = this.props;
 
     const pageSize = this.pageSize;
@@ -230,9 +237,15 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
                   current,
                   showQuickJumper: true,
                   showTotal,
+                  showSizeChanger,
                   pageSize: pageSize,
                   onChange: (value: number) => {
                     this.changePage(value);
+                  },
+                  onShowSizeChange: (_, size: number) => {
+                    const oldIndex = current * pageSize;
+                    const newIndex = Math.ceil(oldIndex / size);
+                    this.setState({ pageSize: size }, () => this.changePage(newIndex));
                   },
                 }
           }

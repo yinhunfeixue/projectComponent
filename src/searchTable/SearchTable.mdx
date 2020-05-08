@@ -51,7 +51,7 @@ import { Button, Form, Input } from 'antd';
     getListFunction={()=>{
      return fetch('./').then(()=>{
         return {
-          total:1,
+          total:3,
           dataSource:[
             {
               id:1,
@@ -85,7 +85,7 @@ import { Button, Form, Input } from 'antd';
     getListFunction={()=>{
      return fetch('./').then(()=>{
         return {
-          total:1,
+          total:3,
           dataSource:[
             {
               id:1,
@@ -117,26 +117,20 @@ import { Button, Form, Input } from 'antd';
         dataIndex:'name'
       }
     ]}
-    getListFunction={(current)=>{
-     return fetch('./').then(()=>{
+    getListFunction={(current, pageSize)=>{
+      console.log(current,pageSize)
+      return fetch('./').then(()=>{
         return {
-          total:5,
-          dataSource:[
-            {
-              id:1,
-              name:`${current}a`
-            },
-            {
-              id:2,
-              name:'b'
-            },
-            {
-              id:3,
-              name:'c'
-            }
-          ]
+          total:134,
+          dataSource: new Array(pageSize).fill(0).map((item, index)=>{
+            const id = (current - 1) * pageSize + index;
+            return {
+              id,
+              name:`name${id}`
+            };
+          })
       }
-     })
+      });
     }}
   />
 </Playground>
@@ -179,26 +173,19 @@ import { Button, Form, Input } from 'antd';
         dataIndex:'name'
       }
     ]}
-    getListFunction={()=>{
+    getListFunction={(current, pageSize)=>{
      return fetch('./').then(()=>{
         return {
           total:5,
-          dataSource:[
-            {
-              id:1,
-              name:'a'
-            },
-            {
-              id:2,
-              name:'b'
-            },
-            {
-              id:3,
-              name:'c'
-            }
-          ]
-      }
-     })
+          dataSource: new Array(pageSize).fill(0).map((item, index)=>{
+            const id = (current - 1) * pageSize + index;
+            return {
+              id,
+              name:`name${id}`
+            };
+          })
+        }
+      })
     }}
   />
 </Playground>
@@ -268,21 +255,14 @@ import { Button, Form, Input } from 'antd';
             getListFunction={(current, pageSize, params)=>{
             return fetch(`./?current=${current}&pageSize=${pageSize}&key=${(params && params.userName)?params.userName:''}`).then(()=>{
                 return {
-                  total:5,
-                  dataSource:[
-                    {
-                      id:1,
-                      name:'a'
-                    },
-                    {
-                      id:2,
-                      name:'b'
-                    },
-                    {
-                      id:3,
-                      name:'c'
-                    }
-                  ]
+                  total:134,
+                  dataSource: new Array(pageSize).fill(0).map((item, index)=>{
+                    const id = (current - 1) * pageSize + index;
+                    return {
+                      id,
+                      name:`name${id}`
+                    };
+                  })
                 }
               })
             }}
