@@ -62,7 +62,7 @@ interface ISearchTableProps<T> extends IComponentProps {
     total: number;
   }>;
 
-  rowKey?: (record: T) => string | string;
+  rowKey?: ((record: T) => string) | string;
 
   /**
    * 渲染表格附加的表单，通常用来放置批量删除，批量设置状态这样的按钮
