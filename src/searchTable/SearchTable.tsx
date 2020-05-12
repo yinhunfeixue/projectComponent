@@ -127,7 +127,7 @@ class SearchTable<T extends object = any> extends Component<
 
   private get maxPageIndex() {
     const { total } = this.state;
-    return Math.ceil(total / this.pageSize);
+    return Math.max(1, Math.ceil(total / this.pageSize));
   }
 
   constructor(props: ISearchTableProps<T>) {
@@ -150,11 +150,13 @@ class SearchTable<T extends object = any> extends Component<
       pageIndex = current;
     }
     const maxPageIndex = this.maxPageIndex;
-    if (pageIndex > maxPageIndex) {
-      pageIndex = maxPageIndex;
-    }
+
     if (pageIndex < 1) {
       pageIndex = 1;
+    }
+
+    if (pageIndex > maxPageIndex) {
+      pageIndex = maxPageIndex;
     }
     this.setState({ current: pageIndex }, () => this.requestList());
   }
