@@ -313,7 +313,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
   private getRecordKey(record: T) {
     const { rowKey = 'id' } = this.props;
     if (typeof rowKey === 'string') {
-      return record[rowKey];
+      return (record as any)[rowKey];
     }
     return rowKey(record);
   }
