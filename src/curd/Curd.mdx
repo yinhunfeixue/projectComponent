@@ -1,0 +1,348 @@
+---
+name: Curd
+route: /Curd
+order: 0
+sidebar: true,
+menu: 组件
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import Curd from './Curd';
+import { Input, DatePicker, Modal, Button } from 'antd';
+
+## Curd
+
+这一个相当重型的组件，使用它可以快速搭建一个包含增、删、改、查的模块。
+
+如果只需要一个表格，请使用 SearchTable
+## Curd 结构
+
+- 表格
+- 表格搜索区
+- 表头操作区
+- 操作列
+
+如下图，其中红色区域是自带元素
+
+<img src='./Curd.png' />
+
+其中，每一结构包含如下默认功能
+
+- 表格
+  - 数据显示
+  * 分页
+- 表格搜索区
+  - 自带：搜索、重置，点击后刷新表格
+- 表头操作区
+
+  - 自带：新建
+  - 可扩展其它操作元素
+  - 可隐藏自带元素
+
+- 操作列
+
+  - 自带：删除、编辑、查看
+
+  * 可扩展其它元素
+
+  - 可隐藏自带元素
+
+## 示例
+
+### 基本用法
+<Playground>
+  <Curd 
+    columns={[
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      }
+    ]}
+    getListFunction={(current, pageSize)=>{
+      return {
+        total:54,
+        dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+          id:index,
+          name:`${(current - 1) * pageSize + index} name`
+        }))
+      }
+    }}
+  />
+</Playground>
+
+### 配置搜索功能
+<Playground>
+  <Curd 
+    columns={[
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      }
+    ]}
+    searchItem={[
+    {
+      label: '姓名',
+      name: 'lastname',
+      content: <Input />,
+    },
+    {
+      label: '日期',
+      name: 'createDate',
+      content: <DatePicker.RangePicker />,
+    }]}
+    getListFunction={(current, pageSize)=>{
+      return {
+        total:54,
+        dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+          id:index,
+          name:`${(current - 1) * pageSize + index} name`
+        }))
+      }
+    }}
+  />
+</Playground>
+
+### 配置增、删、改、预览
+
+可在开发者工具把网速调慢，以观察删除效果
+
+<Playground>
+  <Curd 
+    columns={[
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      }
+    ]}
+    searchItem={[
+    {
+      label: '姓名',
+      name: 'lastname',
+      content: <Input />,
+    },
+    {
+      label: '日期',
+      name: 'createDate',
+      content: <DatePicker.RangePicker />,
+    }]}
+    getListFunction={(current, pageSize, searchParams)=>{
+      return {
+        total:54,
+        dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+          id:index,
+          name:`${(current - 1) * pageSize + index} name`
+        }))
+      }
+    }}
+    // 添加此属性，会自动显示编辑按钮
+    renderEditer={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>这里是编辑内容</Modal>
+        );
+    }}
+    // 添加此属性，自动显示新建按钮
+    renderCreater={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>新建</Modal>
+        );
+    }}
+    // 添加此属性，自动显示预览按钮
+    renderPreviewer={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>预览</Modal>
+        );
+    }}
+    // 添加此属性，自动: 显示删除、表格可选择、当选择行时显示批量删除
+    deleteFunction={(idList) => {
+      return fetch('./');
+    }}
+    editColumnWidth={160}
+  />
+</Playground>
+
+### 扩展表格顶部操作区，扩展操作列
+
+<Playground>
+  <Curd 
+    columns={[
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      }
+    ]}
+    searchItem={[
+    {
+      label: '姓名',
+      name: 'lastname',
+      content: <Input />,
+    },
+    {
+      label: '日期',
+      name: 'createDate',
+      content: <DatePicker.RangePicker />,
+    }]}
+    getListFunction={(current, pageSize, searchParams)=>{
+      return {
+        total:54,
+        dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+          id:index,
+          name:`${(current - 1) * pageSize + index} name`
+        }))
+      }
+    }}
+    renderEditer={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>这里是编辑内容</Modal>
+        );
+    }}
+    renderCreater={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>新建</Modal>
+        );
+    }}
+    renderPreviewer={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>预览</Modal>
+        );
+    }}
+    deleteFunction={(idList) => {
+      return fetch('./');
+    }}
+    // 此属性用于扩展表格顶部操作区
+    renderTableExtra={(extraData, defaultRender) =>{
+      return  (
+        <React.Fragment>
+          <Button>自定义按钮</Button>
+          {defaultRender(extraData)}
+        </React.Fragment>
+      )
+    }}
+
+    renderEditColumns={(record, index, defaultRender)=>{
+      return (
+        <React.Fragment>
+          {
+            defaultRender(record)
+          }
+          <Button>自定义操作</Button>
+        </React.Fragment>
+      )
+    }}
+    editColumnWidth={300}
+  />
+</Playground>
+
+### 禁用预览
+
+
+禁用预览使用disabledPreview属性。 同理增、删、改、预览都可禁用。
+
+<Playground>
+  <Curd 
+    disabledPreview
+    columns={[
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      }
+    ]}
+    searchItem={[
+    {
+      label: '姓名',
+      name: 'lastname',
+      content: <Input />,
+    },
+    {
+      label: '日期',
+      name: 'createDate',
+      content: <DatePicker.RangePicker />,
+    }]}
+    getListFunction={(current, pageSize, searchParams)=>{
+      return {
+        total:54,
+        dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+          id:index,
+          name:`${(current - 1) * pageSize + index} name`
+        }))
+      }
+    }}
+    renderEditer={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>这里是编辑内容</Modal>
+        );
+    }}
+    renderCreater={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>新建</Modal>
+        );
+    }}
+    renderPreviewer={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>预览</Modal>
+        );
+    }}
+    deleteFunction={(idList) => {
+      return fetch('./');
+    }}
+    editColumnWidth={120}
+  />
+</Playground>
+
+
+## 属性
+<Props of={Curd} />

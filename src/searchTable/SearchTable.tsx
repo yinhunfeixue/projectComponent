@@ -115,7 +115,10 @@ interface ISearchTableProps<T> extends IComponentProps {
   selectedEnable?: boolean;
 }
 
-class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISearchTableState<T>> {
+class SearchTable<T extends object = any> extends Component<
+  ISearchTableProps<T>,
+  ISearchTableState<T>
+> {
   static defaultPageSize = 10;
 
   private get pageSize() {
