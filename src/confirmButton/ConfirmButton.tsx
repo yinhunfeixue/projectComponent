@@ -43,7 +43,7 @@ interface IConfirmButtonProps extends IComponentProps {
     /**
      * 弹窗内容
      */
-    content: string;
+    content: string | ReactNode;
   };
 }
 
