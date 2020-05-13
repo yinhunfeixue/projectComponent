@@ -31,6 +31,7 @@ export interface ISearchTableExtra<T> {
 interface ISearchTableState<T> {
   total: number;
   current: number;
+  pageSize?: number;
   dataSource: T[];
   selectedRowKeys?: any[];
   selectedRows?: T[];
@@ -63,7 +64,7 @@ interface ISearchTableProps<T> extends IComponentProps {
     total: number;
   }>;
 
-  rowKey?: (record: T) => string | string;
+  rowKey?: ((record: T) => string) | string;
 
   /**
    * 渲染表格附加的表单，通常用来放置批量删除，批量设置状态这样的按钮
@@ -74,6 +75,11 @@ interface ISearchTableProps<T> extends IComponentProps {
    * 是否显示快速跳转页码的输入框
    */
   showQuickJumper?: boolean;
+
+  /**
+   * 是否可切换每页显示的数量
+   */
+  showSizeChanger?: boolean;
 
   /**
    * 显示总数量的方法
@@ -116,16 +122,19 @@ interface ISearchTableProps<T> extends IComponentProps {
   isDrag?: boolean;
 }
 
-class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISearchTableState<T>> {
-  static defaultPageSize = 20;
+class SearchTable<T extends object = any> extends Component<
+  ISearchTableProps<T>,
+  ISearchTableState<T>
+> {
+  static defaultPageSize = 10;
 
   private get pageSize() {
-    return this.props.pageSize || SearchTable.defaultPageSize || 10;
+    return this.state.pageSize || this.props.pageSize || SearchTable.defaultPageSize || 10;
   }
 
   private get maxPageIndex() {
     const { total } = this.state;
-    return Math.ceil(this.state.total / this.pageSize);
+    return Math.max(1, Math.ceil(total / this.pageSize));
   }
 
   constructor(props: ISearchTableProps<T>) {
@@ -149,9 +158,11 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
       pageIndex = current;
     }
     const maxPageIndex = this.maxPageIndex;
+
     if (pageIndex < 1) {
       pageIndex = 1;
     }
+
     if (pageIndex > maxPageIndex) {
       pageIndex = maxPageIndex;
     }
@@ -223,6 +234,7 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
       disableAutoHidePage,
       showTotal,
       selectedEnable,
+      showSizeChanger = true,
       isDrag,
     } = this.props;
 
@@ -236,7 +248,7 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
       current,
       newColumns,
     } = this.state;
-    const pageTotal: number = dataSource ? dataSource.length / pageSize : 0;
+    const pageTotal: number = total / pageSize;
     return (
       <div className={className} style={style}>
         {renderExtra &&
@@ -263,9 +275,15 @@ class SearchTable<T extends object> extends Component<ISearchTableProps<T>, ISea
                   current,
                   showQuickJumper: true,
                   showTotal,
+                  showSizeChanger,
                   pageSize: pageSize,
                   onChange: (value: number) => {
                     this.changePage(value);
+                  },
+                  onShowSizeChange: (_, size: number) => {
+                    const oldIndex = current * pageSize;
+                    const newIndex = Math.ceil(oldIndex / size);
+                    this.setState({ pageSize: size }, () => this.changePage(newIndex));
                   },
                 }
           }

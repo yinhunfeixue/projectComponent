@@ -109,9 +109,12 @@ import IdCard from "idcard"
                wrapperCol={{ span: 20 }} 
                ref={this.formRef} 
                initialValues={{ idCard: "420115199305126210" }}
+               onFinish={(value)=>{
+                 console.log('表单结果：', value);
+               }}
             >
             <Col span={24} offset={2} style={{marginBottom: 20}}>
-              <Form.Item name="" label="" rules={[{ required: true }]}>
+              <Form.Item name="" label="">
                  <Button type="primary" onClick = {() => {
                     this.formRef.current.setFieldsValue({
                       idCard: IdCard.generateIdcard()
@@ -156,6 +159,9 @@ import IdCard from "idcard"
                 <Input />
               </Form.Item>
              </Col>
+             <Form.Item>
+              <Button htmlType="submit">提交</Button>
+             </Form.Item>
             </Form>
          )
        }

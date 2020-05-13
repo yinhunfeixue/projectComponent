@@ -57,7 +57,13 @@ class FormUtil {
       }
 
       const formItem = item.content ? (
-        <FormItem label={item.label} name={item.name} {...itemProps} {...item.formItemProps}>
+        <FormItem
+          label={item.label}
+          name={item.name}
+          rules={item.rules}
+          {...itemProps}
+          {...item.formItemProps}
+        >
           {item.content}
         </FormItem>
       ) : null;
@@ -107,7 +113,13 @@ class FormUtil {
 
     return formItemList.map((item, index) => {
       return (
-        <FormItem key={index} label={item.label} name={item.name} {...item.formItemProps}>
+        <FormItem
+          key={index}
+          label={item.label}
+          name={item.name}
+          rules={item.rules}
+          {...item.formItemProps}
+        >
           {item.content}
         </FormItem>
       );

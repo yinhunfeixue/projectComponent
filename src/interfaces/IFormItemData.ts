@@ -1,10 +1,11 @@
+import { Rule } from 'antd/lib/form';
 import { FormItemProps } from 'antd/lib/form/FormItem';
 import { ReactNode } from 'react';
 
 /**
  * 表单项
  */
-export default interface IFormItemData {
+interface IFormItemData {
   /**
    * 字段
    */
@@ -32,10 +33,15 @@ export default interface IFormItemData {
   labelSpan?: number;
 
   /**
+   * 表单项规则
+   */
+  rules?: Rule[];
+
+  /**
    * FormItem的props
    * 要传递给Form.Item的props
    */
   formItemProps?: FormItemProps;
 }
 
-export const IFormItemDataC = (props: IFormItemData) => {};
+export default IFormItemData;

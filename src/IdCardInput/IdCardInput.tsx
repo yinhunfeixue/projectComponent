@@ -18,6 +18,8 @@ interface IIdCardInputProps extends IComponentProps {
    * 输入正确身份证后的回调
    */
   onSuccess: (values: any) => void;
+
+  onChange: (value: any) => void;
 }
 
 class IdCardInput extends Component<IIdCardInputProps, IIdCardInputState> {
@@ -55,6 +57,7 @@ class IdCardInput extends Component<IIdCardInputProps, IIdCardInputState> {
 
   onChange = (e: { target: { value: any } }) => {
     const idCard = e.target.value;
+    const { onChange } = this.props;
     this.setState(
       {
         value: idCard,
@@ -63,6 +66,9 @@ class IdCardInput extends Component<IIdCardInputProps, IIdCardInputState> {
         this.setIdCardInfo(idCard);
       },
     );
+    if (onChange) {
+      onChange(idCard);
+    }
   };
 
   public render(): ReactNode {
