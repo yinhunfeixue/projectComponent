@@ -30,39 +30,37 @@ interface IIdCardFormProps extends IComponentProps {
    */
   onSuccess?: (values: any) => void;
   /**
-   * 身份证类型，1分大陆身份证，2港澳身份证，3台湾身份证
+   * 身份证类型，1.大陆身份证，2.港澳身份证，3.台湾身份证
    */
-  idCardType?: number;
+  idCardType?: 1 | 2 | 3;
   /**
    * 必填校验错误信息
    */
   emptyMsg?: string;
   /**
-   * 身份证号码格式错误信息
+   * 身份证号码格式校验错误信息
    */
   errMsg?: string;
 }
 
 class IdCardForm extends Component<IIdCardFormProps, any> {
-
   public getIdCard = (type: number | undefined) => {
-
     let idCard = FormRegExp.IDCARD;
     switch (type) {
       case 1:
-        idCard = FormRegExp.IDCARD
+        idCard = FormRegExp.IDCARD;
         break;
       case 2:
-        idCard = FormRegExp.HK_IDCARD
+        idCard = FormRegExp.HK_IDCARD;
         break;
       case 3:
-        idCard = FormRegExp.TW_IDCARD
+        idCard = FormRegExp.TW_IDCARD;
         break;
       default:
         break;
     }
-    return idCard
-  }
+    return idCard;
+  };
 
   public onChange = (e: { target: { value: any } }) => {
     const idCard = e.target.value;
@@ -70,7 +68,7 @@ class IdCardForm extends Component<IIdCardFormProps, any> {
       const info = IdCard.info(idCard);
       const { onSuccess } = this.props;
       if (onSuccess) {
-        onSuccess(info)
+        onSuccess(info);
       }
     }
   };
@@ -94,14 +92,16 @@ class IdCardForm extends Component<IIdCardFormProps, any> {
         {...fromItemProps}
         name={name}
         label={label}
-        rules={[{
-          required,
-          message: emptyMsg || '请填写身份证号码',
-        },
-        {
-          pattern: this.getIdCard(idCardType),
-          message: errMsg || '身份证号码格式不正确'
-        }]}
+        rules={[
+          {
+            required,
+            message: emptyMsg || '请填写身份证号码',
+          },
+          {
+            pattern: this.getIdCard(idCardType),
+            message: errMsg || '身份证号码格式不正确',
+          },
+        ]}
       >
         <Input onChange={this.onChange} />
       </Form.Item>
