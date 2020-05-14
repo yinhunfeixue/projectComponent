@@ -1,7 +1,6 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
-import { ColumnType } from 'antd/es/table';
-import { ColumnsType } from 'antd/lib/table';
+import { ColumnsType, ColumnType } from 'antd/lib/table';
 import React, { Component, ReactNode } from 'react';
 import ConfirmButton from '../confirmButton/ConfirmButton';
 import IComponentProps from '../interfaces/IComponentProps';
@@ -65,7 +64,14 @@ interface ICurdProps<T> extends IComponentProps {
   renderEditColumns?: (
     record: T,
     index: number,
-    defaultRender: (record: T) => ReactNode,
+    defaultRender: (
+      record: T,
+      params?: {
+        disabledRecordDelete?: boolean;
+        disabledRecordEdit?: boolean;
+        disabledRecordPreview?: boolean;
+      },
+    ) => ReactNode,
   ) => ReactNode;
 
   /**
@@ -221,7 +227,8 @@ interface ICurdProps<T> extends IComponentProps {
  * + 自定义：编辑按钮、删除按钮、新建按钮
  */
 class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T>> {
-  private refresh?: () => void;
+  private extraData?: ISearchTableExtra<T>;
+
   constructor(props: ICurdProps<T>) {
     super(props);
     this.state = {
@@ -231,7 +238,12 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
 
   private defaultRenderExtra = (extraData: ISearchTableExtra<T>) => {
     const { selectedRowKeys } = extraData;
-    const { renderCreater, renderCreateElement, renderBatchDeleteElement } = this.props;
+    const {
+      renderCreater,
+      renderCreateElement,
+      renderBatchDeleteElement,
+      disabledDelete,
+    } = this.props;
     const { deletingKeyList: loadingDelete } = this.state;
     return (
       <React.Fragment>
@@ -250,7 +262,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
             )}
           </span>
         )}
-        {selectedRowKeys && Boolean(selectedRowKeys.length) && (
+        {this._batchDeleteEnable && (
           <ConfirmButton
             onConfirm={() => {
               this.remove(selectedRowKeys);
@@ -274,7 +286,10 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
     );
   };
 
-  private async remove(idList: any[]) {
+  private async remove(idList?: any[]) {
+    if (!idList) {
+      return;
+    }
     const { deleteFunction } = this.props;
     if (!deleteFunction) {
       return;
@@ -282,8 +297,8 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
     this.setState({ deletingKeyList: idList });
     await deleteFunction(idList);
     this.setState({ deletingKeyList: [] });
-    if (this.refresh) {
-      this.refresh();
+    if (this.extraData) {
+      this.extraData.refresh();
     }
   }
 
@@ -318,10 +333,22 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
     return rowKey(record);
   }
 
-  private defaultRenderEditColumns = (record: T) => {
-    const showDelete = this._showDelete;
-    const showEdit = this._showEdit;
-    const showPreview = this._showPreview;
+  private defaultRenderEditColumns = (
+    record: T,
+    params?: {
+      disabledRecordDelete?: boolean;
+      disabledRecordEdit?: boolean;
+      disabledRecordPreview?: boolean;
+    },
+  ) => {
+    const {
+      disabledRecordDelete = false,
+      disabledRecordEdit = false,
+      disabledRecordPreview = false,
+    } = params || {};
+    const showDelete = this._showDelete && !disabledRecordDelete;
+    const showEdit = this._showEdit && !disabledRecordEdit;
+    const showPreview = this._showPreview && !disabledRecordPreview;
     const key = this.getRecordKey(record);
     const { renderDeleteElement, renderEditElement, renderEditPreviewElement } = this.props;
     return (
@@ -413,6 +440,17 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
     this.setState({ visibleCreate: false });
   };
 
+  private get _batchDeleteEnable() {
+    if (this.extraData) {
+      const { selectedRowKeys } = this.extraData;
+      const { disabledDelete, deleteFunction } = this.props;
+      return Boolean(
+        !disabledDelete && deleteFunction && selectedRowKeys && selectedRowKeys.length,
+      );
+    }
+    return false;
+  }
+
   public render(): ReactNode {
     const {
       columns,
@@ -424,13 +462,15 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
       searchItem,
       pageSize,
       disabledCreate,
+      disabledDelete,
       renderCreater,
       renderEditer,
       renderPreviewer,
     } = this.props;
     const { visibleCreate, visibleEdit, editRecord, visiblePreview } = this.state;
     const tableSelectedEnable = Boolean(
-      selectedEnable === true || (selectedEnable === undefined && deleteFunction),
+      selectedEnable === true ||
+        (selectedEnable === undefined && !disabledDelete && deleteFunction),
     );
     const editColumn = this.getEditColumn();
     return (
@@ -448,7 +488,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
         selectedEnable={tableSelectedEnable}
         renderExtra={(extraData: ISearchTableExtra<T>) => {
           const { setSearchParams, refresh } = extraData;
-          this.refresh = refresh;
+          this.extraData = extraData;
           return (
             <React.Fragment>
               {/* 渲染搜索表单 */}

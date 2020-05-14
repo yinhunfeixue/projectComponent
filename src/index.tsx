@@ -1,4 +1,5 @@
 import ConfirmButton from './confirmButton/ConfirmButton';
+import CountUp from './CountUp/CountUp';
 import Curd from './curd/Curd';
 import ImageFitType from './enums/ImageFitType';
 import UploadAcceptType from './enums/UploadAcceptType';
@@ -10,6 +11,7 @@ import LimitUpload from './limitUpload/LimitUpload';
 import PowerImg from './powerImg/PowerImg';
 import SearchForm from './searchForm/SearchForm';
 import SearchTable, { ISearchTableExtra } from './searchTable/SearchTable';
+import TreeCurd, { EditType } from './TreeCurd/TreeCurd';
 import AntdUtil from './utils/AntdUtil';
 import FormUtil from './utils/FormUtil';
 import HtmlUtil from './utils/HtmlUtil';
@@ -31,4 +33,7 @@ export {
   Curd,
   SearchForm,
   IdCardForm,
+  TreeCurd,
+  EditType,
+  CountUp,
 };

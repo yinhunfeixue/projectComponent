@@ -269,14 +269,13 @@ import { Input, DatePicker, Modal, Button } from 'antd';
   />
 </Playground>
 
-### 禁用预览
+### 禁用全部删除
 
-
-禁用预览使用disabledPreview属性。 同理增、删、改、预览都可禁用。
+禁用预览使用disabledDelete属性。 同理增、删、改、预览都可禁用。
 
 <Playground>
   <Curd 
-    disabledPreview
+    disabledDelete
     columns={[
       {
         title: '姓名',
@@ -343,6 +342,79 @@ import { Input, DatePicker, Modal, Button } from 'antd';
   />
 </Playground>
 
+### 禁用指定项的删除
+
+<Playground>
+  <Curd 
+    columns={[
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      }
+    ]}
+    searchItem={[
+    {
+      label: '姓名',
+      name: 'lastname',
+      content: <Input />,
+    },
+    {
+      label: '日期',
+      name: 'createDate',
+      content: <DatePicker.RangePicker />,
+    }]}
+    getListFunction={(current, pageSize, searchParams)=>{
+      return {
+        total:54,
+        dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+          id:index,
+          name:`${(current - 1) * pageSize + index} name`
+        }))
+      }
+    }}
+    renderEditer={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>这里是编辑内容</Modal>
+        );
+    }}
+    renderCreater={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>新建</Modal>
+        );
+    }}
+    renderPreviewer={
+      (
+        visible,
+        close,
+        extraData,
+        record 
+      ) => {
+        return (
+          <Modal visible={visible} onCancel={()=>close()}>预览</Modal>
+        );
+    }}
+    deleteFunction={(idList) => {
+      return fetch('./');
+    }}
+    editColumnWidth={150}
+    // disabledRecordDelete根据record的属性设置
+    renderEditColumns={(record, index, defaultRender)=>{
+      return defaultRender(record, {disabledRecordDelete: record.id <= 1})
+    }}
+  />
+</Playground>
 
 ## 属性
 <Props of={Curd} />
