@@ -44,7 +44,7 @@ interface IIdCardFormProps extends IComponentProps {
 }
 
 class IdCardForm extends Component<IIdCardFormProps, any> {
-  public getIdCard = (type: number | undefined) => {
+  private getIdCard = (type: number | undefined) => {
     let idCard = FormRegExp.IDCARD;
     switch (type) {
       case 1:
@@ -62,7 +62,7 @@ class IdCardForm extends Component<IIdCardFormProps, any> {
     return idCard;
   };
 
-  public onChange = (e: { target: { value: any } }) => {
+  private onChange = (e: { target: { value: any } }) => {
     const idCard = e.target.value;
     if (idCard && IdCard.verify(idCard)) {
       const info = IdCard.info(idCard);
