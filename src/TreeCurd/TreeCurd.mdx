@@ -1,6 +1,6 @@
 ---
-name: FHTree
-route: /FHTree
+name: TreeCurd
+route: /TreeCurd
 order: 0
 sidebar: true,
 menu: 组件
@@ -8,11 +8,11 @@ menu: 组件
 
 import { Playground, Props } from 'docz';
 import 'antd/dist/antd.css';
-import FHTree from './FHTree';
+import TreeCurd from './TreeCurd';
 import { Button, Input, Form, Space } from 'antd';
 import FormUtil from '../utils/FormUtil'
 
-# FHTree
+# TreeCurd
 一个可以自定义树操作的树组件
 
 ### 主要做了以下工作
@@ -40,7 +40,7 @@ import FormUtil from '../utils/FormUtil'
     }
     render() {
       return (
-          <FHTree 
+          <TreeCurd 
             getTreeData={()=>{
               return fetch('./').then(()=>{
                   return [
@@ -73,8 +73,10 @@ import FormUtil from '../utils/FormUtil'
                 if(type && this.formRef && this.formRef.current) {
                   if(type === 'add') {
                    this.formRef.current.resetFields();
-                  } else {
+                  } else if(type === 'edit') {
                     this.formRef.current.setFieldsValue(selectedItems[0])
+                  } else {
+                    this.formRef.current.resetFields();
                   }
                 }
                 return (
@@ -155,7 +157,7 @@ import FormUtil from '../utils/FormUtil'
 
 ## 可以设置为可多选的树
 <Playground>
-  <FHTree 
+  <TreeCurd 
     checkable
     getTreeData={()=>{
       return fetch('./').then(()=>{
@@ -200,4 +202,4 @@ import FormUtil from '../utils/FormUtil'
 </Playground>
 
 ## 属性
-<Props of={FHTree} />
+<Props of={TreeCurd} />

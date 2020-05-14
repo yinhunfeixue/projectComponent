@@ -2,12 +2,15 @@ import { Button, Space, Spin, Tree } from 'antd';
 import React, { Component, ReactNode } from 'react';
 import ConfirmButton from '../confirmButton/ConfirmButton';
 import IComponentProps from '../interfaces/IComponentProps';
-import './FHTree.less';
+import AntdUtil from '../utils/AntdUtil';
+import './TreeCurd.less';
+
 const classnames = require('classnames');
+// const styles = require('./TreeCurd.less');
 
 const { TreeNode } = Tree;
 
-interface IFHTreeState<T> {
+interface ITreeCurdState<T> {
   loading: boolean;
   autoExpandParent: boolean;
   treeData: T[];
@@ -19,7 +22,7 @@ interface IFHTreeState<T> {
   type: string;
 }
 
-interface IFHTreeExtra<T> {
+interface ITreeCurdExtra<T> {
   /**
    * 选取节点的keys
    */
@@ -53,16 +56,28 @@ interface IFHTreeExtra<T> {
   type?: string;
 }
 
-interface IFHTreeProps<T> extends IComponentProps {
+/**
+ * 属性
+ *
+ * @interface ITreeCurdProps
+ * @extends {IComponentProps}
+ * @template T
+ */
+interface ITreeCurdProps<T> extends IComponentProps {
   /**
    * 自定义标识
    */
-  getKey?: (values: T) => string;
+  getKey?: ((item: T) => string) | string;
 
   /**
    * 自定义节点名称
    */
-  getTitle?: (values: T) => string | ReactNode;
+  getTitle?: ((item: T) => ReactNode) | string;
+
+  /**
+   * 自定义数据子节点集合属性名或者自定义子节点集合
+   */
+  getChildren: ((item: T) => T[]) | string;
 
   /**
    * 树的宽度
@@ -75,29 +90,29 @@ interface IFHTreeProps<T> extends IComponentProps {
   minHeight: number;
 
   /**
-   * 添加树自定义的类
+   * 树顶部操作区窗口的样式名
    */
-  classTreeName: string;
+  treeContentClassName: string;
 
   /**
-   * 添加编辑自定义的类
+   * 编辑顶部操作区窗口的样式名
    */
-  classEditName: string;
+  editContentClassName: string;
 
   /**
-   * 添加操作自定义的类
+   * 操作顶部操作区窗口的样式名
    */
-  classOptName: string;
+  optClassOName: string;
 
   /**
-   * 添加多选自定义的类
+   * 多选顶部操作区窗口的样式名
    */
-  classCheckName: string;
+  checkClassName: string;
 
   /**
    *  Tree组件自带的属性
    */
-  TreeProps?: Object;
+  treeProps?: Object;
 
   /**
    * 节点前添加 Checkbox 复选框
@@ -117,25 +132,32 @@ interface IFHTreeProps<T> extends IComponentProps {
   /**
    * 自定义操作
    */
-  renderExtra?: (extraData: IFHTreeExtra<T>) => ReactNode;
+  renderExtra?: (extraData: ITreeCurdExtra<T>) => ReactNode;
 
   /**
    * 自定义编辑操作
    */
-  renderEditExtra?: (extraData: IFHTreeExtra<T>) => ReactNode;
+  renderEditExtra?: (extraData: ITreeCurdExtra<T>) => ReactNode;
 
   /**
    *  自定义多选的操作
    */
-  renderCheckExtra?: (extraData: IFHTreeExtra<T>) => ReactNode;
+  renderCheckExtra?: (extraData: ITreeCurdExtra<T>) => ReactNode;
 }
 
 interface TreeInterfaces {
   [propName: string]: any;
 }
 
-class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTreeState<T>> {
-  state: IFHTreeState<T> = {
+/**
+ * 一个可以增删改查的树
+ *
+ * @class TreeCurd
+ * @extends {Component<ITreeCurdProps<T>, ITreeCurdState<T>>}
+ * @template T
+ */
+class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, ITreeCurdState<T>> {
+  state: ITreeCurdState<T> = {
     loading: false,
     autoExpandParent: true,
     treeData: [],
@@ -167,30 +189,13 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
     // 获取默认展开节点
     let expandedKeys: string[] = [];
     if (res && res.length && res[0].children && res[0].children.length) {
-      const key = getKey ? getKey(res[0]) : res[0].id;
+      const key = typeof getKey === 'string' ? res[0][getKey] : getKey ? getKey(res[0]) : res[0].id;
       expandedKeys = [key];
     }
     this.setState({
       treeData: res,
       expandedKeys,
     });
-  };
-
-  private renderTreeNodeItem = (treeData: T[] | undefined) => {
-    const { getKey, getTitle } = this.props;
-    return (
-      treeData &&
-      treeData.map((item: T) => {
-        return (
-          <TreeNode
-            key={getKey ? getKey(item) : item.id}
-            title={getTitle ? getTitle(item) : item.name}
-          >
-            {item.children && this.renderTreeNodeItem(item.children)}
-          </TreeNode>
-        );
-      })
-    );
   };
 
   private getItemsByIds = (treeData: T[], ids: React.ReactText[], selectedItems: T[]) => {
@@ -215,7 +220,7 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
       selectedKeys,
       selectedItems,
       autoExpandParent: false,
-      type: selectedKeys && selectedKeys.length ? 'edit' : 'add',
+      type: selectedKeys && selectedKeys.length ? 'edit' : '',
     });
   };
 
@@ -235,7 +240,7 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
     });
   };
 
-  private defaultRenderOptItem = (extraData: IFHTreeExtra<T>) => {
+  private defaultRenderOptItem = (extraData: ITreeCurdExtra<T>) => {
     const { selectedKeys, checkedKeys, refresh } = extraData;
     const { deleteFunction, checkable } = this.props;
     return (
@@ -246,7 +251,7 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
         {selectedKeys && selectedKeys.length > 0 && (
           <ConfirmButton
             modalContent={{
-              title: '这个操作可逆',
+              title: '这个操作不可逆',
               content: (
                 <span>
                   确定要<span style={{ color: 'red' }}>删除</span>改节点？
@@ -255,7 +260,7 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
             }}
             onConfirm={async () => {
               if (deleteFunction) {
-                const ids = typeof checkable === 'undefined' ? selectedKeys : checkedKeys;
+                const ids = checkable !== undefined ? selectedKeys : checkedKeys;
                 await deleteFunction(ids);
                 refresh();
               }
@@ -279,11 +284,14 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
       type,
     } = this.state;
     const {
-      classTreeName,
-      classEditName,
-      classOptName,
-      classCheckName,
-      TreeProps,
+      getKey,
+      getTitle,
+      getChildren,
+      treeContentClassName,
+      editContentClassName,
+      optClassOName,
+      checkClassName,
+      treeProps,
       checkable,
       width = 200,
       minHeight = 300,
@@ -292,7 +300,7 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
       renderCheckExtra,
     } = this.props;
     let checkProps = {};
-    if (typeof checkable !== 'undefined') {
+    if (checkable !== undefined) {
       checkProps = {
         checkable: true,
         onCheck: this.onCheck,
@@ -300,9 +308,18 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
       };
     }
 
+    const TreeProps = {
+      autoExpandParent,
+      onSelect: this.onSelect,
+      onExpand: this.onExpand,
+      expandedKeys,
+      ...checkProps,
+      ...treeProps,
+    };
+
     return (
-      <div className="FHTree">
-        <div className={classnames('optContent', classOptName)}>
+      <div className="TreeCurd">
+        <div className={classnames('optContent', optClassOName)}>
           {renderExtra
             ? renderExtra({
                 selectedKeys,
@@ -324,21 +341,12 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
             : null}
         </div>
         <div className="content" style={{ minHeight }}>
-          <div className={classnames('treeContent', classTreeName)} style={{ width }}>
+          <div className={classnames('treeContent', treeContentClassName)} style={{ width }}>
             <Spin spinning={loading}>
-              <Tree
-                autoExpandParent={autoExpandParent}
-                onSelect={this.onSelect}
-                onExpand={this.onExpand}
-                expandedKeys={expandedKeys}
-                {...checkProps}
-                {...TreeProps}
-              >
-                {this.renderTreeNodeItem(treeData)}
-              </Tree>
+              {AntdUtil.rendeTree<T>(treeData, TreeProps, getKey, getTitle, getChildren)}
             </Spin>
-            <div className={classnames('checkContent', classCheckName)}>
-              {typeof checkable !== 'undefined' && renderCheckExtra
+            <div className={classnames('checkContent', checkClassName)}>
+              {checkable !== undefined && renderCheckExtra
                 ? renderCheckExtra({
                     selectedKeys,
                     selectedItems,
@@ -350,7 +358,7 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
                 : null}
             </div>
           </div>
-          <div className={classnames('editContent', classEditName)}>
+          <div className={classnames('editContent', editContentClassName)}>
             {renderEditExtra &&
               renderEditExtra({
                 selectedKeys,
@@ -368,4 +376,4 @@ class FHTree<T extends TreeInterfaces> extends Component<IFHTreeProps<T>, IFHTre
   }
 }
 
-export default FHTree;
+export default TreeCurd;

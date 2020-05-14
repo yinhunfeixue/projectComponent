@@ -119,7 +119,7 @@ interface ISearchTableProps<T> extends IComponentProps {
   /**
    * 是否可拖动
    */
-  isDrag?: boolean;
+  dragEnable?: boolean;
 }
 
 class SearchTable<T extends object = any> extends Component<
@@ -235,7 +235,7 @@ class SearchTable<T extends object = any> extends Component<
       showTotal,
       selectedEnable,
       showSizeChanger = true,
-      isDrag,
+      dragEnable,
     } = this.props;
 
     const pageSize = this.pageSize;
@@ -300,7 +300,7 @@ class SearchTable<T extends object = any> extends Component<
           {newColumns.map(item => (
             <Column
               title={
-                isDrag ? (
+                dragEnable ? (
                   <div
                     draggable
                     onDragStart={event => {
