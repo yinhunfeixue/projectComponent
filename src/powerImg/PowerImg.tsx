@@ -1,11 +1,11 @@
 import React, { Component, ReactNode } from 'react';
-import Zmage from 'react-zmage';
 import ImageFitType from '../enums/ImageFitType';
 import IComponentProps from '../interfaces/IComponentProps';
 
+const Zmage = require('react-zmage').default;
 const classnames = require('classnames');
 
-interface IPowerImgState { }
+interface IPowerImgState {}
 interface IPowerImgProps extends IComponentProps {
   /**
    * 图片地址
