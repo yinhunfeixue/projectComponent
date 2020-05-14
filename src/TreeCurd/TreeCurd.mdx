@@ -8,7 +8,7 @@ menu: 组件
 
 import { Playground, Props } from 'docz';
 import 'antd/dist/antd.css';
-import TreeCurd from './TreeCurd';
+import TreeCurd, {EditType} from './TreeCurd';
 import { Button, Input, Form, Space } from 'antd';
 import FormUtil from '../utils/FormUtil'
 
@@ -71,9 +71,9 @@ import FormUtil from '../utils/FormUtil'
             renderEditExtra={(extraData) => {
                 const {selectedItems,selectedKeys, type, refresh} = extraData;
                 if(type && this.formRef && this.formRef.current) {
-                  if(type === 'add') {
+                  if(type === EditType.ADD) {
                    this.formRef.current.resetFields();
-                  } else if(type === 'edit') {
+                  } else if(type === EditType.EDIT) {
                     this.formRef.current.setFieldsValue(selectedItems[0])
                   } else {
                     this.formRef.current.resetFields();

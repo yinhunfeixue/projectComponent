@@ -7,7 +7,7 @@ import './TreeCurd.less';
 
 const classnames = require('classnames');
 
-export enum EDITTYPE {
+export enum EditType {
   ADD = 'add',
   EDIT = 'edit',
   DEFAULT = '',
@@ -22,7 +22,7 @@ interface ITreeCurdState<T> {
   selectedItems: T[];
   checkedKeys: any[];
   checkedItems: T[];
-  type: EDITTYPE;
+  type: EditType;
 }
 
 interface ITreeCurdExtra<T> {
@@ -56,7 +56,7 @@ interface ITreeCurdExtra<T> {
   /**
    * 操作类型
    */
-  type?: EDITTYPE;
+  type?: EditType;
 }
 
 /**
@@ -169,7 +169,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     checkedItems: [],
     selectedKeys: [],
     selectedItems: [],
-    type: EDITTYPE.DEFAULT,
+    type: EditType.DEFAULT,
   };
 
   componentDidMount() {
@@ -223,7 +223,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       selectedKeys,
       selectedItems,
       autoExpandParent: false,
-      type: selectedKeys && selectedKeys.length ? EDITTYPE.EDIT : EDITTYPE.DEFAULT,
+      type: selectedKeys && selectedKeys.length ? EditType.EDIT : EditType.DEFAULT,
     });
   };
 
@@ -248,7 +248,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     const { deleteFunction, checkable } = this.props;
     return (
       <Space>
-        <Button type="primary" onClick={() => this.setState({ type: EDITTYPE.ADD })}>
+        <Button type="primary" onClick={() => this.setState({ type: EditType.ADD })}>
           新增
         </Button>
         {selectedKeys && selectedKeys.length > 0 && (
