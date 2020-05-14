@@ -1,4 +1,4 @@
-import { Button, Space, Spin, Tree } from 'antd';
+import { Button, Space, Spin } from 'antd';
 import React, { Component, ReactNode } from 'react';
 import ConfirmButton from '../confirmButton/ConfirmButton';
 import IComponentProps from '../interfaces/IComponentProps';
@@ -6,9 +6,12 @@ import AntdUtil from '../utils/AntdUtil';
 import './TreeCurd.less';
 
 const classnames = require('classnames');
-// const styles = require('./TreeCurd.less');
 
-const { TreeNode } = Tree;
+export enum EDITTYPE {
+  ADD = 'add',
+  EDIT = 'edit',
+  DEFAULT = '',
+}
 
 interface ITreeCurdState<T> {
   loading: boolean;
@@ -19,7 +22,7 @@ interface ITreeCurdState<T> {
   selectedItems: T[];
   checkedKeys: any[];
   checkedItems: T[];
-  type: string;
+  type: EDITTYPE;
 }
 
 interface ITreeCurdExtra<T> {
@@ -53,7 +56,7 @@ interface ITreeCurdExtra<T> {
   /**
    * 操作类型
    */
-  type?: string;
+  type?: EDITTYPE;
 }
 
 /**
@@ -166,7 +169,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     checkedItems: [],
     selectedKeys: [],
     selectedItems: [],
-    type: '',
+    type: EDITTYPE.DEFAULT,
   };
 
   componentDidMount() {
@@ -220,7 +223,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       selectedKeys,
       selectedItems,
       autoExpandParent: false,
-      type: selectedKeys && selectedKeys.length ? 'edit' : '',
+      type: selectedKeys && selectedKeys.length ? EDITTYPE.EDIT : EDITTYPE.DEFAULT,
     });
   };
 
@@ -245,7 +248,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     const { deleteFunction, checkable } = this.props;
     return (
       <Space>
-        <Button type="primary" onClick={() => this.setState({ type: 'add' })}>
+        <Button type="primary" onClick={() => this.setState({ type: EDITTYPE.ADD })}>
           新增
         </Button>
         {selectedKeys && selectedKeys.length > 0 && (
