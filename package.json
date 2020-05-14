@@ -21,20 +21,20 @@
   },
   "devDependencies": {
     "father": "^2.29.3",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.2"
   },
   "license": "MIT",
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
     "@types/vfile-message": "^2.0.0",
-    "antd": "^4.2.0",
+    "antd": "^4.2.2",
     "babel-plugin-import": "^1.13.0",
     "classnames": "^2.2.6",
     "docz": "^2.3.1",
     "idcard": "^4.1.0",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
-    "rc-tree": "^3.2.0",
+    "rc-tree": "^3.2.2",
     "react-zmage": "^0.8.5"
   }
 }
