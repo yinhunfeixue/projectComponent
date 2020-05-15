@@ -80,37 +80,37 @@ interface ITreeCurdProps<T> extends IComponentProps {
   /**
    * 自定义数据子节点集合属性名或者自定义子节点集合
    */
-  getChildren: ((item: T) => T[]) | string;
+  getChildren?: ((item: T) => T[]) | string;
 
   /**
    * 树的宽度
    */
-  width: number;
+  width?: number;
 
   /**
    * 树最小高度
    */
-  minHeight: number;
+  minHeight?: number;
 
   /**
    * 树顶部操作区窗口的样式名
    */
-  treeContentClassName: string;
+  treeContentClassName?: string;
 
   /**
    * 编辑顶部操作区窗口的样式名
    */
-  editContentClassName: string;
+  editContentClassName?: string;
 
   /**
    * 操作顶部操作区窗口的样式名
    */
-  optClassOName: string;
+  optClassOName?: string;
 
   /**
    * 多选顶部操作区窗口的样式名
    */
-  checkClassName: string;
+  checkClassName?: string;
 
   /**
    *  Tree组件自带的属性
@@ -141,6 +141,16 @@ interface ITreeCurdProps<T> extends IComponentProps {
    * 自定义编辑操作
    */
   renderEditExtra?: (extraData: ITreeCurdExtra<T>) => ReactNode;
+
+  /**
+   * 默认展开的节点
+   */
+  defaultExpandedKeys?: any[];
+
+  /**
+   * 默认选中的节点
+   */
+  defaultCheckedKeys?: any[];
 
   /**
    *  自定义多选的操作
@@ -180,24 +190,38 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     this.requestTreeData();
   };
 
+  componentDidUpdate(prveProps: ITreeCurdProps<T>) {
+    if (
+      this.props.defaultCheckedKeys !== prveProps.defaultCheckedKeys ||
+      this.props.defaultExpandedKeys !== prveProps.defaultExpandedKeys
+    ) {
+      this.requestTreeData();
+    }
+  }
+
   private setLoading(loading: boolean) {
     this.setState({ loading });
   }
 
   private requestTreeData = async () => {
-    const { getTreeData, getKey } = this.props;
+    const { getTreeData, getKey, defaultExpandedKeys, defaultCheckedKeys } = this.props;
     this.setLoading(true);
     const res = await getTreeData();
     this.setLoading(false);
     // 获取默认展开节点
     let expandedKeys: string[] = [];
+    let checkedKeys = [];
     if (res && res.length && res[0].children && res[0].children.length) {
       const key = typeof getKey === 'string' ? res[0][getKey] : getKey ? getKey(res[0]) : res[0].id;
-      expandedKeys = [key];
+      expandedKeys = defaultExpandedKeys ? defaultExpandedKeys : [key];
+    }
+    if (defaultCheckedKeys) {
+      checkedKeys = defaultCheckedKeys;
     }
     this.setState({
       treeData: res,
       expandedKeys,
+      checkedKeys,
     });
   };
 
