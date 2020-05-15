@@ -3,12 +3,10 @@ import { FormItemProps } from 'antd/lib/form';
 import React, { Component, ReactNode } from 'react';
 import FormRegExp from '../enums/FormRegExp';
 import IComponentProps from '../interfaces/IComponentProps';
-
 const IdCard = require('idcard');
-
 const classnames = require('classnames');
 
-interface IIdCardFormProps extends IComponentProps {
+interface IIdCardFormItemProps extends IComponentProps {
   /**
    * key值
    */
@@ -43,7 +41,7 @@ interface IIdCardFormProps extends IComponentProps {
   errMsg?: string;
 }
 
-class IdCardForm extends Component<IIdCardFormProps, any> {
+class IdCardFormItem extends Component<IIdCardFormItemProps, any> {
   private getIdCard = (type: number | undefined) => {
     let idCard = FormRegExp.IDCARD;
     switch (type) {
@@ -109,4 +107,4 @@ class IdCardForm extends Component<IIdCardFormProps, any> {
   }
 }
 
-export default IdCardForm;
+export default IdCardFormItem;
