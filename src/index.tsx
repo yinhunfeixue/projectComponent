@@ -4,7 +4,9 @@ import Curd from './curd/Curd';
 import ImageFitType from './enums/ImageFitType';
 import UploadAcceptType from './enums/UploadAcceptType';
 import UploadType from './enums/UploadType';
-import IdCardForm from './forms/IdCardForm';
+import EmailFormItem from './forms/EmailFormItem';
+import IdCardFormItem from './forms/IdCardFormItem';
+import PhoneFormItem from './forms/PhoneFormItem';
 import IdCardInput from './IdCardInput/IdCardInput';
 import IFormItemData from './interfaces/IFormItemData';
 import LimitUpload from './limitUpload/LimitUpload';
@@ -32,7 +34,9 @@ export {
   AntdUtil,
   Curd,
   SearchForm,
-  IdCardForm,
+  IdCardFormItem,
+  EmailFormItem,
+  PhoneFormItem,
   TreeCurd,
   EditType,
   CountUp,
