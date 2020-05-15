@@ -143,6 +143,16 @@ interface ITreeCurdProps<T> extends IComponentProps {
   renderEditExtra?: (extraData: ITreeCurdExtra<T>) => ReactNode;
 
   /**
+   * 默认展开的节点
+   */
+  defaultExpandedKeys?: any[];
+
+  /**
+   * 默认选中的节点
+   */
+  defaultCheckedKeys?: any[];
+
+  /**
    *  自定义多选的操作
    */
   renderCheckExtra?: (extraData: ITreeCurdExtra<T>) => ReactNode;
@@ -180,24 +190,38 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     this.requestTreeData();
   };
 
+  componentDidUpdate(prveProps: ITreeCurdProps<T>) {
+    if (
+      this.props.defaultCheckedKeys !== prveProps.defaultCheckedKeys ||
+      this.props.defaultExpandedKeys !== prveProps.defaultExpandedKeys
+    ) {
+      this.requestTreeData();
+    }
+  }
+
   private setLoading(loading: boolean) {
     this.setState({ loading });
   }
 
   private requestTreeData = async () => {
-    const { getTreeData, getKey } = this.props;
+    const { getTreeData, getKey, defaultExpandedKeys, defaultCheckedKeys } = this.props;
     this.setLoading(true);
     const res = await getTreeData();
     this.setLoading(false);
     // 获取默认展开节点
     let expandedKeys: string[] = [];
+    let checkedKeys = [];
     if (res && res.length && res[0].children && res[0].children.length) {
       const key = typeof getKey === 'string' ? res[0][getKey] : getKey ? getKey(res[0]) : res[0].id;
-      expandedKeys = [key];
+      expandedKeys = defaultExpandedKeys ? defaultExpandedKeys : [key];
+    }
+    if (defaultCheckedKeys) {
+      checkedKeys = defaultCheckedKeys;
     }
     this.setState({
       treeData: res,
       expandedKeys,
+      checkedKeys,
     });
   };
 
