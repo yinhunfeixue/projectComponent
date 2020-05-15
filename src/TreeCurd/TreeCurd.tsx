@@ -80,37 +80,37 @@ interface ITreeCurdProps<T> extends IComponentProps {
   /**
    * 自定义数据子节点集合属性名或者自定义子节点集合
    */
-  getChildren: ((item: T) => T[]) | string;
+  getChildren?: ((item: T) => T[]) | string;
 
   /**
    * 树的宽度
    */
-  width: number;
+  width?: number;
 
   /**
    * 树最小高度
    */
-  minHeight: number;
+  minHeight?: number;
 
   /**
    * 树顶部操作区窗口的样式名
    */
-  treeContentClassName: string;
+  treeContentClassName?: string;
 
   /**
    * 编辑顶部操作区窗口的样式名
    */
-  editContentClassName: string;
+  editContentClassName?: string;
 
   /**
    * 操作顶部操作区窗口的样式名
    */
-  optClassOName: string;
+  optClassOName?: string;
 
   /**
    * 多选顶部操作区窗口的样式名
    */
-  checkClassName: string;
+  checkClassName?: string;
 
   /**
    *  Tree组件自带的属性
