@@ -11,8 +11,19 @@ const classnames = require('classnames');
 
 interface ISearchFormState {}
 interface ISearchFormProps extends IComponentProps {
+  /**
+   * 表单项，参考：IFormItemData
+   */
   itemList: IFormItemData[];
+
+  /**
+   * 提交数据时触发的方法
+   */
   onSubmit: (values: Store) => void;
+
+  /**
+   * 每行默认的列数
+   */
   columnNumber?: number;
 }
 

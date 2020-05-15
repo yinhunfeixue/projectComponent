@@ -1,0 +1,120 @@
+---
+name: SearchForm
+route: /SearchForm
+order: -1
+sidebar: true
+menu: 组件
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import SearchForm from './SearchForm';
+import  { Component, ReactNode } from 'react';
+import { Input, Modal } from 'antd';
+
+# 搜索表单
+
+搜索表单为你处理了
+
+- 元素对齐的处理方法
+- 搜索，重置按钮及点击按钮时触发 onSubmit 事件
+
+传入表单项，和提交时执行的方法即可
+
+## 示例
+
+### 基本用法
+表单项<=3个时，使用内联布局；>3个时，默认一行排3项
+
+<Playground>
+  <h2>小于3项</h2>
+  <SearchForm
+    itemList={[
+      {
+        label: '参数1',
+        content: <Input />,
+        name: 'name',
+      },
+         {
+        label: '参数2',
+        content: <Input />,
+        name: 'name2',
+      },
+    ]}
+    onSubmit={(values) => {
+      Modal.confirm({
+        content: JSON.stringify(values)
+      });
+    }}
+  />
+  <h2>大于3项，一行3列，并自动处理对齐</h2>
+  <SearchForm
+    itemList={[
+      {
+        label: '参数1',
+        content: <Input />,
+        name: 'name',
+      },
+      {
+        label: '参数2',
+        content: <Input />,
+        name: 'name2',
+      },
+      {
+        label: '参数3',
+        content: <Input />,
+        name: 'name3',
+      },
+      {
+        label: '参数4',
+        content: <Input />,
+        name: 'name4',
+      },
+    ]}
+    onSubmit={(values) => {
+      Modal.confirm({
+        content: JSON.stringify(values)
+      });
+    }}
+  />
+</Playground>
+
+## 显式设置列数
+
+设置为一行2列
+<Playground>
+  <SearchForm
+    columnNumber={2}
+    itemList={[
+      {
+        label: '参数1',
+        content: <Input />,
+        name: 'name',
+      },
+      {
+        label: '参数2',
+        content: <Input />,
+        name: 'name2',
+      },
+      {
+        label: '参数3',
+        content: <Input />,
+        name: 'name3',
+      },
+      {
+        label: '参数4',
+        content: <Input />,
+        name: 'name4',
+      },
+    ]}
+    onSubmit={(values) => {
+      Modal.confirm({
+        content: JSON.stringify(values)
+      });
+    }}
+  />
+</Playground>
+
+## 属性
+
+<Props of={SearchForm} />
