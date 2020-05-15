@@ -1,0 +1,100 @@
+---
+name: AntdUtil
+route: /AntdUtil
+order: 0
+sidebar: true,
+menu: 辅助工具
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import AntdUtil from './AntdUtil';
+
+
+
+# AntdUtil
+Antd组件相关的辅助工具
+
+### 渲染树
+<Playground>
+  <div>
+    {
+      AntdUtil.rendeTree(
+        [
+          {
+            id:1,
+            name:'1',
+            children:[
+              {
+                id:11,
+                name:'11',
+              }
+            ]
+          },
+          {
+            id:2,
+            name:'2',
+            children:[
+              {
+                id:21,
+                name:'21',
+              }
+            ]
+          },
+          {
+            id:3,
+            name:'3',
+          }
+        ],
+        {
+          onSelect:(value)=>{
+            
+            alert(`已选中${value.join()}`)
+          }
+        }
+      )
+    }
+  </div>
+</Playground>
+
+### 自定义渲染属性
+<Playground>
+  <div>
+    {
+      AntdUtil.rendeTree(
+        [
+          {
+            myID:1,
+            myName:'1',
+            myChildren:[
+              {
+                myID:11,
+                myName:'11',
+              }
+            ]
+          },
+          {
+            myID:2,
+            myName:'2',
+            myChildren:[
+              {
+                myID:21,
+                myName:'21',
+              }
+            ]
+          },
+          {
+            myID:3,
+            myName:'3',
+          }
+        ],
+        null,
+        'myID',
+        (item)=>{
+          return <span style={{color:'red'}}>{`我的名称是：${item.myName}`}</span>
+        },
+        'myChildren'
+      )
+    }
+  </div>
+</Playground>

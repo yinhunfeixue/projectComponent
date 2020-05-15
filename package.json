@@ -1,6 +1,6 @@
 {
   "name": "fb-project-component",
-  "version": "0.0.1",
+  "version": "0.0.38",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -8,23 +8,33 @@
     "name": "xujunjie",
     "email": "yinhunfeixue@163.com"
   },
-  "repository": "/fb-project-component",
+  "repository": "https://github.com/yinhunfeixue/projectComponent",
   "scripts": {
     "dev": "father doc dev",
-    "build": "father build"
+    "build": "father build",
+    "publicGitHub": "father doc build && father doc deploy",
+    "publicNpm": "npm run build && npm version patch && cp package.json ./dist/package.json && cp README.md ./dist/README.md && cd dist && npm login && npm publish",
+    "public": "npm run publicGitHub && npm run publicNpm"
   },
   "peerDependencies": {
     "react": "16.x"
   },
   "devDependencies": {
-    "father": "^2.16.0",
-    "typescript": "^3.3.3"
+    "father": "^2.29.3",
+    "typescript": "^3.9.2"
   },
   "license": "MIT",
   "dependencies": {
-    "antd": "^3.0.0",
+    "@ant-design/icons": "^4.1.0",
+    "@types/vfile-message": "^2.0.0",
+    "antd": "^4.2.2",
     "babel-plugin-import": "^1.13.0",
     "classnames": "^2.2.6",
-    "docz": "^2.2.0"
+    "docz": "^2.3.1",
+    "idcard": "^4.1.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.25.3",
+    "rc-tree": "^3.2.2",
+    "react-zmage": "^0.8.5"
   }
 }

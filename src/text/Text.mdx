@@ -1,0 +1,48 @@
+---
+name: Text
+route: /Text
+order: 0
+sidebar: true,
+menu: 组件
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import Text from './Text';
+
+# Text
+根据文字长度，自动处理文字裁切及tooltip显示的组件。
+同时，还可设置处理富文本
+
+### 主要做了以下工作
++ 默认显示15个字符，超出则裁切
++ 文字被裁切时，显示tooltip
++ 富文本处理
+
+### 你可以
++ 自定义允许显示的字符长度，也可以不裁切
++ 可开启富文本处理
+
+## 示例
+
+### 基本用法
+<Playground>
+  <Text text="鼠标移上查看我完整的数据,12,3,456789" />
+</Playground>
+
+### 自定义最大长度
+<Playground>
+  <Text text="最多显示7个文字，123456789" maxLen={7} />
+  <br/>
+  <Text text="不截取122134342354554646457567456756" maxLen={0} />
+</Playground>
+
+### 解析富文本
+<Playground>
+  <Text text="<span>我未解析富文本</span>" maxLen={0} />
+  <br/>
+  <Text plainHtml text="<span>我解析了富文本</span>" />
+</Playground>
+
+## 属性
+<Props of={Text} />
