@@ -91,7 +91,7 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
     const { defaultFileList } = props;
     this.state = {
       loading: false,
-      fileList: [],
+      fileList: defaultFileList || [],
     };
   }
 
@@ -141,10 +141,9 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
 
   private onChange = (info: UploadChangeParam<UploadFile<any>>) => {
     const { validateFile } = this.props;
-    this.setState({ loading: false, fileList: info.fileList });
-
+    this.setState({ fileList: info.fileList });
+    let loading = false;
     const file = info.file;
-
     switch (file.status) {
       case 'done':
         const success = validateFile(file);
@@ -155,7 +154,7 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
         }
         break;
       case 'uploading':
-        this.setState({ loading: true });
+        loading = true;
         break;
       case 'error':
         this.validateFileList();
@@ -167,6 +166,7 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
       default:
         break;
     }
+    this.setState({ loading });
   };
 
   private onError(file: UploadFile<any>) {
@@ -192,12 +192,11 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   }
 
   public render(): ReactNode {
-    const { type, disabled, defaultFileList, action, uploadProps, disableCredentials } = this.props;
+    const { type, disabled, action, uploadProps, disableCredentials } = this.props;
     const { fileList } = this.state;
     const props: UploadProps = {
       fileList,
       disabled,
-      defaultFileList,
       accept: this.getAccept(),
       action,
       withCredentials: !disableCredentials,

@@ -11,6 +11,8 @@ import 'antd/dist/antd.css';
 import LimitUpload from './LimitUpload';
 import UploadType from '../enums/UploadType';
 import UploadAcceptType from '../enums/UploadAcceptType';
+import { Upload,Button } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 
 
@@ -152,6 +154,43 @@ import UploadAcceptType from '../enums/UploadAcceptType';
           return false;
         }
       }}
+  />
+</Playground>
+
+### 设置已上传文件
+<Playground>
+  <LimitUpload 
+    defaultFileList={
+      [
+        {
+          uid: '1',
+          name: 'xxx.png',
+          status: 'done',
+          response: {
+            status:'done'
+          }, // custom error message to show
+          url: 'http://www.baidu.com/xxx.png',
+        },
+        {
+          uid: '2',
+          name: 'yyy.png',
+          response: {
+            status:'done'
+          },
+          url: 'http://www.baidu.com/yyy.png',
+        },
+      ]
+    }
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    validateFile={(file)=>{
+        if(file.response && file.response.status === 'done'){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+    }
   />
 </Playground>
 
