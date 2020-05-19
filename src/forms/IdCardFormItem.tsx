@@ -87,6 +87,7 @@ class IdCardFormItem extends Component<IIdCardFormItemProps, any> {
       <Form.Item
         className={classnames('idCard-from', className)}
         style={style}
+        {...this.props}
         {...fromItemProps}
         name={name}
         label={label}

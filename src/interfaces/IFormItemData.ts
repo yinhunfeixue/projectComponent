@@ -42,6 +42,11 @@ interface IFormItemData {
    * 要传递给Form.Item的props
    */
   formItemProps?: FormItemProps;
+
+  /**
+   * content是否是FormItem，设置为true时，不会新创建一层formitem，而是使用content本身
+   */
+  contentIsFormItem?: boolean;
 }
 
 export default IFormItemData;

@@ -40,6 +40,7 @@ class EmailFormItem extends Component<IEmailFormItemProps, any> {
       <Form.Item
         className={classnames('email-from', className)}
         style={style}
+        {...this.props}
         {...fromItemProps}
         name={name}
         label={label}

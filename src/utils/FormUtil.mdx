@@ -11,6 +11,7 @@ import 'antd/dist/antd.css';
 import FormUtil from './FormUtil';
 import { IFormItemDataC } from '../interfaces/Demo';
 import {Input, Form, Button} from 'antd';
+import PhoneFormItem from '../forms/PhoneFormItem';
 
 
 # FormUtil
@@ -71,8 +72,9 @@ import {Input, Form, Button} from 'antd';
         {
           label:'手机号',
           span: 8,
+          contentIsFormItem:true,
           name:'mobilePhone',
-          content: <Input />
+          content: <PhoneFormItem required name='mobilePhone' label="aaa"/>
         },
         {
           label:'紧急联系人',
@@ -118,6 +120,41 @@ import {Input, Form, Button} from 'antd';
 }
 </Playground>
 
+### 使用特殊的formItem
+
+本示例，使用`<PhoneFormItem />` 做为content值，此时需设置`contentIsFormItem:true`
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'手机号',
+          span: 8,
+          contentIsFormItem:true,
+          content: <PhoneFormItem required name='mobilePhone' />
+        },
+        {
+          span:24,
+          content:<Button type="primary" htmlType="submit">保存</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal" onFinish={(value)=>{
+            console.log(value);
+          }}>
+          {
+            FormUtil.renderFormItems(list)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
 ### 一些特殊情况的处理
 <Playground>
 {
@@ -141,11 +178,11 @@ import {Input, Form, Button} from 'antd';
         },
         {
           label:'我是标签字数超过7，会自动独占一行，但可能需要手动调整labe占位，否则显示不全',
-          labelSpan: 11,
+          labelSpan: 15,
           content: <Input value="我手动调整了标签占位"/>
         },
         {
-          label:'我也很长，但手动设置了',
+          label:'我也很长',
           span: 12,
           content: <Input value="我也很长，但手动设置了只占半行"/>
         },

@@ -1,6 +1,6 @@
 import { Row } from 'antd';
 import Col, { ColProps } from 'antd/lib/col';
-import FormItem from 'antd/lib/form/FormItem';
+import FormItem, { FormItemProps } from 'antd/lib/form/FormItem';
 import React from 'react';
 import IFormItemData from '../interfaces/IFormItemData';
 
@@ -56,17 +56,27 @@ class FormUtil {
         itemProps.wrapperCol = { offset: labelSpan };
       }
 
-      const formItem = item.content ? (
-        <FormItem
-          label={item.label}
-          name={item.name}
-          rules={item.rules}
-          {...itemProps}
-          {...item.formItemProps}
-        >
-          {item.content}
-        </FormItem>
-      ) : null;
+      let formItem = null;
+
+      if (item.content) {
+        const props: FormItemProps = Object.assign({
+          label: item.label,
+          name: item.name,
+          rules: item.rules,
+          ...itemProps,
+          ...item.formItemProps,
+          children: null,
+        });
+
+        if (item.contentIsFormItem) {
+          formItem = React.cloneElement(
+            item.content as React.ReactElement,
+            Object.assign(props, (item.content as React.ReactElement).props),
+          );
+        } else {
+          formItem = <FormItem {...props}>{item.content}</FormItem>;
+        }
+      }
 
       // 创建col
       const col = {

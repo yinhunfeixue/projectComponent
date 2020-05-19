@@ -69,6 +69,7 @@ class PhoneFormItem extends Component<IPhoneFormItemProps, any> {
       <Form.Item
         className={classnames('phone-from', className)}
         style={style}
+        {...this.props}
         {...fromItemProps}
         name={name}
         label={label}
