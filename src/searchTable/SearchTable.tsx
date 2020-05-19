@@ -228,7 +228,6 @@ class SearchTable<T extends object = any> extends Component<
       style,
       tableStyle,
       tableProps,
-      columns,
       renderExtra,
       rowKey,
       disableAutoHidePage,
@@ -297,8 +296,9 @@ class SearchTable<T extends object = any> extends Component<
               : undefined
           }
         >
-          {newColumns.map(item => (
+          {newColumns.map((item, index) => (
             <Column
+              key={index}
               title={
                 dragEnable ? (
                   <div
