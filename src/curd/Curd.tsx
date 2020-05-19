@@ -402,18 +402,14 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
   };
 
   private getEditColumn(): ColumnType<T> | null {
-    const {
-      disabledEditColumn,
-      renderEditColumns,
-      editColumnWidth: columnWidth = 120,
-    } = this.props;
+    const { disabledEditColumn, renderEditColumns, editColumnWidth = 120 } = this.props;
     if (disabledEditColumn) {
       return null;
     }
     return {
       title: '操作',
       fixed: 'right',
-      width: columnWidth,
+      width: editColumnWidth,
       align: 'right',
       className: 'fh-CurdEditColumn',
       render: (text, record, index) => {
