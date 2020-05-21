@@ -187,7 +187,15 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   }
 
   private refresh = () => {
-    this.requestTreeData();
+    const { type } = this.state;
+    this.setState(
+      {
+        type,
+      },
+      () => {
+        this.requestTreeData();
+      },
+    );
   };
 
   componentDidUpdate(prveProps: ITreeCurdProps<T>) {
@@ -367,7 +375,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
               })
             : null}
         </div>
-        <div className="content" style={{ minHeight }}>
+        <div className="treeCurdContent" style={{ minHeight }}>
           <div className={classnames('treeContent', treeContentClassName)} style={{ width }}>
             <Spin spinning={loading}>
               {AntdUtil.rendeTree<T>(treeData, TreeProps, getKey, getTitle, getChildren)}
