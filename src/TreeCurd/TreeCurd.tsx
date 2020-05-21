@@ -187,20 +187,29 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   }
 
   private refresh = () => {
-    const { selectedKeys } = this.state;
     this.requestTreeData().then(() => {
-      const selectedItems: T[] = this.updateSelectedItems(selectedKeys);
-      this.setState({
-        selectedItems,
-      });
+      this.updateSelectedItems();
     });
   };
 
-  private updateSelectedItems = (selectedKeys: React.ReactText[]) => {
+  private updateSelectedItems = () => {
+    const { selectedKeys } = this.state;
     const selectedItems: T[] = [];
     const { treeData } = this.state;
     this.getItemsByIds(treeData, selectedKeys, selectedItems);
-    return selectedItems;
+    this.setState({
+      selectedItems,
+    });
+  };
+
+  private updateCheckedItems = () => {
+    const { checkedKeys } = this.state;
+    const checkedItems: T[] = [];
+    const { treeData } = this.state;
+    this.getItemsByIds(treeData, checkedKeys, checkedItems);
+    this.setState({
+      checkedItems,
+    });
   };
 
   componentDidUpdate(prveProps: ITreeCurdProps<T>) {
@@ -216,25 +225,33 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     this.setState({ loading });
   }
 
-  private requestTreeData = async () => {
-    const { getTreeData, getKey, defaultExpandedKeys, defaultCheckedKeys } = this.props;
-    this.setLoading(true);
-    const res = await getTreeData();
-    this.setLoading(false);
-    // 获取默认展开节点
-    let expandedKeys: string[] = [];
-    let checkedKeys = [];
-    if (res && res.length && res[0].children && res[0].children.length) {
-      const key = typeof getKey === 'string' ? res[0][getKey] : getKey ? getKey(res[0]) : res[0].id;
-      expandedKeys = defaultExpandedKeys ? defaultExpandedKeys : [key];
-    }
-    if (defaultCheckedKeys) {
-      checkedKeys = defaultCheckedKeys;
-    }
-    this.setState({
-      treeData: res,
-      expandedKeys,
-      checkedKeys,
+  private requestTreeData = () => {
+    return new Promise(async (resolve) => {
+      const { getTreeData, getKey, defaultExpandedKeys, defaultCheckedKeys } = this.props;
+      this.setLoading(true);
+      const res = await getTreeData();
+      this.setLoading(false);
+      // 获取默认展开节点
+      let expandedKeys: string[] = [];
+      let checkedKeys = [];
+      if (res && res.length && res[0].children && res[0].children.length) {
+        const key =
+          typeof getKey === 'string' ? res[0][getKey] : getKey ? getKey(res[0]) : res[0].id;
+        expandedKeys = defaultExpandedKeys ? defaultExpandedKeys : [key];
+      }
+      if (defaultCheckedKeys) {
+        checkedKeys = defaultCheckedKeys;
+      }
+      this.setState(
+        {
+          treeData: res,
+          expandedKeys,
+          checkedKeys,
+        },
+        () => {
+          resolve();
+        },
+      );
     });
   };
 
@@ -253,14 +270,16 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   };
 
   private onSelect = (selectedKeys: React.ReactText[]) => {
-    const { treeData, expandedKeys } = this.state;
-    const selectedItems = this.updateSelectedItems(selectedKeys);
-    this.setState({
-      selectedKeys,
-      selectedItems,
-      autoExpandParent: false,
-      type: selectedKeys && selectedKeys.length ? EditType.EDIT : EditType.DEFAULT,
-    });
+    this.setState(
+      {
+        selectedKeys,
+        autoExpandParent: false,
+        type: selectedKeys && selectedKeys.length ? EditType.EDIT : EditType.DEFAULT,
+      },
+      () => {
+        this.updateSelectedItems();
+      },
+    );
   };
 
   private onExpand = (expandedKeys: React.ReactText[]) => {
@@ -270,11 +289,14 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   };
 
   private onCheck = (checkedKeys: React.ReactText[]) => {
-    const checkedItems: T[] = this.updateSelectedItems(checkedKeys);
-    this.setState({
-      checkedKeys,
-      checkedItems,
-    });
+    this.setState(
+      {
+        checkedKeys,
+      },
+      () => {
+        this.updateCheckedItems();
+      },
+    );
   };
 
   private defaultRenderOptItem = (extraData: ITreeCurdExtra<T>) => {
