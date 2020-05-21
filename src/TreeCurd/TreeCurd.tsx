@@ -187,15 +187,20 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   }
 
   private refresh = () => {
-    const { type } = this.state;
-    this.setState(
-      {
-        type,
-      },
-      () => {
-        this.requestTreeData();
-      },
-    );
+    const { selectedKeys } = this.state;
+    this.requestTreeData().then(() => {
+      const selectedItems: T[] = this.updateSelectedItems(selectedKeys);
+      this.setState({
+        selectedItems,
+      });
+    });
+  };
+
+  private updateSelectedItems = (selectedKeys: React.ReactText[]) => {
+    const selectedItems: T[] = [];
+    const { treeData } = this.state;
+    this.getItemsByIds(treeData, selectedKeys, selectedItems);
+    return selectedItems;
   };
 
   componentDidUpdate(prveProps: ITreeCurdProps<T>) {
@@ -248,9 +253,8 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   };
 
   private onSelect = (selectedKeys: React.ReactText[]) => {
-    const selectedItems: T[] = [];
     const { treeData, expandedKeys } = this.state;
-    this.getItemsByIds(treeData, selectedKeys, selectedItems);
+    const selectedItems = this.updateSelectedItems(selectedKeys);
     this.setState({
       selectedKeys,
       selectedItems,
@@ -266,9 +270,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   };
 
   private onCheck = (checkedKeys: React.ReactText[]) => {
-    const checkedItems: T[] = [];
-    const { treeData } = this.state;
-    this.getItemsByIds(treeData, checkedKeys, checkedItems);
+    const checkedItems: T[] = this.updateSelectedItems(checkedKeys);
     this.setState({
       checkedKeys,
       checkedItems,
