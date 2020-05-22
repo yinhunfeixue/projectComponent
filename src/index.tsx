@@ -1,4 +1,5 @@
 import ConfirmButton from './confirmButton/ConfirmButton';
+import TimeSpan from './core/TimeSpan';
 import CountUp from './CountUp/CountUp';
 import Curd from './curd/Curd';
 import ImageFitType from './enums/ImageFitType';
@@ -40,4 +41,5 @@ export {
   TreeCurd,
   EditType,
   CountUp,
+  TimeSpan,
 };
