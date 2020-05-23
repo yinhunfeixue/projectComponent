@@ -198,8 +198,8 @@ import { UploadOutlined } from '@ant-design/icons';
 <Playground>
   <LimitUpload 
     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-    renderChooser={()=> {
-      return <span style={{borderLeft: '3px solid red', paddingLeft:10}}>点我上传</span>
+    renderChooser={(loading)=> {
+      return <span style={{borderLeft: '3px solid red', paddingLeft:10}}>{loading? '上传中...' : '点我上传'}</span>
       }}
     validateFile={(file)=>{
         if(file.response && file.response.status === 'done'){

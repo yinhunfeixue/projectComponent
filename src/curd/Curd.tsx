@@ -196,6 +196,16 @@ interface ICurdProps<T> extends IComponentProps {
    * 编辑列的宽度
    */
   editColumnWidth?: number;
+
+  /**
+   * 是否可切换每页显示的数量
+   */
+  showSizeChanger?: boolean;
+
+  /**
+   * 是否显示快速跳转页码的输入框
+   */
+  showQuickJumper?: boolean;
 }
 
 /**
@@ -238,13 +248,8 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
 
   private defaultRenderExtra = (extraData: ISearchTableExtra<T>) => {
     const { selectedRowKeys } = extraData;
-    const {
-      renderCreater,
-      renderCreateElement,
-      renderBatchDeleteElement,
-      disabledDelete,
-    } = this.props;
-    const { deletingKeyList: loadingDelete } = this.state;
+    const { renderCreater, renderCreateElement, renderBatchDeleteElement } = this.props;
+    const { deletingKeyList } = this.state;
     return (
       <React.Fragment>
         {renderCreater && (
@@ -274,7 +279,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
                 <Button
                   icon={<DeleteOutlined />}
                   danger
-                  loading={loading || loadingDelete.length > 0}
+                  loading={loading || deletingKeyList.length > 0}
                 >
                   批量删除
                 </Button>
@@ -462,6 +467,8 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
       renderCreater,
       renderEditer,
       renderPreviewer,
+      showSizeChanger,
+      showQuickJumper,
     } = this.props;
     const { visibleCreate, visibleEdit, editRecord, visiblePreview } = this.state;
     const tableSelectedEnable = Boolean(
@@ -475,6 +482,8 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
         getListFunction={getListFunction}
         rowKey={rowKey}
         pageSize={pageSize}
+        showSizeChanger={showSizeChanger}
+        showQuickJumper={showQuickJumper}
         tableProps={{
           scroll: {
             x: 800,

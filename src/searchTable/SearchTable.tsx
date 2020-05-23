@@ -234,6 +234,7 @@ class SearchTable<T extends object = any> extends Component<
       showTotal,
       selectedEnable,
       showSizeChanger = true,
+      showQuickJumper = true,
       dragEnable,
     } = this.props;
 
@@ -272,7 +273,7 @@ class SearchTable<T extends object = any> extends Component<
               : {
                   total,
                   current,
-                  showQuickJumper: true,
+                  showQuickJumper,
                   showTotal,
                   showSizeChanger,
                   pageSize: pageSize,

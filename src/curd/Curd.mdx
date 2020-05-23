@@ -71,6 +71,29 @@ import { Input, DatePicker, Modal, Button } from 'antd';
   />
 </Playground>
 
+### 禁用快速设置、pageSize设置
+<Playground>
+  <Curd 
+    showQuickJumper={false}
+    showSizeChanger={false}
+    columns={[
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      }
+    ]}
+    getListFunction={(current, pageSize)=>{
+      return {
+        total:54,
+        dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+          id:index,
+          name:`${(current - 1) * pageSize + index} name`
+        }))
+      }
+    }}
+  />
+</Playground>
+
 ### 配置搜索功能
 <Playground>
   <Curd 

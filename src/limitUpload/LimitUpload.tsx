@@ -56,7 +56,7 @@ interface ILimitUploadProps extends IComponentProps {
   /**
    * 选择元素的渲染函数，如果没有，使用默认方案
    */
-  renderChooser?: () => ReactNode;
+  renderChooser?: (loading?: boolean) => ReactNode;
 
   /**
    * 可选的文件后缀。
@@ -110,7 +110,7 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
 
   private renderChooseer() {
     const { loading, fileList } = this.state;
-    const { maxNumber, renderChooser: chooserRender, type, disabled, defaultFileList } = this.props;
+    const { maxNumber, renderChooser, type, disabled, defaultFileList } = this.props;
 
     const fileNumber = fileList.length + (defaultFileList ? defaultFileList.length : 0);
     const chooseEnable = !maxNumber || fileNumber < maxNumber;
@@ -118,8 +118,8 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
       return null;
     }
 
-    if (chooserRender) {
-      return chooserRender();
+    if (renderChooser) {
+      return renderChooser(loading);
     }
 
     switch (type) {
