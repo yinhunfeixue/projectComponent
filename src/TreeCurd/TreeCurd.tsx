@@ -256,9 +256,16 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   };
 
   private getItemsByIds = (treeData: T[], ids: React.ReactText[], selectedItems: T[]) => {
+    const { getKey } = this.props;
     for (let i = 0; i < treeData.length; i++) {
+      const key =
+        typeof getKey === 'string'
+          ? treeData[i][getKey]
+          : getKey
+          ? getKey(treeData[i])
+          : treeData[i].id;
       for (let j = 0; j < ids.length; j++) {
-        if (treeData[i].id === ids[j]) {
+        if (key === ids[j]) {
           selectedItems.push(treeData[i]);
         }
       }
