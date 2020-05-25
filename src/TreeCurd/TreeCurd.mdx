@@ -41,6 +41,7 @@ import FormUtil from '../utils/FormUtil'
     render() {
       return (
           <TreeCurd 
+            getKey='id'
             getTreeData={()=>{
               return fetch('./').then(()=>{
                   return [
