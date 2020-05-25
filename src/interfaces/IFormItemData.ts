@@ -38,6 +38,11 @@ interface IFormItemData {
   rules?: Rule[];
 
   /**
+   * 子节点的值的属性，如 Switch 的是 'checked'
+   */
+  valuePropName?: string;
+
+  /**
    * FormItem的props
    * 要传递给Form.Item的props
    */

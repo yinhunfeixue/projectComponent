@@ -63,6 +63,7 @@ class FormUtil {
           label: item.label,
           name: item.name,
           rules: item.rules,
+          valuePropName: item.valuePropName || 'value',
           ...itemProps,
           ...item.formItemProps,
           children: null,
