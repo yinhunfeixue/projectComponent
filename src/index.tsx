@@ -18,6 +18,7 @@ import TreeCurd, { EditType } from './TreeCurd/TreeCurd';
 import AntdUtil from './utils/AntdUtil';
 import FormUtil from './utils/FormUtil';
 import HtmlUtil from './utils/HtmlUtil';
+import TreeControl from './utils/TreeControl';
 
 export {
   ConfirmButton,
@@ -42,4 +43,5 @@ export {
   EditType,
   CountUp,
   TimeSpan,
+  TreeControl,
 };
