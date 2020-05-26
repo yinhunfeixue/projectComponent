@@ -9,7 +9,7 @@ menu: 组件
 import { Playground, Props } from 'docz';
 import 'antd/dist/antd.css';
 import TreeCurd, {EditType} from './TreeCurd';
-import { Button, Input, Form, Space } from 'antd';
+import { Button, Input, Form, Space, message } from 'antd';
 import FormUtil from '../utils/FormUtil'
 
 # TreeCurd
@@ -42,6 +42,7 @@ import FormUtil from '../utils/FormUtil'
       return (
           <TreeCurd 
             getKey='id'
+            deleteFunction={(ids) => message.info(ids)}
             getTreeData={()=>{
               return fetch('./').then(()=>{
                   return [
