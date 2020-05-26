@@ -439,10 +439,11 @@ import { Input, DatePicker, Modal, Button } from 'antd';
   />
 </Playground>
 
-### 设置搜索表单为内联
+### 设置搜索表单项小于等于4时，为内联
 
 <Playground>
   <Curd 
+    inlineMaxNumber={4}
     columns={[
       {
         title: '姓名',

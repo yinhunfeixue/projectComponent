@@ -208,9 +208,9 @@ interface ICurdProps<T> extends IComponentProps {
   showQuickJumper?: boolean;
 
   /**
-   * 搜索表单是否使用inline
+   * 搜索表单项小于等于几时，使用inline，默认为3
    */
-  inlineSearchForm?: boolean;
+  inlineMaxNumber?: number;
 }
 
 /**
@@ -479,6 +479,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
       renderPreviewer,
       showSizeChanger,
       showQuickJumper,
+      inlineMaxNumber,
     } = this.props;
     const { visibleCreate, visibleEdit, editRecord, visiblePreview } = this.state;
     const tableSelectedEnable = Boolean(
@@ -509,6 +510,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
               {/* 渲染搜索表单 */}
               {searchItem && (
                 <SearchForm
+                  inlineMaxNumber={inlineMaxNumber}
                   itemList={searchItem}
                   onSubmit={(values: any) => {
                     setSearchParams(values);
