@@ -32,6 +32,37 @@ class TreeControl<T extends any> {
   }
 
   /**
+   * 过滤树
+   * @param tree 树
+   * @param equal 是否匹配的方法，返回true，表示结果中包含此结点及基子结点
+   */
+  public filter(tree: T[], equal: equalFunctionType<T>): T[] {
+    return this._filterInner(tree, equal, null);
+  }
+
+  private _filterInner(tree: T[], equal: equalFunctionType<T>, parentNode: T | null): T[] {
+    if (!tree) {
+      return [];
+    }
+    const result: T[] = [];
+    // 循环tree
+    // 对于每一项，如果equal返回true，添加到结果列表中；否则，递归子列表，如果递归的子列表>=0，添加到结果列表
+    for (let i = 0; i < tree.length; i++) {
+      const item = { ...tree[i] };
+      if (equal(item, i, parentNode)) {
+        result.push(item);
+      } else {
+        const filterChildren = this._filterInner(this.getChildren(item), equal, item);
+        if (filterChildren && filterChildren.length > 0) {
+          result.push(item);
+          this._createChildren(item, filterChildren);
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
    * 一维数组转换成树结构
    * @param list
    */

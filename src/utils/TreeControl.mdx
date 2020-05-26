@@ -25,7 +25,6 @@ import TreeControl from './TreeControl';
   <div>
     {
       (function renderTree(){
-        console.log('renderTree')
          let list = [
           {
             id:1,
@@ -50,14 +49,84 @@ import TreeControl from './TreeControl';
           },
         ];
         let control = new TreeControl("id", "children", "children");
-        let tree = control.listToTree(list, (node, parent)=>{
+        let tree = control.listToTree(list.map(item=>({...item})), (node, parent)=>{
           if(!parent){
             return !node.pid;
           }
           return node.pid === parent.id;
         });
-        console.log('tree', tree)
-        return JSON.stringify(tree, null, 2)
+        return (
+          <div>
+            <h2>原始数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(list, null, 4)}</p>
+            <h2>树结构</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(tree, null, 4)}</p>
+          </div>
+        );
+       
+      })()
+    }
+  </div>
+</Playground>
+
+### 过滤数据
+
+挑选出name包含a的数据
+<Playground>
+  <div>
+    {
+      (function renderTree(){
+         let list = [
+          {
+            id:1,
+          },
+          {
+            id:2,
+          },
+          {
+            id:3,
+          },
+          {
+            id:'1-1',
+            pid:1,
+          },
+          {
+            id:'1-1-2',
+            pid:'1-1',
+            name:'a111',
+          },
+          {
+            id:'1-2',
+            pid:1,
+          },
+          {
+            id:'2-1',
+            pid:2,
+            name:'a21'
+          },
+        ];
+        let control = new TreeControl("id", "children", "children");
+        let tree = control.listToTree(list.map(item=>({...item})), (node, parent)=>{
+          if(!parent){
+            return !node.pid;
+          }
+          return node.pid === parent.id;
+        });
+
+        let filterList = control.filter(tree, (node)=>{
+          return node.name && node.name.indexOf('a') >= 0;
+        })
+        return (
+          <div>
+            <h2>原始数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(list, null, 4)}</p>
+            <h2>树结构</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(tree, null, 4)}</p>
+            <h2>过滤出的数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(filterList, null, 4)}</p>
+          </div>
+        );
+       
       })()
     }
   </div>
