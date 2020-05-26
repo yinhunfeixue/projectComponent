@@ -1,0 +1,65 @@
+---
+name: TreeControl
+route: /TreeControl
+order: 0
+sidebar: true,
+menu: 辅助工具
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import TreeControl from './TreeControl';
+
+
+
+# TreeControl
+树相关的辅助工具
++ 一维数组转换为树结构
++ 搜索指定的结点
++ 搜索指定结点及其所有父结点
++ foreach
++ map
+
+### 数组转换为树
+<Playground>
+  <div>
+    {
+      (function renderTree(){
+        console.log('renderTree')
+         let list = [
+          {
+            id:1,
+          },
+          {
+            id:2,
+          },
+          {
+            id:3,
+          },
+          {
+            id:'1-1',
+            pid:1
+          },
+          {
+            id:'1-2',
+            pid:1
+          },
+          {
+            id:'2-1',
+            pid:2
+          },
+        ];
+        let control = new TreeControl("id", "children", "children");
+        let tree = control.listToTree(list, (node, parent)=>{
+          if(!parent){
+            return !node.pid;
+          }
+          return node.pid === parent.id;
+        });
+        console.log('tree', tree)
+        return JSON.stringify(tree, null, 2)
+      })()
+    }
+  </div>
+</Playground>
+

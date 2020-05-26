@@ -1,9 +1,30 @@
-import { Tree } from 'antd';
-import { TreeProps } from 'antd/lib/tree';
+import { Select, Tree } from 'antd';
 import { DataNode } from 'rc-tree/lib/interface';
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 class AntdUtil {
+  /**
+   * 根据数据源创建select的options列表
+   * @param dataSource 数据源
+   * @param labelFunction 把每一项转换成显示文字的函数，如果不设置，则使用toString()
+   */
+  public static createSelectOptions<T extends React.ReactText>(
+    dataSource: T[],
+    labelFunction?: (item: T) => ReactNode,
+    valueFunction?: (item: T) => React.ReactText,
+  ): ReactNode {
+    if (dataSource && dataSource.length) {
+      return dataSource.map((item, i) => {
+        return (
+          <Select.Option key={i.toString()} value={valueFunction ? valueFunction(item) : item}>
+            {labelFunction ? labelFunction(item) : item}
+          </Select.Option>
+        );
+      });
+    }
+    return [];
+  }
+
   /**
    * 渲染树
    *
