@@ -27,7 +27,7 @@ import { Input, Modal } from 'antd';
 表单项<=3个时，使用内联布局；>3个时，默认一行排3项
 
 <Playground>
-  <h2>小于3项</h2>
+  <h2>小于等于3项</h2>
   <SearchForm
     itemList={[
       {
@@ -35,10 +35,15 @@ import { Input, Modal } from 'antd';
         content: <Input />,
         name: 'name',
       },
-         {
+      {
         label: '参数2',
         content: <Input />,
         name: 'name2',
+      },
+      {
+        label: '参数3',
+        content: <Input />,
+        name: 'name3',
       },
     ]}
     onSubmit={(values) => {
@@ -85,6 +90,41 @@ import { Input, Modal } from 'antd';
 <Playground>
   <SearchForm
     columnNumber={2}
+    itemList={[
+      {
+        label: '参数1',
+        content: <Input />,
+        name: 'name',
+      },
+      {
+        label: '参数2',
+        content: <Input />,
+        name: 'name2',
+      },
+      {
+        label: '参数3',
+        content: <Input />,
+        name: 'name3',
+      },
+      {
+        label: '参数4',
+        content: <Input />,
+        name: 'name4',
+      },
+    ]}
+    onSubmit={(values) => {
+      Modal.confirm({
+        content: JSON.stringify(values)
+      });
+    }}
+  />
+</Playground>
+
+## 设置表单项小于等于5时(默认为3），使用内联
+
+<Playground>
+  <SearchForm
+    inlineMaxNumber={4}
     itemList={[
       {
         label: '参数1',

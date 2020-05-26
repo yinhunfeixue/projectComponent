@@ -25,6 +25,11 @@ interface ISearchFormProps extends IComponentProps {
    * 每行默认的列数
    */
   columnNumber?: number;
+
+  /**
+   * 表单项小于等于几时，使用inline，默认为3
+   */
+  inlineMaxNumber?: number;
 }
 
 /**
@@ -34,7 +39,7 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
   private form: FormInstance | null = null;
 
   public render(): ReactNode {
-    const { itemList, onSubmit, columnNumber, className, style } = this.props;
+    const { itemList, onSubmit, columnNumber, className, style, inlineMaxNumber = 3 } = this.props;
     if (!itemList || !itemList.length) {
       return null;
     }
@@ -60,7 +65,7 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
       },
     ]);
 
-    const useHorizontal = columnNumber || list.length > 3;
+    const useHorizontal = columnNumber || itemList.length > inlineMaxNumber;
     return (
       <Form
         ref={target => {
@@ -78,7 +83,7 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
         }}
       >
         {useHorizontal
-          ? FormUtil.renderFormItems(list, columnNumber || 3)
+          ? FormUtil.renderFormItems(list, columnNumber || inlineMaxNumber)
           : FormUtil.renderInlinFormItems(list)}
       </Form>
     );

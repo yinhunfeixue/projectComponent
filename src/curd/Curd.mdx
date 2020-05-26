@@ -439,5 +439,48 @@ import { Input, DatePicker, Modal, Button } from 'antd';
   />
 </Playground>
 
+### 设置搜索表单为内联
+
+<Playground>
+  <Curd 
+    columns={[
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      }
+    ]}
+    searchItem={[
+    {
+      label: '姓名',
+      name: 'lastname',
+      content: <Input />,
+    },
+    {
+      label: '姓名2',
+      name: 'lastname2',
+      content: <Input />,
+    },
+    {
+      label: '姓名3',
+      name: 'lastname3',
+      content: <Input />,
+    },
+    {
+      label: '日期',
+      name: 'createDate',
+      content: <DatePicker.RangePicker />,
+    }]}
+    getListFunction={(current, pageSize, searchParams)=>{
+      return {
+        total:54,
+        dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+          id:index,
+          name:`${(current - 1) * pageSize + index} name`
+        }))
+      }
+    }}
+  />
+</Playground>
+
 ## 属性
 <Props of={Curd} />

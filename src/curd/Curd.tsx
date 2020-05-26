@@ -206,6 +206,11 @@ interface ICurdProps<T> extends IComponentProps {
    * 是否显示快速跳转页码的输入框
    */
   showQuickJumper?: boolean;
+
+  /**
+   * 搜索表单是否使用inline
+   */
+  inlineSearchForm?: boolean;
 }
 
 /**
@@ -248,11 +253,16 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
 
   private defaultRenderExtra = (extraData: ISearchTableExtra<T>) => {
     const { selectedRowKeys } = extraData;
-    const { renderCreater, renderCreateElement, renderBatchDeleteElement } = this.props;
+    const {
+      disabledCreate,
+      renderCreater,
+      renderCreateElement,
+      renderBatchDeleteElement,
+    } = this.props;
     const { deletingKeyList } = this.state;
     return (
       <React.Fragment>
-        {renderCreater && (
+        {!disabledCreate && renderCreater && (
           <span
             onClick={() => {
               this.showCreate();
