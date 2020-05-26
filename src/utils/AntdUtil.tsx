@@ -1,4 +1,5 @@
 import { Select, Tree } from 'antd';
+import { TreeProps } from 'antd/lib/tree';
 import { DataNode } from 'rc-tree/lib/interface';
 import React, { ReactNode } from 'react';
 
@@ -42,7 +43,7 @@ class AntdUtil {
     getTitle: ((item: T) => ReactNode) | string = 'name',
     getChildren: ((item: T) => T[]) | string = 'children',
     createNodeProps?: (item: T) => DataNode,
-  ): ReactElement | null {
+  ): React.ReactElement | null {
     if (dataSource) {
       const treeData = this.loopTreeNode(
         dataSource,
