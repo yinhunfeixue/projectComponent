@@ -42,6 +42,7 @@ import FormUtil from '../utils/FormUtil'
       return (
           <TreeCurd 
             getKey='id'
+            deleteFunction={(ids) => console.log(ids)}
             getTreeData={()=>{
               return fetch('./').then(()=>{
                   return [
