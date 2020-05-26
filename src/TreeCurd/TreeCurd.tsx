@@ -320,13 +320,13 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
               title: '这个操作不可逆',
               content: (
                 <span>
-                  确定要<span style={{ color: 'red' }}>删除</span>改节点？
+                  确定要<span style={{ color: 'red' }}>删除</span>该节点？
                 </span>
               ),
             }}
             onConfirm={async () => {
               if (deleteFunction) {
-                const ids = checkable !== undefined ? selectedKeys : checkedKeys;
+                const ids = checkable !== undefined ? checkedKeys : selectedKeys;
                 await deleteFunction(ids);
                 refresh();
               }
