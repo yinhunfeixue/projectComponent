@@ -1,6 +1,6 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
-import { ColumnsType, ColumnType } from 'antd/lib/table';
+import { ColumnsType, ColumnType, TableProps } from 'antd/lib/table';
 import React, { Component, ReactNode } from 'react';
 import ConfirmButton from '../confirmButton/ConfirmButton';
 import IComponentProps from '../interfaces/IComponentProps';
@@ -215,6 +215,8 @@ interface ICurdProps<T> extends IComponentProps {
   inlineMaxNumber?: number;
 
   searchFormProps?: ISearchFormProps;
+
+  tableProps?: TableProps<T>;
 }
 
 /**
@@ -485,6 +487,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
       showQuickJumper,
       inlineMaxNumber,
       searchFormProps,
+      tableProps,
       className,
       style,
     } = this.props;
@@ -506,6 +509,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
           scroll: {
             x: 800,
           },
+          ...tableProps,
         }}
         style={style}
         className={classnames('fh-Curd', className)}
