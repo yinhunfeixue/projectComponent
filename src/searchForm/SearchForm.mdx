@@ -155,6 +155,36 @@ import { Input, Modal } from 'antd';
   />
 </Playground>
 
+## 自定义搜索、重置元素的外观
+
+<Playground>
+  <SearchForm
+    renderSearchElement={()=>{
+      return <a>我是自定义的搜索</a>
+    }}
+    renderResetElement={()=>{
+      return <a>我是自定义的重置</a>
+    }}
+    itemList={[
+      {
+        label: '参数1',
+        content: <Input />,
+        name: 'name',
+      },
+      {
+        label: '参数2',
+        content: <Input />,
+        name: 'name2',
+      },
+    ]}
+    onSubmit={(values) => {
+      Modal.confirm({
+        content: JSON.stringify(values)
+      });
+    }}
+  />
+</Playground>
+
 ## 属性
 
 <Props of={SearchForm} />

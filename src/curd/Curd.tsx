@@ -5,9 +5,11 @@ import React, { Component, ReactNode } from 'react';
 import ConfirmButton from '../confirmButton/ConfirmButton';
 import IComponentProps from '../interfaces/IComponentProps';
 import IFormItemData from '../interfaces/IFormItemData';
-import SearchForm from '../searchForm/SearchForm';
+import SearchForm, { ISearchFormProps } from '../searchForm/SearchForm';
 import SearchTable, { ISearchTableExtra } from '../searchTable/SearchTable';
 import './Curd.less';
+
+const classnames = require('classnames');
 
 interface ICurdState<T> {
   /**
@@ -211,6 +213,8 @@ interface ICurdProps<T> extends IComponentProps {
    * 搜索表单项小于等于几时，使用inline，默认为3
    */
   inlineMaxNumber?: number;
+
+  searchFormProps?: ISearchFormProps;
 }
 
 /**
@@ -480,6 +484,9 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
       showSizeChanger,
       showQuickJumper,
       inlineMaxNumber,
+      searchFormProps,
+      className,
+      style,
     } = this.props;
     const { visibleCreate, visibleEdit, editRecord, visiblePreview } = this.state;
     const tableSelectedEnable = Boolean(
@@ -500,7 +507,8 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
             x: 800,
           },
         }}
-        className="fh-Curd"
+        style={style}
+        className={classnames('fh-Curd', className)}
         selectedEnable={tableSelectedEnable}
         renderExtra={(extraData: ISearchTableExtra<T>) => {
           const { setSearchParams, refresh } = extraData;
@@ -510,6 +518,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
               {/* 渲染搜索表单 */}
               {searchItem && (
                 <SearchForm
+                  {...searchFormProps}
                   inlineMaxNumber={inlineMaxNumber}
                   itemList={searchItem}
                   onSubmit={(values: any) => {

@@ -10,7 +10,7 @@ import './SearchForm.less';
 const classnames = require('classnames');
 
 interface ISearchFormState {}
-interface ISearchFormProps extends IComponentProps {
+export interface ISearchFormProps extends IComponentProps {
   /**
    * 表单项，参考：IFormItemData
    */
@@ -30,6 +30,16 @@ interface ISearchFormProps extends IComponentProps {
    * 表单项小于等于几时，使用inline，默认为3
    */
   inlineMaxNumber?: number;
+
+  /**
+   * 渲染搜索元素
+   */
+  renderSearchElement?: () => ReactNode;
+
+  /**
+   * 渲染重置元素
+   */
+  renderResetElement?: () => ReactNode;
 }
 
 /**
@@ -37,6 +47,16 @@ interface ISearchFormProps extends IComponentProps {
  */
 class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
   private form: FormInstance | null = null;
+
+  private _defaultRenderSearchElement() {
+    const { renderSearchElement } = this.props;
+    return renderSearchElement ? renderSearchElement() : <Button type="primary">搜索</Button>;
+  }
+
+  private _defaultRenderResetElement() {
+    const { renderResetElement } = this.props;
+    return renderResetElement ? renderResetElement() : <Button>重置</Button>;
+  }
 
   public render(): ReactNode {
     const { itemList, onSubmit, columnNumber, className, style, inlineMaxNumber = 3 } = this.props;
@@ -47,10 +67,18 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
       {
         content: (
           <div className="fb-ControlGroup">
-            <Button type="primary" htmlType="submit">
-              搜索
-            </Button>
-            <Button
+            <span
+              onClick={() => {
+                if (this.form) {
+                  this.form.validateFields().then(values => {
+                    onSubmit(values);
+                  });
+                }
+              }}
+            >
+              {this._defaultRenderSearchElement()}
+            </span>
+            <span
               onClick={() => {
                 if (this.form) {
                   this.form.resetFields();
@@ -58,8 +86,8 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
                 }
               }}
             >
-              重置
-            </Button>
+              {this._defaultRenderResetElement()}
+            </span>
           </div>
         ),
       },
@@ -78,9 +106,6 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
         )}
         style={style}
         layout={useHorizontal ? 'horizontal' : 'inline'}
-        onFinish={values => {
-          onSubmit(values);
-        }}
       >
         {useHorizontal
           ? FormUtil.renderFormItems(list, columnNumber || inlineMaxNumber)

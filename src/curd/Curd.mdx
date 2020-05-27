@@ -483,5 +483,57 @@ import { Input, DatePicker, Modal, Button } from 'antd';
   />
 </Playground>
 
+### 自定义搜索表单中，搜索、重置元素的外观
+
+<Playground>
+  <Curd 
+    searchFormProps={{
+      renderSearchElement:()=>{
+        return <a>我是自定义的搜索</a>
+      },
+      renderResetElement:()=>{
+      return <a>我是自定义的重置</a>
+    }
+    }}
+    columns={[
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      }
+    ]}
+    searchItem={[
+    {
+      label: '姓名',
+      name: 'lastname',
+      content: <Input />,
+    },
+    {
+      label: '姓名2',
+      name: 'lastname2',
+      content: <Input />,
+    },
+    {
+      label: '姓名3',
+      name: 'lastname3',
+      content: <Input />,
+    },
+    {
+      label: '日期',
+      name: 'createDate',
+      content: <DatePicker.RangePicker />,
+    }]}
+    getListFunction={(current, pageSize, searchParams)=>{
+      fetch('./');
+      return {
+        total:54,
+        dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+          id:index,
+          name:`${(current - 1) * pageSize + index} name`
+        }))
+      }
+    }}
+  />
+</Playground>
+
 ## 属性
 <Props of={Curd} />
