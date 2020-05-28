@@ -1,4 +1,4 @@
-import { Button, Input, Space, Spin } from 'antd';
+import { Button, Input, Spin } from 'antd';
 import { DataNode } from 'rc-tree/lib/interface';
 import React, { Component, ReactNode } from 'react';
 import ConfirmButton from '../confirmButton/ConfirmButton';
@@ -139,12 +139,15 @@ interface ITreeCurdProps<T> extends IComponentProps {
   /**
    * 删除节点
    */
-  deleteFunction?: (ids: React.ReactText[]) => void;
+  deleteFunction?: (ids: React.ReactText[]) => Promise<any>;
 
   /**
    * 自定义操作
    */
-  renderExtra?: (extraData: ITreeCurdExtra<T>) => ReactNode;
+  renderExtra?: (
+    extraData: ITreeCurdExtra<T>,
+    defaultRender: (extraData: ITreeCurdExtra<T>) => ReactNode,
+  ) => ReactNode;
 
   /**
    * 自定义编辑操作
@@ -332,7 +335,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     const { selectedKeys, checkedKeys, refresh } = extraData;
     const { deleteFunction, checkable } = this.props;
     return (
-      <Space>
+      <React.Fragment>
         <Button type="primary" onClick={() => this.setState({ type: EditType.ADD })}>
           新增
         </Button>
@@ -355,7 +358,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
             }}
           />
         )}
-      </Space>
+      </React.Fragment>
     );
   };
 
@@ -411,24 +414,25 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       <div className="TreeCurd">
         <div className={classnames('optContent', optClassOName)}>
           {renderExtra
-            ? renderExtra({
+            ? renderExtra(
+                {
+                  selectedKeys,
+                  selectedItems,
+                  checkedKeys,
+                  checkedItems,
+                  loading,
+                  refresh: this.refresh,
+                },
+                this.defaultRenderOptItem,
+              )
+            : this.defaultRenderOptItem({
                 selectedKeys,
                 selectedItems,
                 checkedKeys,
                 checkedItems,
                 loading,
                 refresh: this.refresh,
-              })
-            : renderEditExtra
-            ? this.defaultRenderOptItem({
-                selectedKeys,
-                selectedItems,
-                checkedKeys,
-                checkedItems,
-                loading,
-                refresh: this.refresh,
-              })
-            : null}
+              })}
         </div>
         <div className="treeCurdContent" style={{ minHeight }}>
           <div className={classnames('treeContent', treeContentClassName)} style={{ width }}>
