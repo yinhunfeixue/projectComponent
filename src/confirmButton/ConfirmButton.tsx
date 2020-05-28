@@ -60,7 +60,6 @@ class ConfirmButton extends Component<IConfirmButtonProps, IConfirmButtonState> 
 
   public render(): ReactNode {
     const { className, style } = this.props;
-    const { loading } = this.state;
     return (
       <span
         className={classnames('ConfirmButton', className)}
@@ -94,7 +93,7 @@ class ConfirmButton extends Component<IConfirmButtonProps, IConfirmButtonState> 
   }
 
   private defaultValidate(): Promise<boolean> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const { modalContent } = this.props;
       Modal.confirm({
         title: modalContent ? modalContent.title : '操作不可恢复',
