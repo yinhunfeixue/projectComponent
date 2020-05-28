@@ -1,4 +1,4 @@
-import { Button, Space, Spin } from 'antd';
+import { Button, Input, Space, Spin } from 'antd';
 import React, { Component, ReactNode } from 'react';
 import ConfirmButton from '../confirmButton/ConfirmButton';
 import IComponentProps from '../interfaces/IComponentProps';
@@ -6,6 +6,8 @@ import AntdUtil from '../utils/AntdUtil';
 import './TreeCurd.less';
 
 const classnames = require('classnames');
+
+const { Search } = Input;
 
 export enum EditType {
   ADD = 'add',
@@ -22,6 +24,7 @@ interface ITreeCurdState<T> {
   selectedItems: T[];
   checkedKeys: any[];
   checkedItems: T[];
+  searchValue: string;
   type: EditType;
 }
 
@@ -125,7 +128,12 @@ interface ITreeCurdProps<T> extends IComponentProps {
   /**
    * 获取树源数据
    */
-  getTreeData: () => Promise<T[]>;
+  getTreeData: (searchValue?: string) => Promise<T[]>;
+
+  /**
+   * 是否可搜索
+   */
+  showSearch?: boolean;
 
   /**
    * 删除节点
@@ -179,6 +187,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     checkedItems: [],
     selectedKeys: [],
     selectedItems: [],
+    searchValue: '',
     type: EditType.DEFAULT,
   };
 
@@ -227,9 +236,10 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
 
   private requestTreeData = () => {
     return new Promise(async (resolve) => {
+      const { searchValue } = this.state;
       const { getTreeData, getKey, defaultExpandedKeys, defaultCheckedKeys } = this.props;
       this.setLoading(true);
-      const res = await getTreeData();
+      const res = await getTreeData(searchValue);
       this.setLoading(false);
       // 获取默认展开节点
       let expandedKeys: string[] = [];
@@ -364,6 +374,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       renderExtra,
       renderEditExtra,
       renderCheckExtra,
+      showSearch,
     } = this.props;
     let checkProps = {};
     if (checkable !== undefined) {
@@ -408,6 +419,17 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
         </div>
         <div className="treeCurdContent" style={{ minHeight }}>
           <div className={classnames('treeContent', treeContentClassName)} style={{ width }}>
+            {showSearch !== undefined && (
+              <div style={{ marginBottom: 20 }}>
+                <Search
+                  enterButton
+                  onChange={(e) =>
+                    this.setState({ searchValue: e.target.value }, () => this.refresh())
+                  }
+                />
+              </div>
+            )}
+
             <Spin spinning={loading}>
               {AntdUtil.rendeTree<T>(treeData, TreeProps, getKey, getTitle, getChildren)}
             </Spin>
