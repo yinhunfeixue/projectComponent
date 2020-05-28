@@ -1,4 +1,5 @@
 import { Button, Input, Space, Spin } from 'antd';
+import { DataNode } from 'rc-tree/lib/interface';
 import React, { Component, ReactNode } from 'react';
 import ConfirmButton from '../confirmButton/ConfirmButton';
 import IComponentProps from '../interfaces/IComponentProps';
@@ -160,6 +161,8 @@ interface ITreeCurdProps<T> extends IComponentProps {
    */
   defaultCheckedKeys?: any[];
 
+  getNodeProps?: (item: T) => DataNode;
+
   /**
    *  自定义多选的操作
    */
@@ -234,8 +237,18 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     this.setState({ loading });
   }
 
+  private getNodeChildren(item: T) {
+    const { getChildren = 'children' } = this.props;
+    return typeof getChildren === 'string' ? item[getChildren] : getChildren(item);
+  }
+
+  private getItemKey(item: T) {
+    const { getKey = 'id' } = this.props;
+    return typeof getKey === 'string' ? item[getKey] : getKey(item);
+  }
+
   private requestTreeData = () => {
-    return new Promise(async (resolve) => {
+    return new Promise(async resolve => {
       const { searchValue } = this.state;
       const { getTreeData, getKey, defaultExpandedKeys, defaultCheckedKeys } = this.props;
       this.setLoading(true);
@@ -244,10 +257,13 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       // 获取默认展开节点
       let expandedKeys: string[] = [];
       let checkedKeys = [];
-      if (res && res.length && res[0].children && res[0].children.length) {
-        const key =
-          typeof getKey === 'string' ? res[0][getKey] : getKey ? getKey(res[0]) : res[0].id;
-        expandedKeys = defaultExpandedKeys ? defaultExpandedKeys : [key];
+      if (res && res.length) {
+        const node0 = res[0];
+        const children = this.getNodeChildren(node0);
+        if (children && children.length) {
+          const key = this.getItemKey(node0);
+          expandedKeys = defaultExpandedKeys ? defaultExpandedKeys : [key];
+        }
       }
       if (defaultCheckedKeys) {
         checkedKeys = defaultCheckedKeys;
@@ -266,22 +282,18 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   };
 
   private getItemsByIds = (treeData: T[], ids: React.ReactText[], selectedItems: T[]) => {
-    const { getKey } = this.props;
+    const { getKey = 'id', getChildren = 'children' } = this.props;
     for (let i = 0; i < treeData.length; i++) {
-      const key =
-        typeof getKey === 'string'
-          ? treeData[i][getKey]
-          : getKey
-          ? getKey(treeData[i])
-          : treeData[i].id;
+      const item = treeData[i];
+      const key = this.getItemKey(item);
+      const children = this.getNodeChildren(item);
       for (let j = 0; j < ids.length; j++) {
         if (key === ids[j]) {
           selectedItems.push(treeData[i]);
         }
       }
-
-      if (treeData[i].children) {
-        this.getItemsByIds(treeData[i].children, ids, selectedItems);
+      if (children) {
+        this.getItemsByIds(children, ids, selectedItems);
       }
     }
   };
@@ -375,6 +387,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       renderEditExtra,
       renderCheckExtra,
       showSearch,
+      getNodeProps,
     } = this.props;
     let checkProps = {};
     if (checkable !== undefined) {
@@ -423,7 +436,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
               <div style={{ marginBottom: 20 }}>
                 <Search
                   enterButton
-                  onChange={(e) =>
+                  onChange={e =>
                     this.setState({ searchValue: e.target.value }, () => this.refresh())
                   }
                 />
@@ -431,7 +444,14 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
             )}
 
             <Spin spinning={loading}>
-              {AntdUtil.rendeTree<T>(treeData, TreeProps, getKey, getTitle, getChildren)}
+              {AntdUtil.rendeTree<T>(
+                treeData,
+                TreeProps,
+                getKey,
+                getTitle,
+                getChildren,
+                getNodeProps,
+              )}
             </Spin>
             <div className={classnames('checkContent', checkClassName)}>
               {checkable !== undefined && renderCheckExtra
