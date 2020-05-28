@@ -58,6 +58,15 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
     return renderResetElement ? renderResetElement() : <Button>重置</Button>;
   }
 
+  private submit() {
+    const { onSubmit } = this.props;
+    if (this.form) {
+      this.form.validateFields().then(values => {
+        onSubmit(values);
+      });
+    }
+  }
+
   public render(): ReactNode {
     const { itemList, onSubmit, columnNumber, className, style, inlineMaxNumber = 3 } = this.props;
     if (!itemList || !itemList.length) {
@@ -69,11 +78,7 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
           <div className="fb-ControlGroup">
             <span
               onClick={() => {
-                if (this.form) {
-                  this.form.validateFields().then(values => {
-                    onSubmit(values);
-                  });
-                }
+                this.submit();
               }}
             >
               {this._defaultRenderSearchElement()}
@@ -82,7 +87,7 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
               onClick={() => {
                 if (this.form) {
                   this.form.resetFields();
-                  this.form.submit();
+                  this.submit();
                 }
               }}
             >
