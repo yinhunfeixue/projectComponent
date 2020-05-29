@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "father": "^2.29.3",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.2"
   },
   "license": "MIT",
   "dependencies": {
