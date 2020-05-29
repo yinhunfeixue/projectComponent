@@ -15,7 +15,15 @@ export interface ISearchTableExtra<T> {
    */
   selectedRows?: T[];
 
+  /**
+   * 是否加载中
+   */
   loading: boolean;
+
+  /**
+   * 获取搜索参数
+   */
+  searchParams: any;
 
   /**
    * 刷新
@@ -253,6 +261,7 @@ class SearchTable<T extends object = any> extends Component<
       total,
       current,
       newColumns,
+      searchParams,
     } = this.state;
     const pageTotal: number = total / pageSize;
     return (
@@ -262,6 +271,7 @@ class SearchTable<T extends object = any> extends Component<
             selectedRowKeys,
             selectedRows,
             loading,
+            searchParams,
             refresh: this.refresh,
             setSearchParams: this.setSearchParams,
           })}
