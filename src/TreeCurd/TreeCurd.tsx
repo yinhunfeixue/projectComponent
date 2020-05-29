@@ -92,6 +92,11 @@ interface ITreeCurdProps<T> extends IComponentProps {
   width?: number;
 
   /**
+   * 是否是一个是否可编辑的树
+   */
+  isEdit?: boolean;
+
+  /**
    * 树最小高度
    */
   minHeight?: number;
@@ -251,7 +256,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   }
 
   private requestTreeData = () => {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       const { searchValue } = this.state;
       const { getTreeData, getKey, defaultExpandedKeys, defaultCheckedKeys } = this.props;
       this.setLoading(true);
@@ -391,6 +396,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       renderCheckExtra,
       showSearch,
       getNodeProps,
+      isEdit = true,
     } = this.props;
     let checkProps = {};
     if (checkable !== undefined) {
@@ -413,26 +419,28 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     return (
       <div className="TreeCurd">
         <div className={classnames('optContent', optClassOName)}>
-          {renderExtra
-            ? renderExtra(
-                {
+          {isEdit
+            ? renderExtra
+              ? renderExtra(
+                  {
+                    selectedKeys,
+                    selectedItems,
+                    checkedKeys,
+                    checkedItems,
+                    loading,
+                    refresh: this.refresh,
+                  },
+                  this.defaultRenderOptItem,
+                )
+              : this.defaultRenderOptItem({
                   selectedKeys,
                   selectedItems,
                   checkedKeys,
                   checkedItems,
                   loading,
                   refresh: this.refresh,
-                },
-                this.defaultRenderOptItem,
-              )
-            : this.defaultRenderOptItem({
-                selectedKeys,
-                selectedItems,
-                checkedKeys,
-                checkedItems,
-                loading,
-                refresh: this.refresh,
-              })}
+                })
+            : null}
         </div>
         <div className="treeCurdContent" style={{ minHeight }}>
           <div className={classnames('treeContent', treeContentClassName)} style={{ width }}>
@@ -440,7 +448,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
               <div style={{ marginBottom: 20 }}>
                 <Search
                   enterButton
-                  onChange={e =>
+                  onChange={(e) =>
                     this.setState({ searchValue: e.target.value }, () => this.refresh())
                   }
                 />
