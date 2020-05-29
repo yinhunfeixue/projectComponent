@@ -1,6 +1,6 @@
 {
   "name": "fb-project-component",
-  "version": "0.0.67",
+  "version": "0.0.61",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -13,7 +13,7 @@
     "dev": "father doc dev",
     "build": "father build",
     "publicGitHub": "father doc build && father doc deploy",
-    "publicNpm": "npm login && npm run build && npm version patch && cp package.json ./dist/package.json && cp README.md ./dist/README.md && cd dist && npm publish",
+    "publicNpm": "npm run build && npm version patch && cp package.json ./dist/package.json && cp README.md ./dist/README.md && cd dist && npm login && npm publish",
     "public": "npm run publicGitHub && npm run publicNpm"
   },
   "peerDependencies": {
@@ -27,13 +27,13 @@
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
     "@types/vfile-message": "^2.0.0",
-    "antd": "^4.2.4",
+    "antd": "^4.2.5",
     "babel-plugin-import": "^1.13.0",
     "classnames": "^2.2.6",
     "docz": "^2.3.1",
     "idcard": "^4.1.0",
     "lodash": "^4.17.15",
-    "moment": "^2.25.3",
+    "moment": "^2.26.0",
     "rc-tree": "^3.2.2",
     "react-zmage": "^0.8.5"
   }
