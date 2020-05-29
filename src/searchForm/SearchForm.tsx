@@ -40,6 +40,11 @@ export interface ISearchFormProps extends IComponentProps {
    * 渲染重置元素
    */
   renderResetElement?: () => ReactNode;
+
+  /**
+   * Form的初始化
+   */
+  initialValues?: Store;
 }
 
 /**
@@ -68,7 +73,15 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
   }
 
   public render(): ReactNode {
-    const { itemList, onSubmit, columnNumber, className, style, inlineMaxNumber = 3 } = this.props;
+    const {
+      itemList,
+      onSubmit,
+      columnNumber,
+      className,
+      style,
+      inlineMaxNumber = 3,
+      initialValues,
+    } = this.props;
     if (!itemList || !itemList.length) {
       return null;
     }
@@ -104,6 +117,7 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
         ref={target => {
           this.form = target;
         }}
+        initialValues={initialValues}
         className={classnames(
           'fb-SearchForm',
           useHorizontal ? 'fb-SearchFormHorizontal' : '',
