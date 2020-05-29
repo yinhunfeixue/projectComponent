@@ -152,6 +152,12 @@ class SearchTable<T extends object = any> extends Component<
     this.requestList();
   }
 
+  componentDidUpdate(prevProps: ISearchTableProps<T>) {
+    if (prevProps.columns !== this.props.columns) {
+      this.setState({ newColumns: this.props.columns });
+    }
+  }
+
   private changePage(pageIndex?: number) {
     const { current } = this.state;
     if (!pageIndex) {

@@ -535,5 +535,55 @@ import { Input, DatePicker, Modal, Button } from 'antd';
   />
 </Playground>
 
+
+### 动态修改Columns
+
+<Playground>
+{
+  class Demo extends React.Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        columns:[],
+      }
+    }
+
+    render(){
+      return (
+        <div>
+          <Button onClick={()=>{
+              this.setState({
+                columns: [
+                  {
+                    title: '姓名',
+                    dataIndex: 'name',
+                  }
+                ]
+              })
+          }}
+          >
+            切换columns
+          </Button>
+          <Curd
+            name='aaa'
+            columns={this.state.columns}
+            getListFunction={(current, pageSize, searchParams)=>{
+              fetch('./');
+              return {
+                total:54,
+                dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+                  id:index,
+                  name:`${(current - 1) * pageSize + index} name`
+                }))
+              }
+            }}
+          />
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
 ## 属性
 <Props of={Curd} />
