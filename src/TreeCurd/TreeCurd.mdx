@@ -161,6 +161,7 @@ import FormUtil from '../utils/FormUtil'
 <Playground>
   <TreeCurd 
     checkable
+    editEnable={false}
     getTreeData={()=>{
       return fetch('./').then(()=>{
           return [
