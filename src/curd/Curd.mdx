@@ -585,5 +585,113 @@ import { Input, DatePicker, Modal, Button } from 'antd';
 }
 </Playground>
 
+### 设置搜索表单的初始值
+
+<Playground>
+{
+  class Demo extends React.Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        columns:[
+          {
+            dataIndex:'name'
+          }
+        ],
+      }
+    }
+
+    render(){
+      return (
+        <div>
+          <Curd
+            name='aaa'
+            columns={this.state.columns}
+            searchFormProps={{
+              initialValues:{
+                name:'小王'
+              }
+            }}
+            searchItem={[
+              {
+                label: '姓名',
+                name: 'name',
+                content: <Input />,
+              }
+            ]}
+            getListFunction={(current, pageSize, searchParams)=>{
+              fetch('./');
+              return {
+                total:54,
+                dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+                  id:index,
+                  name:`${(current - 1) * pageSize + index} name`
+                }))
+              }
+            }}
+          />
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 在其它地方获取搜索参数
+
+<Playground>
+{
+  class Demo extends React.Component {
+
+    constructor(props){
+      super(props);
+      this.state = {
+        columns:[
+          {
+            dataIndex:'name'
+          }
+        ],
+      }
+    }
+
+    render(){
+      return (
+        <div>
+          <Button onClick={()=>{
+              Modal.confirm({
+                content:JSON.stringify(this.extraData.searchParams)
+              })
+          }}>获取CURD的搜索参数</Button>
+          <Curd
+            columns={this.state.columns}
+            searchItem={[
+              {
+                label: '姓名',
+                name: 'name',
+                content: <Input />,
+              }
+            ]}
+            renderTableExtra={(extraData)=>{
+              this.extraData = extraData;
+            }}
+            getListFunction={(current, pageSize, searchParams)=>{
+              fetch('./');
+              return {
+                total:54,
+                dataSource: new Array(pageSize).fill(0).map((_, index)=>({
+                  id:index,
+                  name:`${(current - 1) * pageSize + index} name`
+                }))
+              }
+            }}
+          />
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+
 ## 属性
 <Props of={Curd} />
