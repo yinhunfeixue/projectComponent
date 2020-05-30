@@ -92,9 +92,9 @@ interface ITreeCurdProps<T> extends IComponentProps {
   width?: number;
 
   /**
-   * 是否是一个是否可编辑的树
+   * 是否是一个是否可编辑的树,默认为true
    */
-  isEdit?: boolean;
+  editDisable?: boolean;
 
   /**
    * 树最小高度
@@ -396,7 +396,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       renderCheckExtra,
       showSearch,
       getNodeProps,
-      isEdit = true,
+      editDisable = true,
     } = this.props;
     let checkProps = {};
     if (checkable !== undefined) {
@@ -419,7 +419,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     return (
       <div className="TreeCurd">
         <div className={classnames('optContent', optClassOName)}>
-          {isEdit
+          {editDisable
             ? renderExtra
               ? renderExtra(
                   {
