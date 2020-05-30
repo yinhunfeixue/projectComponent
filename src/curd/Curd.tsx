@@ -210,6 +210,11 @@ interface ICurdProps<T> extends IComponentProps {
   showQuickJumper?: boolean;
 
   /**
+   * 显示总数量的方法, false表示不显示
+   */
+  showTotal?: ((total: number, range: [number, number]) => React.ReactNode) | false;
+
+  /**
    * 搜索表单项小于等于几时，使用inline，默认为3
    */
   inlineMaxNumber?: number;
@@ -490,6 +495,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
       tableProps,
       className,
       style,
+      showTotal,
     } = this.props;
     const { visibleCreate, visibleEdit, editRecord, visiblePreview } = this.state;
     const tableSelectedEnable = Boolean(
@@ -505,6 +511,7 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
         pageSize={pageSize}
         showSizeChanger={showSizeChanger}
         showQuickJumper={showQuickJumper}
+        showTotal={showTotal}
         tableProps={{
           scroll: {
             x: 800,

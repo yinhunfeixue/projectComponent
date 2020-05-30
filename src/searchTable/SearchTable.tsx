@@ -92,7 +92,7 @@ interface ISearchTableProps<T> extends IComponentProps {
   /**
    * 显示总数量的方法
    */
-  showTotal?: ((total: number, range: [number, number]) => React.ReactNode) | undefined;
+  showTotal?: ((total: number, range: [number, number]) => React.ReactNode) | false;
 
   /**
    * 表格的样式名
@@ -235,6 +235,10 @@ class SearchTable<T extends object = any> extends Component<
     });
   };
 
+  private defaultShowTotal(total: number, range: [number, number]): React.ReactNode {
+    return `共${total}项`;
+  }
+
   public render(): ReactNode {
     const {
       className,
@@ -245,7 +249,7 @@ class SearchTable<T extends object = any> extends Component<
       renderExtra,
       rowKey,
       disableAutoHidePage,
-      showTotal,
+      showTotal = this.defaultShowTotal,
       selectedEnable,
       showSizeChanger = true,
       showQuickJumper = true,
@@ -290,7 +294,7 @@ class SearchTable<T extends object = any> extends Component<
                   total,
                   current,
                   showQuickJumper,
-                  showTotal,
+                  showTotal: showTotal === false ? undefined : showTotal,
                   showSizeChanger,
                   pageSize: pageSize,
                   onChange: (value: number) => {
