@@ -1,8 +1,0 @@
-/yarn.lock
-/package-lock.json
-/dist
-/.docz
-/node_modules
-.doc
-npmlib
-lib
