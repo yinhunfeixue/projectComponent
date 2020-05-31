@@ -128,6 +128,8 @@ interface ISearchTableProps<T> extends IComponentProps {
    * 是否可拖动
    */
   dragEnable?: boolean;
+
+  defaultSearchParams?: any;
 }
 
 class SearchTable<T extends object = any> extends Component<
@@ -153,6 +155,7 @@ class SearchTable<T extends object = any> extends Component<
       dataSource: [],
       newColumns: this.props.columns,
       loading: false,
+      searchParams: props.defaultSearchParams,
     };
   }
 

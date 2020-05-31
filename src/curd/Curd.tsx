@@ -518,11 +518,12 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
           },
           ...tableProps,
         }}
+        defaultSearchParams={searchFormProps?.initialValues}
         style={style}
         className={classnames('fh-Curd', className)}
         selectedEnable={tableSelectedEnable}
         renderExtra={(extraData: ISearchTableExtra<T>) => {
-          const { setSearchParams, refresh } = extraData;
+          const { setSearchParams } = extraData;
           this.extraData = extraData;
           return (
             <React.Fragment>

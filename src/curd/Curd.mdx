@@ -523,7 +523,6 @@ import { Input, DatePicker, Modal, Button } from 'antd';
       content: <DatePicker.RangePicker />,
     }]}
     getListFunction={(current, pageSize, searchParams)=>{
-      fetch('./');
       return {
         total:54,
         dataSource: new Array(pageSize).fill(0).map((_, index)=>({
@@ -568,7 +567,6 @@ import { Input, DatePicker, Modal, Button } from 'antd';
             name='aaa'
             columns={this.state.columns}
             getListFunction={(current, pageSize, searchParams)=>{
-              fetch('./');
               return {
                 total:54,
                 dataSource: new Array(pageSize).fill(0).map((_, index)=>({
@@ -587,12 +585,22 @@ import { Input, DatePicker, Modal, Button } from 'antd';
 
 ### 设置搜索表单的初始值
 
+使用如下代码
+```
+searchFormProps={{
+      initialValues:{
+        name:'小王'
+      }
+    }}
+```
+
 <Playground>
 {
   class Demo extends React.Component {
     constructor(props){
       super(props);
       this.state = {
+        searchParams:null,
         columns:[
           {
             dataIndex:'name'
@@ -604,6 +612,9 @@ import { Input, DatePicker, Modal, Button } from 'antd';
     render(){
       return (
         <div>
+          <p>
+            {JSON.stringify(this.state.searchParams)}
+          </p>
           <Curd
             name='aaa'
             columns={this.state.columns}
@@ -620,7 +631,8 @@ import { Input, DatePicker, Modal, Button } from 'antd';
               }
             ]}
             getListFunction={(current, pageSize, searchParams)=>{
-              fetch('./');
+              console.log('搜索参数', searchParams)
+              this.setState({searchParams});
               return {
                 total:54,
                 dataSource: new Array(pageSize).fill(0).map((_, index)=>({
@@ -675,7 +687,6 @@ import { Input, DatePicker, Modal, Button } from 'antd';
               this.extraData = extraData;
             }}
             getListFunction={(current, pageSize, searchParams)=>{
-              fetch('./');
               return {
                 total:54,
                 dataSource: new Array(pageSize).fill(0).map((_, index)=>({
