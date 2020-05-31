@@ -45,6 +45,11 @@ export interface ISearchFormProps extends IComponentProps {
    * Form的初始化
    */
   initialValues?: Store;
+
+  /**
+   * 禁用
+   */
+  disabled?: boolean;
 }
 
 /**
@@ -80,35 +85,41 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
       style,
       inlineMaxNumber = 3,
       initialValues,
+      disabled,
     } = this.props;
     if (!itemList || !itemList.length) {
       return null;
     }
-    const list = itemList.concat([
-      {
-        content: (
-          <div className="fb-ControlGroup">
-            <span
-              onClick={() => {
-                this.submit();
-              }}
-            >
-              {this._defaultRenderSearchElement()}
-            </span>
-            <span
-              onClick={() => {
-                if (this.form) {
-                  this.form.resetFields();
+    let list = itemList;
+
+    console.log('disabled', disabled);
+    if (Boolean(!disabled)) {
+      list = list.concat([
+        {
+          content: (
+            <div className="fb-ControlGroup">
+              <span
+                onClick={() => {
                   this.submit();
-                }
-              }}
-            >
-              {this._defaultRenderResetElement()}
-            </span>
-          </div>
-        ),
-      },
-    ]);
+                }}
+              >
+                {this._defaultRenderSearchElement()}
+              </span>
+              <span
+                onClick={() => {
+                  if (this.form) {
+                    this.form.resetFields();
+                    this.submit();
+                  }
+                }}
+              >
+                {this._defaultRenderResetElement()}
+              </span>
+            </div>
+          ),
+        },
+      ]);
+    }
 
     const useHorizontal = columnNumber || itemList.length > inlineMaxNumber;
     return (
