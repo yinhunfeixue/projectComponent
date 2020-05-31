@@ -14,12 +14,12 @@ export interface ISearchFormProps extends IComponentProps {
   /**
    * 表单项，参考：IFormItemData
    */
-  itemList: IFormItemData[];
+  itemList?: IFormItemData[];
 
   /**
    * 提交数据时触发的方法
    */
-  onSubmit: (values: Store) => void;
+  onSubmit?: (values: Store) => void;
 
   /**
    * 每行默认的列数
@@ -65,7 +65,7 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
 
   private submit() {
     const { onSubmit } = this.props;
-    if (this.form) {
+    if (this.form && onSubmit) {
       this.form.validateFields().then(values => {
         onSubmit(values);
       });
@@ -75,7 +75,6 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
   public render(): ReactNode {
     const {
       itemList,
-      onSubmit,
       columnNumber,
       className,
       style,
