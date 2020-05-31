@@ -129,6 +129,9 @@ interface ISearchTableProps<T> extends IComponentProps {
    */
   dragEnable?: boolean;
 
+  /**
+   * 默认搜索参数
+   */
   defaultSearchParams?: any;
 }
 
