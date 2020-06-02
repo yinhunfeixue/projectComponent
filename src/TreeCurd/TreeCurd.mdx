@@ -160,7 +160,7 @@ import FormUtil from '../utils/FormUtil'
 ## 可以设置为可多选的树
 <Playground>
   <TreeCurd 
-    checkable
+    checkable  
     editEnable={false}
     getTreeData={()=>{
       return fetch('./').then(()=>{
@@ -202,6 +202,67 @@ import FormUtil from '../utils/FormUtil'
      }
   
   />
+</Playground>
+
+## 自定义结点props
+
+## 设置onCheck回调
+<Playground>
+{
+  class Demo extends React.Component {
+    constructor(props) {
+      super(props);
+      this.formRef = React.createRef();
+      this.state= {
+       checkedItems: []
+      }
+    }
+    render() {
+      return (
+          <TreeCurd 
+            getKey='id'
+            deleteFunction={(ids) => message.info(ids)}
+            checkable  
+            editEnable={false}
+            onCheck={(extraData) => {
+              const {checkedItems} = extraData;
+              this.setState({
+                checkedItems
+              }, () => {
+                console.log(this.state.checkedItems);
+              })
+            }}
+            getTreeData={()=>{
+              return fetch('./').then(()=>{
+                  return [
+                    {
+                      id: "0-0",
+                      name: "0-0",
+                      children: [
+                        {
+                          id: "0-0-1",
+                          name: "0-0-1",
+                        }
+                      ]
+                    },
+                    {
+                      id: "0-1",
+                      name: "0-1",
+                      children: [
+                        {
+                          id: "0-1-1",
+                          name: "0-1-1",
+                        }
+                      ]
+                    }
+                  ]
+              })
+            }}
+        />
+      )
+    }
+  }
+}
 </Playground>
 
 

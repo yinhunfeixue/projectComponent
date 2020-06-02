@@ -87,6 +87,11 @@ interface ITreeCurdProps<T> extends IComponentProps {
   getChildren?: ((item: T) => T[]) | string;
 
   /**
+   * 选中回调
+   */
+  onCheck?: (extraData: ITreeCurdExtra<T>) => void;
+
+  /**
    * 树的宽度
    */
   width?: number;
@@ -222,14 +227,34 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     });
   };
 
+  private getExtraData = () => {
+    const { checkedKeys, checkedItems, selectedKeys, selectedItems, loading } = this.state;
+    return {
+      checkedKeys,
+      checkedItems,
+      selectedKeys,
+      selectedItems,
+      loading,
+      refresh: this.refresh,
+    };
+  };
+
   private updateCheckedItems = () => {
     const { checkedKeys } = this.state;
     const checkedItems: T[] = [];
     const { treeData } = this.state;
     this.getItemsByIds(treeData, checkedKeys, checkedItems);
-    this.setState({
-      checkedItems,
-    });
+    this.setState(
+      {
+        checkedItems,
+      },
+      () => {
+        const extraData = this.getExtraData();
+        if (this.props.onCheck) {
+          this.props.onCheck(extraData);
+        }
+      },
+    );
   };
 
   componentDidUpdate(prveProps: ITreeCurdProps<T>) {
@@ -421,25 +446,8 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
         <div className={classnames('optContent', optClassOName)}>
           {editEnable
             ? renderExtra
-              ? renderExtra(
-                  {
-                    selectedKeys,
-                    selectedItems,
-                    checkedKeys,
-                    checkedItems,
-                    loading,
-                    refresh: this.refresh,
-                  },
-                  this.defaultRenderOptItem,
-                )
-              : this.defaultRenderOptItem({
-                  selectedKeys,
-                  selectedItems,
-                  checkedKeys,
-                  checkedItems,
-                  loading,
-                  refresh: this.refresh,
-                })
+              ? renderExtra(this.getExtraData(), this.defaultRenderOptItem)
+              : this.defaultRenderOptItem(this.getExtraData())
             : null}
         </div>
         <div className="treeCurdContent" style={{ minHeight }}>
@@ -467,28 +475,12 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
             </Spin>
             <div className={classnames('checkContent', checkClassName)}>
               {checkable !== undefined && renderCheckExtra
-                ? renderCheckExtra({
-                    selectedKeys,
-                    selectedItems,
-                    checkedKeys,
-                    checkedItems,
-                    loading,
-                    refresh: this.refresh,
-                  })
+                ? renderCheckExtra(this.getExtraData())
                 : null}
             </div>
           </div>
           <div className={classnames('editContent', editContentClassName)}>
-            {renderEditExtra &&
-              renderEditExtra({
-                selectedKeys,
-                selectedItems,
-                checkedKeys,
-                checkedItems,
-                loading,
-                refresh: this.refresh,
-                type,
-              })}
+            {renderEditExtra && renderEditExtra(this.getExtraData())}
           </div>
         </div>
       </div>
