@@ -446,25 +446,8 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
         <div className={classnames('optContent', optClassOName)}>
           {editEnable
             ? renderExtra
-              ? renderExtra(
-                  {
-                    selectedKeys,
-                    selectedItems,
-                    checkedKeys,
-                    checkedItems,
-                    loading,
-                    refresh: this.refresh,
-                  },
-                  this.defaultRenderOptItem,
-                )
-              : this.defaultRenderOptItem({
-                  selectedKeys,
-                  selectedItems,
-                  checkedKeys,
-                  checkedItems,
-                  loading,
-                  refresh: this.refresh,
-                })
+              ? renderExtra(this.getExtraData(), this.defaultRenderOptItem)
+              : this.defaultRenderOptItem(this.getExtraData())
             : null}
         </div>
         <div className="treeCurdContent" style={{ minHeight }}>
