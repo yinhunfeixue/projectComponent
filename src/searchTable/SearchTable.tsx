@@ -4,6 +4,10 @@ import React, { Component, ReactNode } from 'react';
 import IComponentProps from '../interfaces/IComponentProps';
 const { Column } = Table;
 
+export interface ITableResponse<T> {
+  dataSource: T[];
+  total: number;
+}
 export interface ISearchTableExtra<T> {
   /**
    * 当前选中的key列表
@@ -67,10 +71,7 @@ interface ISearchTableProps<T> extends IComponentProps {
     currentPage: number,
     pageSize: number,
     searchParams: any,
-  ) => Promise<{
-    dataSource: T[];
-    total: number;
-  }>;
+  ) => Promise<ITableResponse<T>>;
 
   rowKey?: ((record: T) => string) | string;
 
@@ -133,6 +134,16 @@ interface ISearchTableProps<T> extends IComponentProps {
    * 默认搜索参数
    */
   defaultSearchParams?: any;
+
+  /**
+   * 搜索参数变化时触发的事件
+   */
+  onSearchParamsChange?: (searchParams: any) => void;
+
+  /**
+   * 数据源发生变化时触发的事件
+   */
+  onDataChange?: (data: ITableResponse<T>) => void;
 }
 
 class SearchTable<T extends object = any> extends Component<
@@ -198,25 +209,35 @@ class SearchTable<T extends object = any> extends Component<
   }
 
   private setSearchParams = (searchParams: any) => {
+    const { onSearchParamsChange } = this.props;
     this.setState({ searchParams }, () => {
       this.changePage(1);
+      if (onSearchParamsChange) {
+        onSearchParamsChange(searchParams);
+      }
     });
   };
 
   private async requestList() {
-    const { getListFunction } = this.props;
+    const { getListFunction, onDataChange } = this.props;
     const { searchParams } = this.state;
     const { current } = this.state;
 
     this.setLoading(true);
     const res = await getListFunction(current, this.pageSize, searchParams);
     this.setLoading(false);
+    const data: ITableResponse<T> = {
+      dataSource: res.dataSource,
+      total: res.total,
+    };
     this.setState(
       {
-        dataSource: res.dataSource,
-        total: res.total,
+        ...data,
       },
       () => {
+        if (onDataChange) {
+          onDataChange(data);
+        }
         if (this.state.current > this.maxPageIndex) {
           this.changePage();
         }

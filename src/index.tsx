@@ -13,7 +13,7 @@ import IFormItemData from './interfaces/IFormItemData';
 import LimitUpload from './limitUpload/LimitUpload';
 import PowerImg from './powerImg/PowerImg';
 import SearchForm from './searchForm/SearchForm';
-import SearchTable, { ISearchTableExtra } from './searchTable/SearchTable';
+import SearchTable, { ISearchTableExtra, ITableResponse } from './searchTable/SearchTable';
 import TreeCurd, { EditType } from './TreeCurd/TreeCurd';
 import AntdUtil from './utils/AntdUtil';
 import FormUtil from './utils/FormUtil';
@@ -44,4 +44,5 @@ export {
   CountUp,
   TimeSpan,
   TreeControl,
+  ITableResponse,
 };

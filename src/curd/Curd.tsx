@@ -6,7 +6,7 @@ import ConfirmButton from '../confirmButton/ConfirmButton';
 import IComponentProps from '../interfaces/IComponentProps';
 import IFormItemData from '../interfaces/IFormItemData';
 import SearchForm, { ISearchFormProps } from '../searchForm/SearchForm';
-import SearchTable, { ISearchTableExtra } from '../searchTable/SearchTable';
+import SearchTable, { ISearchTableExtra, ITableResponse } from '../searchTable/SearchTable';
 import './Curd.less';
 
 const classnames = require('classnames');
@@ -41,10 +41,7 @@ interface ICurdProps<T> extends IComponentProps {
     currentPage: number,
     pageSize: number,
     searchParams: any,
-  ) => Promise<{
-    dataSource: T[];
-    total: number;
-  }>;
+  ) => Promise<ITableResponse<T>>;
 
   /**
    * 数据标识符，可以是属性名称或者一个函数，如果是函数，返回值表示标识符的值
@@ -219,9 +216,25 @@ interface ICurdProps<T> extends IComponentProps {
    */
   inlineMaxNumber?: number;
 
+  /**
+   * 传递给搜索表单的props
+   */
   searchFormProps?: ISearchFormProps;
 
+  /**
+   * 传递给表格的props
+   */
   tableProps?: TableProps<T>;
+
+  /**
+   * 搜索参数变化时触发的事件
+   */
+  onSearchParamsChange?: (searchParams: any) => void;
+
+  /**
+   * 数据源发生变化时触发的事件
+   */
+  onDataChange?: (data: ITableResponse<T>) => void;
 }
 
 /**
@@ -477,6 +490,8 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
     const {
       columns,
       getListFunction,
+      onDataChange,
+      onSearchParamsChange,
       rowKey = 'id',
       deleteFunction,
       selectedEnable,
@@ -507,6 +522,8 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
       <SearchTable<T>
         columns={editColumn ? columns.concat([editColumn]) : columns}
         getListFunction={getListFunction}
+        onDataChange={onDataChange}
+        onSearchParamsChange={onSearchParamsChange}
         rowKey={rowKey}
         pageSize={pageSize}
         showSizeChanger={showSizeChanger}

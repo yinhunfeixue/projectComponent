@@ -640,33 +640,49 @@ import { Input, DatePicker, Modal, Button } from 'antd';
 }
 </Playground>
 
-### 在其它地方获取搜索参数
+### 获取搜索参数、列表数据变化的事件
 
+修改搜索内容，点击搜索按钮，观察表格上方信息的变化
+```
+onDataChange
+onSearchParamsChange
+```
 <Playground>
 {
   class Demo extends React.Component {
-
     constructor(props){
       super(props);
       this.state = {
-        columns:[
-          {
-            dataIndex:'name'
-          }
-        ],
+        data:{},
+        searchParams:{}
       }
     }
-
     render(){
+      const {data, searchParams} = this.state;
       return (
         <div>
-          <Button onClick={()=>{
-              Modal.confirm({
-                content:JSON.stringify(this.extraData.searchParams)
-              })
-          }}>获取CURD的搜索参数</Button>
+          <div>
+            <h4>搜索参数</h4>
+            {
+              JSON.stringify(searchParams)
+            }
+          </div>
+          <div>
+            <h4>列表数据</h4>
+            {data && data.total}
+          </div>
           <Curd
-            columns={this.state.columns}
+            onDataChange={(data)=>{
+              this.setState({data});
+            }}
+            onSearchParamsChange={(searchParams)=>{
+              this.setState({searchParams});
+            }}
+            columns={[
+              {
+                dataIndex:'name'
+              }
+            ]}
             searchItem={[
               {
                 label: '姓名',
@@ -679,7 +695,7 @@ import { Input, DatePicker, Modal, Button } from 'antd';
             }}
             getListFunction={(current, pageSize, searchParams)=>{
               return {
-                total:54,
+                total: Math.floor(30 + Math.random() * 100),
                 dataSource: new Array(pageSize).fill(0).map((_, index)=>({
                   id:index,
                   name:`${(current - 1) * pageSize + index} name`

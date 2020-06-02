@@ -35,6 +35,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "rc-tree": "^3.2.2",
+    "react-github-btn": "^1.2.0",
     "react-zmage": "^0.8.5"
   }
 }

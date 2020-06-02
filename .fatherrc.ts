@@ -11,6 +11,15 @@ const options: IBundleOptions = {
     typescript: true,
     title: '烽火工程组件',
     base: '/projectComponent/',
+    htmlContext: {
+      lang: '',
+      head: {
+        raw: '',
+        links: [],
+        meta: [],
+        scripts: [],
+      },
+    },
   },
   extraBabelPlugins: [
     [
