@@ -218,6 +218,31 @@ import { Input, Modal } from 'antd';
   />
 </Playground>
 
+## 禁用
+
+<Playground>
+  <SearchForm
+    disabled
+    itemList={[
+      {
+        label: '参数1',
+        content: <Input />,
+        name: 'name',
+      },
+      {
+        label: '参数2',
+        content: <Input />,
+        name: 'name2',
+      },
+    ]}
+    onSubmit={(values) => {
+      Modal.confirm({
+        content: JSON.stringify(values)
+      });
+    }}
+  />
+</Playground>
+
 ## 属性
 
 <Props of={SearchForm} />
