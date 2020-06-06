@@ -214,7 +214,8 @@ import FormUtil from '../utils/FormUtil'
       super(props);
       this.formRef = React.createRef();
       this.state= {
-       checkedItems: []
+       checkedItems:[],
+       defaultCheckedKeys: []
       }
     }
     render() {
@@ -224,13 +225,14 @@ import FormUtil from '../utils/FormUtil'
             deleteFunction={(ids) => message.info(ids)}
             checkable  
             editEnable={false}
-            onCheck={(extraData) => {
-              const {checkedItems} = extraData;
+            onCheck={(extraData, checkedInfo) => {
+              const {checkedItems} = extraData;  
+              const { checkedNodes } = checkedInfo; 
+              const defaultCheckedKeys = checkedNodes.filter(item => (!item.children || !item.children.length)).map(item => item.key);                    
               this.setState({
-                checkedItems
-              }, () => {
-                console.log(this.state.checkedItems);
+                checkedItems,
               })
+              return defaultCheckedKeys;
             }}
             getTreeData={()=>{
               return fetch('./').then(()=>{
