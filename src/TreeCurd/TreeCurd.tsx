@@ -92,6 +92,11 @@ interface ITreeCurdProps<T> extends IComponentProps {
   onCheck?: (extraData: ITreeCurdExtra<T>) => void;
 
   /**
+   * 展开回调
+   */
+  onExpand?: (expandedKeys: React.ReactText[]) => void;
+
+  /**
    * 树的宽度
    */
   width?: number;
@@ -257,15 +262,6 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     );
   };
 
-  componentDidUpdate(prveProps: ITreeCurdProps<T>) {
-    if (
-      this.props.defaultCheckedKeys !== prveProps.defaultCheckedKeys ||
-      this.props.defaultExpandedKeys !== prveProps.defaultExpandedKeys
-    ) {
-      this.requestTreeData();
-    }
-  }
-
   private setLoading(loading: boolean) {
     this.setState({ loading });
   }
@@ -295,7 +291,8 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
         const children = this.getNodeChildren(node0);
         if (children && children.length) {
           const key = this.getItemKey(node0);
-          expandedKeys = defaultExpandedKeys ? defaultExpandedKeys : [key];
+          expandedKeys =
+            defaultExpandedKeys && defaultExpandedKeys.length > 0 ? defaultExpandedKeys : [key];
         }
       }
       if (defaultCheckedKeys) {
@@ -345,9 +342,16 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   };
 
   private onExpand = (expandedKeys: React.ReactText[]) => {
-    this.setState({
-      expandedKeys,
-    });
+    this.setState(
+      {
+        expandedKeys,
+      },
+      () => {
+        if (this.props.onExpand) {
+          this.props.onExpand(expandedKeys);
+        }
+      },
+    );
   };
 
   private onCheck = (checkedKeys: React.ReactText[]) => {
@@ -463,7 +467,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
               </div>
             )}
 
-            <Spin spinning={loading}>
+            <Spin spinning={this.props.onExpand ? false : loading}>
               {AntdUtil.rendeTree<T>(
                 treeData,
                 TreeProps,
