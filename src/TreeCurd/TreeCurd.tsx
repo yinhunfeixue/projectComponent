@@ -89,7 +89,12 @@ interface ITreeCurdProps<T> extends IComponentProps {
   /**
    * 选中回调
    */
-  onCheck?: (extraData: ITreeCurdExtra<T>) => void;
+  onCheck?: (
+    extraData: ITreeCurdExtra<T>,
+    checkedInfo: {
+      checkedNodes: DataNode[];
+    },
+  ) => any;
 
   /**
    * 展开回调
@@ -244,7 +249,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     };
   };
 
-  private updateCheckedItems = () => {
+  private updateCheckedItems = (checkedInfo: { checkedNodes: DataNode[] }) => {
     const { checkedKeys } = this.state;
     const checkedItems: T[] = [];
     const { treeData } = this.state;
@@ -256,7 +261,12 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       () => {
         const extraData = this.getExtraData();
         if (this.props.onCheck) {
-          this.props.onCheck(extraData);
+          const defaultCheckedKeys = this.props.onCheck(extraData, checkedInfo);
+          if (defaultCheckedKeys) {
+            this.setState({
+              checkedKeys: defaultCheckedKeys,
+            });
+          }
         }
       },
     );
@@ -354,13 +364,18 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     );
   };
 
-  private onCheck = (checkedKeys: React.ReactText[]) => {
+  private onCheck = (
+    checkedKeys: React.ReactText[],
+    checkedInfo: {
+      checkedNodes: DataNode[];
+    },
+  ) => {
     this.setState(
       {
         checkedKeys,
       },
       () => {
-        this.updateCheckedItems();
+        this.updateCheckedItems(checkedInfo);
       },
     );
   };
