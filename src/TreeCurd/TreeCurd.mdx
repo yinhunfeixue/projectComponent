@@ -541,12 +541,23 @@ name='0-0'的  style.color = 'red'
     constructor(props) {
       super(props);
       this.formRef = React.createRef();
+      this.state = {
+        expandedKeys: []
+      }
     }
     render() {
       return (
           <TreeCurd 
             getKey='id'
             deleteFunction={(ids) => message.info(ids)}
+            defaultExpandedKeys={this.state.expandedKeys}
+            onExpand={
+              (expandedKeys) => {
+                this.setState({
+                  expandedKeys
+                })
+              }
+            }
             getTreeData={()=>{
               return fetch('./').then(()=>{
                   return [
