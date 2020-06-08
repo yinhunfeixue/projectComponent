@@ -50,6 +50,11 @@ export interface ISearchFormProps extends IComponentProps {
    * 禁用
    */
   disabled?: boolean;
+
+  /**
+   * 获取表单实例，需要联动时，需要使用此方法
+   */
+  getFormInstance: (form: FormInstance | null) => void;
 }
 
 /**
@@ -86,13 +91,13 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
       inlineMaxNumber = 3,
       initialValues,
       disabled,
+      getFormInstance,
     } = this.props;
     if (!itemList || !itemList.length) {
       return null;
     }
     let list = itemList;
 
-    console.log('disabled', disabled);
     if (Boolean(!disabled)) {
       list = list.concat([
         {
@@ -126,6 +131,9 @@ class SearchForm extends Component<ISearchFormProps, ISearchFormState> {
       <Form
         ref={target => {
           this.form = target;
+          if (getFormInstance) {
+            getFormInstance(this.form);
+          }
         }}
         initialValues={initialValues}
         className={classnames(
