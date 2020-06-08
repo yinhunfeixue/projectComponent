@@ -343,8 +343,9 @@ class SearchTable<T extends object = any> extends Component<
                 }
               : undefined
           }
+          columns={newColumns}
         >
-          {newColumns.map((item, index) => (
+          {/* {newColumns.map((item, index) => (
             <Column<T>
               key={index}
               title={
@@ -376,7 +377,7 @@ class SearchTable<T extends object = any> extends Component<
               }
               {...item}
             />
-          ))}
+          ))} */}
         </Table>
       </div>
     );

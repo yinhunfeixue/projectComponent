@@ -518,9 +518,11 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
         (selectedEnable === undefined && !disabledDelete && deleteFunction),
     );
     const editColumn = this.getEditColumn();
+    const useColumns = editColumn ? columns.concat([editColumn]) : columns;
+    console.log('useColumns', useColumns);
     return (
       <SearchTable<T>
-        columns={editColumn ? columns.concat([editColumn]) : columns}
+        columns={useColumns}
         getListFunction={getListFunction}
         onDataChange={onDataChange}
         onSearchParamsChange={onSearchParamsChange}

@@ -54,7 +54,7 @@ export interface ISearchFormProps extends IComponentProps {
   /**
    * 获取表单实例，需要联动时，需要使用此方法
    */
-  getFormInstance: (form: FormInstance | null) => void;
+  getFormInstance?: (form: FormInstance | null) => void;
 }
 
 /**
