@@ -225,14 +225,15 @@ import FormUtil from '../utils/FormUtil'
             deleteFunction={(ids) => message.info(ids)}
             checkable  
             editEnable={false}
+            defaultCheckedKeys={this.state.defaultCheckedKeys}
             onCheck={(extraData, checkedInfo) => {
               const {checkedItems} = extraData;  
               const { checkedNodes } = checkedInfo; 
               const defaultCheckedKeys = checkedNodes.filter(item => (!item.children || !item.children.length)).map(item => item.key);                    
               this.setState({
                 checkedItems,
+                defaultCheckedKeys
               })
-              return defaultCheckedKeys;
             }}
             getTreeData={()=>{
               return fetch('./').then(()=>{
@@ -254,6 +255,10 @@ import FormUtil from '../utils/FormUtil'
                         {
                           id: "0-1-1",
                           name: "0-1-1",
+                        },
+                        {
+                          id: "0-1-2",
+                          name: "0-1-2",
                         }
                       ]
                     }
