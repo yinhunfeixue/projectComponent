@@ -14,6 +14,7 @@ import LimitUpload from './limitUpload/LimitUpload';
 import PowerImg from './powerImg/PowerImg';
 import SearchForm from './searchForm/SearchForm';
 import SearchTable, { ISearchTableExtra, ITableResponse } from './searchTable/SearchTable';
+import Text from './text/Text';
 import TreeCurd, { EditType } from './TreeCurd/TreeCurd';
 import AntdUtil from './utils/AntdUtil';
 import FormUtil from './utils/FormUtil';
@@ -45,4 +46,5 @@ export {
   TimeSpan,
   TreeControl,
   ITableResponse,
+  Text,
 };
