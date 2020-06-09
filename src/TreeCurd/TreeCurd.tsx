@@ -244,7 +244,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   }
 
   private getExtraData = () => {
-    const { checkedKeys, checkedItems, selectedKeys, selectedItems, loading } = this.state;
+    const { checkedKeys, checkedItems, selectedKeys, selectedItems, loading, type } = this.state;
     return {
       checkedKeys,
       checkedItems,
@@ -252,6 +252,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
       selectedItems,
       loading,
       refresh: this.refresh,
+      type,
     };
   };
 
