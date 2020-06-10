@@ -239,7 +239,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
 
   componentDidUpdate(prevProps: ITreeCurdProps<T>) {
     if (prevProps.defaultCheckedKeys !== this.props.defaultCheckedKeys) {
-      this.requestTreeData('checked');
+      this.requestTreeData();
     }
   }
 
@@ -304,37 +304,23 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
         if (children && children.length) {
           const key = this.getItemKey(node0);
           expandedKeys =
-            defaultExpandedKeys && defaultExpandedKeys.length > 0 && type
-              ? defaultExpandedKeys
-              : [key];
+            defaultExpandedKeys && defaultExpandedKeys.length > 0 ? defaultExpandedKeys : [key];
         }
       }
       if (defaultCheckedKeys) {
         checkedKeys = defaultCheckedKeys;
       }
 
-      if (type) {
-        this.setState(
-          {
-            treeData: res,
-            checkedKeys,
-          },
-          () => {
-            resolve();
-          },
-        );
-      } else {
-        this.setState(
-          {
-            treeData: res,
-            expandedKeys,
-            checkedKeys,
-          },
-          () => {
-            resolve();
-          },
-        );
-      }
+      this.setState(
+        {
+          treeData: res,
+          expandedKeys,
+          checkedKeys,
+        },
+        () => {
+          resolve();
+        },
+      );
     });
   };
 
