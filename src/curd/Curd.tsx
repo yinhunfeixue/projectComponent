@@ -519,7 +519,6 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
     );
     const editColumn = this.getEditColumn();
     const useColumns = editColumn ? columns.concat([editColumn]) : columns;
-    console.log('useColumns', useColumns);
     return (
       <SearchTable<T>
         columns={useColumns}

@@ -6,6 +6,11 @@ const classnames = require('classnames');
 
 interface ICountUpProps {
   /**
+   * 服务器时间戳，如果不传，以客户端时间为准
+   */
+  serverTimestamp?: number;
+
+  /**
    * 计时开始时间
    */
   startTime: string;
@@ -29,14 +34,21 @@ interface ICountUpProps {
  * @param props
  */
 const CountUp = (props: ICountUpProps) => {
-  const { countUpClassName, startTime, format } = props;
+  const { countUpClassName, startTime, format, serverTimestamp } = props;
 
   const [time, setTime] = useState(new TimeSpan());
+  const [servTimeChangeTime, setServTimeChangeTime] = useState(Date.now());
 
   const updateTime = () => {
-    const count = moment().valueOf() - moment(startTime).valueOf();
+    const now = serverTimestamp ? serverTimestamp + (Date.now() - servTimeChangeTime) : Date.now();
+    const count = now - moment(startTime).valueOf();
     setTime(new TimeSpan(0, 0, 0, 0, count));
   };
+
+  useEffect(() => {
+    console.log('setServTimeChangeTime');
+    setServTimeChangeTime(Date.now());
+  }, [serverTimestamp]);
 
   useEffect(() => {
     updateTime();
@@ -47,6 +59,7 @@ const CountUp = (props: ICountUpProps) => {
       clearInterval(countUp);
     };
   }, [startTime]);
+
   return (
     <div className={classnames('countUpContent', countUpClassName)}>{time.format(format)}</div>
   );
