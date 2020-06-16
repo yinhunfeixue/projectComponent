@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import Form from 'antd/lib/form/Form';
 import { Store } from 'antd/lib/form/interface';
+import L from 'lodash';
 import React, { Component, ReactNode } from 'react';
 import EditFormType from '../enums/EditFormType';
 import IComponentProps from '../interfaces/IComponentProps';
@@ -8,8 +9,9 @@ import IFormItemData from '../interfaces/IFormItemData';
 import FormUtil from '../utils/FormUtil';
 import './EditForm.less';
 
-interface IEditFormState {
+interface IEditFormState<T> {
   loading: boolean;
+  source?: T;
 }
 interface IEditFormProps<T> extends IComponentProps {
   /**
@@ -21,6 +23,12 @@ interface IEditFormProps<T> extends IComponentProps {
    * 编辑函数，then表示成功，catch表示异常
    */
   updateFunction?: (value: Store, source: T) => Promise<any>;
+
+  /**
+   * 获取源数据完整信息的方法。
+   * 当props.source只是部分信息，而表单中需要展示完整信息时，需通过此方法获取完整数据
+   */
+  getDetailFunction?: (source: T) => Promise<T>;
 
   /**
    * 源数据，如果是“编辑模式”，且设置了“源数据”，保存时调用编辑函数
@@ -66,7 +74,7 @@ interface IEditFormProps<T> extends IComponentProps {
 /**
  * 编辑表单，支持：编辑，阅读两种模式；会自行判断是新增还是修改
  */
-class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormState> {
+class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormState<T>> {
   constructor(props: IEditFormProps<T>) {
     super(props);
     this.state = {
@@ -74,8 +82,32 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
     };
   }
 
+  componentDidMount() {
+    this.updateStateSource();
+  }
+
+  componentDidUpdate(prevProps: IEditFormProps<T>) {
+    if (!L.isEqual(this.props.source, prevProps.source)) {
+      this.updateStateSource();
+    }
+  }
+
+  private async updateStateSource() {
+    const { source, getDetailFunction } = this.props;
+    const { source: stateSource } = this.state;
+    if (!source) {
+      this.setState({ source: undefined });
+    } else if (getDetailFunction) {
+      const data = await getDetailFunction(source);
+      this.setState({ source: data });
+    } else {
+      this.setState({ source });
+    }
+  }
+
   private save(value: Store) {
-    const { source, addFunction, updateFunction, onOk, onError } = this.props;
+    const { addFunction, updateFunction, onOk, onError } = this.props;
+    const { source } = this.state;
     let promise: Promise<any> | null = null;
     if (source) {
       if (updateFunction) {
@@ -141,7 +173,8 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
   }
 
   public render(): ReactNode {
-    const { formItemList, columnsCount = 1, source, key = 'id' } = this.props;
+    const { formItemList, columnsCount = 1, key = 'id' } = this.props;
+    const { source } = this.state;
     const controlList: IFormItemData[] = this.getControlList();
     const readOnly = this.readOnly;
     if (readOnly) {
