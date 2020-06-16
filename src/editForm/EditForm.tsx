@@ -3,7 +3,6 @@ import Form from 'antd/lib/form/Form';
 import { Store } from 'antd/lib/form/interface';
 import L from 'lodash';
 import React, { Component, ReactNode } from 'react';
-import EditFormType from '../enums/EditFormType';
 import IComponentProps from '../interfaces/IComponentProps';
 import IFormItemData from '../interfaces/IFormItemData';
 import FormUtil from '../utils/FormUtil';
@@ -36,11 +35,6 @@ export interface IEditFormProps<T> extends IComponentProps {
   source?: T;
 
   /**
-   * 窗口模式，编辑还是查看
-   */
-  type?: EditFormType;
-
-  /**
    * 表单项列表
    */
   formItemList: IFormItemData[];
@@ -51,7 +45,7 @@ export interface IEditFormProps<T> extends IComponentProps {
   columnsCount?: number;
 
   /**
-   * 标识属性名称
+   * 主键名称
    */
   key?: string;
 
