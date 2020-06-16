@@ -13,7 +13,7 @@ interface IEditFormState<T> {
   loading: boolean;
   source?: T;
 }
-interface IEditFormProps<T> extends IComponentProps {
+export interface IEditFormProps<T> extends IComponentProps {
   /**
    * 新增函数，then表示成功，catch表示异常
    */
