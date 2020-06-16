@@ -1,0 +1,280 @@
+---
+name: EditForm
+route: /EditForm
+order: -1
+sidebar: true
+menu: 组件
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import { Form, InputNumber, Input, Radio, Modal, Button} from 'antd';
+import EditForm from './EditForm';
+
+# 编辑表单
+编辑表单具有3种状态
++ 新增--source属性为空
++ 编辑--source属性不为空，updateFunction不为空
++ 阅读--source属性不为空，updateFunction为空
+
+编辑表单为你处理了
++ 根据不同状态显示或隐藏保存、取消按钮
++ 请求时，显示保存按钮动画，禁用取消
++ 阅读时，给表单元素加上disbled属性
++ 借助FormUtil进行了元素对齐
+
+## 新增
+无source时，为新增状态
+
+<Playground>
+  <EditForm   
+    formItemList={[
+      {
+        name:'nickName',
+        label:'姓名',
+        content: <Input />,
+        rules:[
+          {
+            required:true,
+            message:'请填写姓名'
+          }
+        ]
+      },
+      {
+        name:'age',
+        label:'年龄',
+        content:<InputNumber />
+      }
+    ]} 
+    addFunction={(value)=>{
+      Modal.confirm({
+        title:'新增',
+        content:JSON.stringify(value)
+      })
+      return fetch('./add');
+    }}
+  />
+</Playground>
+
+## 编辑
+source、updateFunction不为空时，编辑状态
+
+<Playground>
+  <EditForm   
+    formItemList={[
+      {
+        name:'nickName',
+        label:'姓名',
+        content: <Input />,
+        rules:[
+          {
+            required:true,
+            message:'请填写姓名'
+          }
+        ]
+      }
+    ]} 
+    source={{
+      id: 1,
+      nickName: 'aa',
+    }}
+    updateFunction={(value, source)=>{
+      Modal.confirm({
+        title:'编辑',
+        content:`新数据：${JSON.stringify(value)}。 原数据：${JSON.stringify(source)}`
+      })
+      return fetch('./');
+    }}
+  />
+</Playground>
+
+## 阅读
+source不为空，updateFunction为空，阅读状态。
+
+阅读状态下，会自动给组件加上disabled=true，请确认表单组件支持disabled属性，或组件本身已不可编辑
+
+<Playground>
+  <EditForm   
+    formItemList={[
+      {
+        name:'nickName',
+        label:'姓名',
+        content: <Input />,
+        rules:[
+          {
+            required:true,
+            message:'请填写姓名'
+          }
+        ]
+      }
+    ]} 
+    source={{
+      id: 1,
+      nickName: 'aa',
+    }}
+  />
+</Playground>
+
+## 一行设置多列
+
+<Playground>
+  <EditForm   
+    columnsCount={2}
+    formItemList={[
+      {
+        name:'nickName',
+        label:'姓名',
+        content: <Input />,
+        rules:[
+          {
+            required:true,
+            message:'请填写姓名'
+          }
+        ]
+      },
+      {
+        name:'age',
+        label:'年龄',
+        content:<InputNumber />
+      }
+    ]} 
+    addFunction={(value)=>{
+      Modal.confirm({
+        title:'新增',
+        content:JSON.stringify(value)
+      })
+      return fetch('./');
+    }}
+  />
+</Playground>
+
+## 和弹窗结合
+
+设置了一个源数据，对于源数据，使用弹窗的方式进行新增、修改、查看。
+
++ 新增时，表单组件无默认数据
++ 编辑时，表单组件有默认数据
+
+<Playground>
+{
+  class Demo extends React.Component{
+    constructor(props){
+      super(props);
+      this.formItemList = [
+        {
+          name:'nickName',
+          label:'姓名',
+          content: <Input />,
+          rules:[
+            {
+              required:true,
+              message:'请填写姓名'
+            }
+          ]
+        },
+        {
+          name:'age',
+          label:'年龄',
+          content:<InputNumber />
+        }
+      ];
+      this.state ={
+        visibleModal:false,
+        source:{
+          id:1,
+          nickName:'aaaa',
+          age:45
+        },
+        editSource:null,
+        addFunction:null,
+        updateFunction:null,
+      }
+    }
+
+    addFunction(value){
+      Modal.confirm({
+        title:'新增',
+        content:JSON.stringify(value)
+      })
+      return fetch('./add');
+    }
+
+    updateFunction(value) {
+      Modal.confirm({
+        title:'新增',
+        content:JSON.stringify(value)
+      })
+      return fetch('./update');
+    }
+
+    cancelEdit(){
+      this.setState({visibleModal: false});
+    }
+
+    render(){
+      const {visibleModal, editSource, updateFunction, addFunction, source} = this.state;
+      return (
+        <div>
+          <div>
+            <Button 
+              onClick={()=>{
+                this.setState({
+                  visibleModal: true,
+                  addFunction: this.addFunction,
+                  updateFunction: this.updateFunction,
+                  editSource: null
+                })
+              }}
+            >
+              新增
+            </Button>
+            <Button 
+              onClick={()=>{
+                this.setState({
+                  visibleModal: true,
+                  addFunction: this.addFunction,
+                  updateFunction: this.updateFunction,
+                  editSource: source
+                })
+              }}
+            >
+              编辑
+            </Button>
+            <Button 
+              onClick={()=>{
+                this.setState({
+                  visibleModal: true,
+                  addFunction: this.addFunction,
+                  updateFunction: null,
+                  editSource: source
+                })
+              }}
+            >
+              查看
+            </Button>
+          </div>
+          <Modal 
+            visible={visibleModal} 
+            footer={null} 
+            title='新增' 
+            onCancel={this.cancelEdit.bind(this)}
+            destroyOnClose
+          >
+            <EditForm   
+              onCancel={this.cancelEdit.bind(this)}
+              formItemList={this.formItemList} 
+              addFunction={addFunction}
+              updateFunction={updateFunction}
+              source={editSource}
+            />
+          </Modal>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+## 属性
+<Props of={EditForm} />
+

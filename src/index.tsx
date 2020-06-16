@@ -9,6 +9,7 @@ import EmailFormItem from './forms/EmailFormItem';
 import IdCardFormItem from './forms/IdCardFormItem';
 import PhoneFormItem from './forms/PhoneFormItem';
 import IdCardInput from './IdCardInput/IdCardInput';
+import './index.less';
 import IFormItemData from './interfaces/IFormItemData';
 import LimitUpload from './limitUpload/LimitUpload';
 import PowerImg from './powerImg/PowerImg';
