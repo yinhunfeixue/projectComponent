@@ -55,10 +55,12 @@ class EditModal<T extends Store> extends Component<IEditModalProps<T>, IEditModa
     }
   }
   public render(): ReactNode {
-    const { visible, editFormProps, modalProps } = this.props;
+    const { visible, editFormProps, modalProps, className, style } = this.props;
     const { onOk } = editFormProps;
     return (
       <Modal
+        className={className}
+        style={style}
         {...modalProps}
         title={this.renderTitle()}
         destroyOnClose

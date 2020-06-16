@@ -173,7 +173,7 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
   }
 
   public render(): ReactNode {
-    const { formItemList, columnsCount = 1, key = 'id' } = this.props;
+    const { formItemList, columnsCount = 1, key = 'id', className, style } = this.props;
     const { source } = this.state;
     const controlList: IFormItemData[] = this.getControlList();
     const readOnly = this.readOnly;
@@ -187,6 +187,8 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
     return (
       <div className="fhEditForm">
         <Form
+          className={className}
+          style={style}
           key={source ? source[key] : ''}
           initialValues={source}
           onFinish={value => {
