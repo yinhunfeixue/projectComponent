@@ -32,16 +32,34 @@ interface IEditFormProps<T> extends IComponentProps {
    */
   type?: EditFormType;
 
+  /**
+   * 表单项列表
+   */
   formItemList: IFormItemData[];
 
+  /**
+   * 列数
+   */
   columnsCount?: number;
 
+  /**
+   * 标识属性名称
+   */
   key?: string;
 
+  /**
+   * 取消事件
+   */
   onCancel?: () => void;
 
+  /**
+   * 保存成功事件
+   */
   onOk?: () => void;
 
+  /**
+   * 保存出错的事件
+   */
   onError?: (error: any) => void;
 }
 
@@ -57,7 +75,7 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
   }
 
   private save(value: Store) {
-    const { source, addFunction, updateFunction } = this.props;
+    const { source, addFunction, updateFunction, onOk, onError } = this.props;
     let promise: Promise<any> | null = null;
     if (source) {
       if (updateFunction) {
@@ -74,9 +92,15 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
       promise
         .then(() => {
           this.setState({ loading: false });
+          if (onOk) {
+            onOk();
+          }
         })
-        .catch(() => {
+        .catch(error => {
           this.setState({ loading: false });
+          if (onError) {
+            onError(error);
+          }
         });
     }
   }

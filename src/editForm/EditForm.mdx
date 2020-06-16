@@ -8,7 +8,7 @@ menu: 组件
 
 import { Playground, Props } from 'docz';
 import 'antd/dist/antd.css';
-import { Form, InputNumber, Input, Radio, Modal, Button} from 'antd';
+import { Form, InputNumber, Input, Radio, Modal, Button, message} from 'antd';
 import EditForm from './EditForm';
 
 # 编辑表单
@@ -207,7 +207,7 @@ source不为空，updateFunction为空，阅读状态。
       return fetch('./update');
     }
 
-    cancelEdit(){
+    closeEdit(){
       this.setState({visibleModal: false});
     }
 
@@ -217,6 +217,7 @@ source不为空，updateFunction为空，阅读状态。
         <div>
           <div>
             <Button 
+              style={{marginRight:10}}
               onClick={()=>{
                 this.setState({
                   visibleModal: true,
@@ -229,6 +230,7 @@ source不为空，updateFunction为空，阅读状态。
               新增
             </Button>
             <Button 
+              style={{marginRight:10}}
               onClick={()=>{
                 this.setState({
                   visibleModal: true,
@@ -257,15 +259,124 @@ source不为空，updateFunction为空，阅读状态。
             visible={visibleModal} 
             footer={null} 
             title='新增' 
-            onCancel={this.cancelEdit.bind(this)}
+            onCancel={this.closeEdit.bind(this)}
             destroyOnClose
           >
             <EditForm   
-              onCancel={this.cancelEdit.bind(this)}
+              onCancel={this.closeEdit.bind(this)}
               formItemList={this.formItemList} 
               addFunction={addFunction}
               updateFunction={updateFunction}
               source={editSource}
+            />
+          </Modal>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+## 处理保存成功、失败
+
+onOk--保存成功
+onError--保存失败
+
+打开窗口，点击保存，会随机进入成功或失败
+
+<Playground>
+{
+  class Demo extends React.Component{
+    constructor(props){
+      super(props);
+      this.formItemList = [
+        {
+          name:'nickName',
+          label:'姓名',
+          content: <Input />,
+          rules:[
+            {
+              required:true,
+              message:'请填写姓名'
+            }
+          ]
+        },
+        {
+          name:'age',
+          label:'年龄',
+          content:<InputNumber />
+        }
+      ];
+      this.state ={
+        visibleModal:false,
+        source:{
+          id:1,
+          nickName:'aaaa',
+          age:45
+        },
+        editSource:null,
+        addFunction:null,
+        updateFunction:null,
+      }
+    }
+
+    addFunction(value){
+      Modal.confirm({
+        title:'新增',
+        content:JSON.stringify(value)
+      });
+
+      return new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+          fetch('./add');
+
+          if(Math.random() > 0.5){
+            resolve();
+          }
+          else{
+            reject('这里是服务器返回的错误原因');
+          }
+        }, 1000)
+      })
+    
+    }
+
+    closeEdit(){
+      this.setState({visibleModal: false});
+    }
+
+    render(){
+      const {visibleModal, addFunction} = this.state;
+      return (
+        <div>
+          <Button 
+            onClick={()=>{
+              this.setState({
+                visibleModal: true,
+                addFunction: this.addFunction,
+              })
+            }}
+          >
+            新增
+          </Button>
+          <Modal 
+            visible={visibleModal} 
+            footer={null} 
+            title='新增' 
+            onCancel={this.closeEdit.bind(this)}
+            destroyOnClose
+          >
+            <EditForm   
+              onCancel={this.closeEdit.bind(this)}
+              onOk={()=>{
+                message.success('保存成功');
+                this.closeEdit();
+              }}
+              onError={(error)=>{
+                message.error('保存失败：' + error);
+              }}
+              formItemList={this.formItemList} 
+              addFunction={addFunction}
             />
           </Modal>
         </div>
