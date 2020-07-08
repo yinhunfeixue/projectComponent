@@ -9,6 +9,7 @@ menu: 辅助工具
 import { Playground, Props } from 'docz';
 import 'antd/dist/antd.css';
 import HtmlUtil from './HtmlUtil';
+import {message, Button} from 'antd';
 
 
 
@@ -28,3 +29,17 @@ HTML相关的辅助工具
 // 导出blob
 HtmlUtil.exportBlob(blob, '文件名.txt');
 ```
+
+### 富文本转换为纯文本
+<Playground>
+  <Button onClick={()=>{
+    if(HtmlUtil.copyText('aaaa')){
+      message.success('复制成功，可粘贴到其它地方');
+    }
+    else{
+      message.error('复制失败');
+    }
+  }}>
+    点我复制 aaaa
+  </Button>
+</Playground>
