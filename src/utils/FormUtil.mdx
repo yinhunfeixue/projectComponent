@@ -330,6 +330,91 @@ import PhoneFormItem from '../forms/PhoneFormItem';
 }
 </Playground>
 
+### 渲染表单项--三列
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />,
+        },   
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          content:<Button type="primary">保存，我是自动对齐</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list, 3)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 增加每列的间隔
+通过设置renderFormItems的第4个参数--`defaultContentSpan`，使用labelSpan + wrapSpan < 24，达到增加每列间隔的目的
+
+同时，也可以给表单项单独设置wrawSpan
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input value='我单独设置了wrapSpan'/>,
+          wrapSpan: 10
+        },
+        {
+          span:24,
+          content:<Button type="primary">保存</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list, 3, 6, 15)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
 ## 参考 IFormItemData
 
 <Props of={IFormItemDataC} />

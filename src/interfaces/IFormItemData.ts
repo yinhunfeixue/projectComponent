@@ -27,10 +27,15 @@ interface IFormItemData {
   span?: number;
 
   /**
-   * 当前项标签占用的span，没设置则自动计算。
+   * 当前项标签占用的列数，未设置则自动计算。
    * 通常，只有标签文字太多，显示不全时，需要设置此值
    */
   labelSpan?: number;
+
+  /**
+   * 内容占用的列数，未设置则自动计算
+   */
+  wrapSpan?: number;
 
   /**
    * 表单项规则

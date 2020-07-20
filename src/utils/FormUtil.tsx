@@ -15,6 +15,7 @@ class FormUtil {
     formItemList: IFormItemData[],
     columnCount: number = 2,
     defaultLabelSpan = 6,
+    defaultWrapSpan?: number,
   ) {
     if (!formItemList || !formItemList.length) {
       return null;
@@ -27,9 +28,9 @@ class FormUtil {
     for (let i = 0; i < formItemList.length; i++) {
       const item = formItemList[i];
 
-      // 获取一个表单项占多少span，优先级从高到低为
+      // 获取一个表单项占多少列，优先级从高到低为
       // 1. item.span
-      // 2. item.label.length > 6? 占一整行：defaultSpan
+      // 2. item.label.length > 6? 占一整列（24）：defaultSpan
       let span = item.span;
       if (!span) {
         if (item.label && item.label.length > 6) {
@@ -41,8 +42,8 @@ class FormUtil {
       span = Math.min(24, span);
 
       // 创建formItem
-      // 获取 label占用的空间，优先用item设置的值，未设置，则根据defaultSpan取一个合适的值，以确定对齐
-      // 例如：defaultSpan是12, defaultLabelSpan=6，而当前item.span = 8, 则当前item的labelspan= 12*6/8
+      // 获取 label占用的空间，优先用item设置的值，未设置，则根据defaultSpan取一个合适的值，以确保对齐
+      // 例如：defaultSpan是12, defaultLabelSpan=6，而当前ispan = 8, 则当前item的labelspan= 12*6/8
       const labelSpan = Math.min(
         24,
         item.labelSpan ? item.labelSpan : Math.round((defaultLabelSpan * defaultSpan) / span),
@@ -51,9 +52,20 @@ class FormUtil {
       const itemProps: { labelCol?: ColProps; wrapperCol?: ColProps } = {};
       if (item.label) {
         itemProps.labelCol = { span: labelSpan };
-        itemProps.wrapperCol = { span: 24 - labelSpan };
       } else {
         itemProps.wrapperCol = { offset: labelSpan };
+      }
+
+      // 设置内容占用的列数
+      // 优先使用item.wrapSpan，
+      // 其次为defaultWrapSpan
+      // 如果都未设置，则: 自动计算 = 24 - labelSpan
+      if (item.wrapSpan) {
+        itemProps.wrapperCol = { span: item.wrapSpan };
+      } else if (defaultWrapSpan) {
+        itemProps.wrapperCol = { span: defaultWrapSpan };
+      } else {
+        itemProps.wrapperCol = { span: 24 - labelSpan };
       }
 
       let formItem = null;
