@@ -50,10 +50,11 @@ class FormUtil {
       );
       // 如果表单项有label，则设置labelCol；否则，设置offsetCol，以确保表单元素是对齐的
       const itemProps: { labelCol?: ColProps; wrapperCol?: ColProps } = {};
+      itemProps.wrapperCol = {};
       if (item.label) {
         itemProps.labelCol = { span: labelSpan };
       } else {
-        itemProps.wrapperCol = { offset: labelSpan };
+        itemProps.wrapperCol.offset = labelSpan;
       }
 
       // 设置内容占用的列数
@@ -61,11 +62,11 @@ class FormUtil {
       // 其次为defaultWrapSpan
       // 如果都未设置，则: 自动计算 = 24 - labelSpan
       if (item.wrapSpan) {
-        itemProps.wrapperCol = { span: item.wrapSpan };
+        itemProps.wrapperCol.span = item.wrapSpan;
       } else if (defaultWrapSpan) {
-        itemProps.wrapperCol = { span: defaultWrapSpan };
+        itemProps.wrapperCol.span = defaultWrapSpan;
       } else {
-        itemProps.wrapperCol = { span: 24 - labelSpan };
+        itemProps.wrapperCol.span = 24 - labelSpan;
       }
 
       let formItem = null;
