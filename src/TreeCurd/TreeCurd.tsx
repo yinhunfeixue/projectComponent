@@ -217,6 +217,8 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
     type: EditType.DEFAULT,
   };
 
+
+
   componentDidMount() {
     this.requestTreeData();
   }
@@ -378,7 +380,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
         checkedKeys,
       },
       () => {
-        this.updateCheckedItems(checkedInfo);
+        // this.updateCheckedItems(checkedInfo);
       },
     );
   };
