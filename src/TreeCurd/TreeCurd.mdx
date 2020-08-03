@@ -40,7 +40,7 @@ import FormUtil from '../utils/FormUtil'
     }
     render() {
       return (
-          <TreeCurd 
+          <TreeCurd
             getKey='id'
             showSearch
             deleteFunction={(ids) => message.info(ids)}
@@ -159,8 +159,8 @@ import FormUtil from '../utils/FormUtil'
 
 ## 可以设置为可多选的树
 <Playground>
-  <TreeCurd 
-    checkable  
+  <TreeCurd
+    checkable
     editEnable={false}
     getTreeData={()=>{
       return fetch('./').then(()=>{
@@ -200,7 +200,7 @@ import FormUtil from '../utils/FormUtil'
         )
       }
      }
-  
+
   />
 </Playground>
 
@@ -217,19 +217,64 @@ import FormUtil from '../utils/FormUtil'
        checkedItems:[],
        defaultCheckedKeys: []
       }
+
+      const x = 3;
+        const y = 2;
+        const z = 5;
+        this.gData = [];
+
+        const generateData = (_level, _preKey, _tns) => {
+          const preKey = _preKey || '0';
+          const tns = _tns || this.gData;
+
+          const children = [];
+          for (let i = 0; i < x; i++) {
+            const key = `${preKey}-${i}`;
+            tns.push({ title: key, key });
+            if (i < y) {
+              children.push(key);
+            }
+          }
+          if (_level < 0) {
+            return tns;
+          }
+          const level = _level - 1;
+          children.forEach((key, index) => {
+            tns[index].children = [];
+            return generateData(level, key, tns[index].children);
+          });
+        };
+        generateData(z);
+
+        const dataList = [];
+        const generateList = data => {
+          for (let i = 0; i < data.length; i++) {
+            const node = data[i];
+            const { key } = node;
+            dataList.push({ key, title: key });
+            if (node.children) {
+              generateList(node.children);
+            }
+          }
+        };
+        generateList(this.gData);
+
     }
+
+
     render() {
       return (
-          <TreeCurd 
-            getKey='id'
+          <TreeCurd
+            getKey='key'
+            getTitle={(item) => item.title}
             deleteFunction={(ids) => message.info(ids)}
-            checkable  
+            checkable
             editEnable={false}
             defaultCheckedKeys={this.state.defaultCheckedKeys}
             onCheck={(extraData, checkedInfo) => {
-              const {checkedItems} = extraData;  
-              const { checkedNodes } = checkedInfo; 
-              const defaultCheckedKeys = checkedNodes.filter(item => (!item.children || !item.children.length)).map(item => item.key);                    
+              const {checkedItems} = extraData;
+              const { checkedNodes } = checkedInfo;
+              const defaultCheckedKeys = checkedNodes.filter(item => (!item.children || !item.children.length)).map(item => item.key);
               this.setState({
                 checkedItems,
                 defaultCheckedKeys
@@ -237,32 +282,7 @@ import FormUtil from '../utils/FormUtil'
             }}
             getTreeData={()=>{
               return fetch('./').then(()=>{
-                  return [
-                    {
-                      id: "0-0",
-                      name: "0-0",
-                      children: [
-                        {
-                          id: "0-0-1",
-                          name: "0-0-1",
-                        }
-                      ]
-                    },
-                    {
-                      id: "0-1",
-                      name: "0-1",
-                      children: [
-                        {
-                          id: "0-1-1",
-                          name: "0-1-1",
-                        },
-                        {
-                          id: "0-1-2",
-                          name: "0-1-2",
-                        }
-                      ]
-                    }
-                  ]
+                  return this.gData
               })
             }}
         />
@@ -284,7 +304,7 @@ name='0-0'的  style.color = 'red'
     }
     render() {
       return (
-          <TreeCurd 
+          <TreeCurd
             getKey='id'
             showSearch
             deleteFunction={(ids) => message.info(ids)}
@@ -421,7 +441,7 @@ name='0-0'的  style.color = 'red'
     }
     render() {
       return (
-          <TreeCurd 
+          <TreeCurd
             getKey='id'
             showSearch
             getChildren='childrenCustom'
@@ -554,7 +574,7 @@ name='0-0'的  style.color = 'red'
     }
     render() {
       return (
-          <TreeCurd 
+          <TreeCurd
             getKey='id'
             deleteFunction={(ids) => message.info(ids)}
             defaultExpandedKeys={this.state.expandedKeys}
