@@ -405,7 +405,6 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
                 <Tooltip title="删除">
                   <Button
                     type="link"
-                    ghost
                     danger
                     icon={<DeleteOutlined />}
                     loading={loading || loadingDelete.indexOf(key) >= 0}
