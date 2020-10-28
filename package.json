@@ -2,8 +2,6 @@
   "name": "fb-project-component",
   "version": "0.0.89",
   "description": "",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
   "authors": {
     "name": "xujunjie",
     "email": "yinhunfeixue@163.com"
@@ -16,6 +14,9 @@
     "publicNpm": "npm run build && npm login && npm version patch && npm publish",
     "public": "npm run publicGitHub && npm run publicNpm"
   },
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "typings": "lib/index.d.ts",
   "files": [
     "es",
     "lib"
