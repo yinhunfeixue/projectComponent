@@ -2,10 +2,10 @@ import { IBundleOptions } from 'father';
 
 const options: IBundleOptions = {
   cjs: {
-    type: 'rollup',
+    type: 'babel',
   },
   esm: {
-    type: 'rollup',
+    type: 'babel',
   },
   doc: {
     typescript: true,
