@@ -27,7 +27,7 @@ const options: IBundleOptions = {
       {
         libraryName: 'antd',
         libraryDirectory: 'es',
-        style: true,
+        style: 'css',
       },
     ],
   ],
