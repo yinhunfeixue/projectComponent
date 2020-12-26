@@ -65,9 +65,11 @@ class AntdUtil {
     createNodeProps?: (item: T) => DataNode,
   ): DataNode[] | undefined {
     return treeData.map(item => {
-      const children = typeof getChildren === 'string' ? item[getChildren] : getChildren(item);
-      const key = typeof getKey === 'string' ? item[getKey] : getKey(item);
-      const title = typeof getTitle === 'string' ? (item[getTitle] as ReactNode) : getTitle(item);
+      const children =
+        typeof getChildren === 'string' ? (item as any)[getChildren] : getChildren(item);
+      const key = typeof getKey === 'string' ? (item as any)[getKey] : getKey(item);
+      const title =
+        typeof getTitle === 'string' ? ((item as any)[getTitle] as ReactNode) : getTitle(item);
       const otherProps = createNodeProps ? createNodeProps(item) : null;
       const result: DataNode = { key, title, ...otherProps };
       if (children) {

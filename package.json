@@ -26,12 +26,12 @@
   },
   "devDependencies": {
     "father": "^2.29.3",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.2",
+    "@types/vfile-message": "^2.0.0"
   },
   "license": "MIT",
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
-    "@types/vfile-message": "^2.0.0",
     "antd": "^4.2.4",
     "babel-plugin-import": "^1.13.0",
     "classnames": "^2.2.6",

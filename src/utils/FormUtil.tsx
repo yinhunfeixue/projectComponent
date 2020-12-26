@@ -33,7 +33,7 @@ class FormUtil {
       // 2. item.label.length > 6? 占一整列（24）：defaultSpan
       let span = item.span;
       if (!span) {
-        if (item.label && item.label.length > 6) {
+        if (item.label && typeof item.label === 'string' && item.label.length > 6) {
           span = 24;
         } else {
           span = defaultSpan;

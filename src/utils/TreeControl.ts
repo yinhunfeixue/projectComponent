@@ -5,7 +5,7 @@ type equalFunctionType<T> = (node: T, index: number, parentNode: T | null) => bo
  * @author yinhunfeixue
  * @email yinhunfeixue@163.com
  */
-class TreeControl<T extends any> {
+class TreeControl<T extends { [key: string]: any }> {
   private dataGetter: string | ((item: T) => any);
   private childrenGetter: string | ((item: T) => T[]);
   private childrenCreater: string | ((item: T, children?: T[]) => T[]);
@@ -48,7 +48,7 @@ class TreeControl<T extends any> {
     // 循环tree
     // 对于每一项，如果equal返回true，添加到结果列表中；否则，递归子列表，如果递归的子列表>=0，添加到结果列表
     for (let i = 0; i < tree.length; i++) {
-      const item = { ...tree[i] };
+      const item = { ...(tree[i] as any) };
       if (equal(item, i, parentNode)) {
         result.push(item);
       } else {
@@ -358,7 +358,7 @@ class TreeControl<T extends any> {
     if (this.childrenCreater instanceof Function) {
       return this.childrenCreater(node, children);
     } else {
-      node[this.childrenCreater] = children || [];
+      (node as any)[this.childrenCreater] = children || [];
       return node[this.childrenCreater];
     }
   }
