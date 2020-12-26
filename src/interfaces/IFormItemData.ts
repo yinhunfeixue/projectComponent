@@ -14,7 +14,7 @@ interface IFormItemData {
   /**
    * 标签
    */
-  label?: string;
+  label?: ReactNode;
 
   /**
    * 内容
