@@ -46,7 +46,9 @@ class FormUtil {
       // 例如：defaultSpan是12, defaultLabelSpan=6，而当前ispan = 8, 则当前item的labelspan= 12*6/8
       const labelSpan = Math.min(
         24,
-        item.labelSpan ? item.labelSpan : Math.round((defaultLabelSpan * defaultSpan) / span),
+        item.labelSpan !== undefined
+          ? item.labelSpan
+          : Math.round((defaultLabelSpan * defaultSpan) / span),
       );
       // 如果表单项有label，则设置labelCol；否则，设置offsetCol，以确保表单元素是对齐的
       const itemProps: { labelCol?: ColProps; wrapperCol?: ColProps } = {};
@@ -61,7 +63,7 @@ class FormUtil {
       // 优先使用item.wrapSpan，
       // 其次为defaultWrapSpan
       // 如果都未设置，则: 自动计算 = 24 - labelSpan
-      if (item.wrapSpan) {
+      if (item.wrapSpan !== undefined) {
         itemProps.wrapperCol.span = item.wrapSpan;
       } else if (defaultWrapSpan) {
         itemProps.wrapperCol.span = defaultWrapSpan;
