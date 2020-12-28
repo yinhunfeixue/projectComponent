@@ -7,6 +7,7 @@ const options: IBundleOptions = {
   esm: {
     type: 'babel',
   },
+  lessInBabelMode: true,
   doc: {
     typescript: true,
     title: '烽火工程组件',

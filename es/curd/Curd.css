@@ -1,0 +1,19 @@
+.fh-Curd {
+  display: flex;
+  flex-direction: column;
+}
+.fh-Curd > *:not(:last-child) {
+  margin-bottom: 20px;
+}
+.fh-Curd .fh-ControlGroup {
+  display: flex;
+}
+.fh-Curd .fh-ControlGroup > *:not(:last-child) {
+  margin-right: 10px;
+}
+.fh-Curd .fh-CurdEditColumn {
+  text-align: right;
+}
+.fh-Curd .fh-CurdEditColumn > *:not(:last-child) {
+  margin-right: 10px;
+}

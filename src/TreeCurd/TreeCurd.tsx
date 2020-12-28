@@ -289,7 +289,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
   }
 
   private requestTreeData = (type?: string) => {
-    return new Promise(async (resolve) => {
+    return new Promise(async resolve => {
       const { searchValue } = this.state;
       const { getTreeData, getKey, defaultExpandedKeys, defaultCheckedKeys } = this.props;
       this.setLoading(true);
@@ -318,7 +318,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
           checkedKeys,
         },
         () => {
-          resolve();
+          resolve('');
         },
       );
     });
@@ -478,7 +478,7 @@ class TreeCurd<T extends TreeInterfaces> extends Component<ITreeCurdProps<T>, IT
               <div style={{ marginBottom: 20 }}>
                 <Search
                   enterButton
-                  onChange={(e) =>
+                  onChange={e =>
                     this.setState({ searchValue: e.target.value }, () => this.refresh())
                   }
                 />

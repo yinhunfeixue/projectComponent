@@ -25,9 +25,9 @@
     "react": "16.x"
   },
   "devDependencies": {
+    "@types/vfile-message": "^2.0.0",
     "father": "^2.29.3",
-    "typescript": "^3.9.2",
-    "@types/vfile-message": "^2.0.0"
+    "typescript": "^3.9.2"
   },
   "license": "MIT",
   "dependencies": {
