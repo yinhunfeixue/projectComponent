@@ -9,7 +9,7 @@ interface IFormItemData {
   /**
    * 字段
    */
-  name?: string;
+  name?: string | string[];
 
   /**
    * 标签
