@@ -88,10 +88,9 @@ interface ILimitUploadProps extends IComponentProps {
 class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   constructor(props: ILimitUploadProps) {
     super(props);
-    const { defaultFileList } = props;
     this.state = {
       loading: false,
-      fileList: defaultFileList || [],
+      fileList: [],
     };
   }
 
@@ -169,14 +168,14 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
     this.setState({ loading });
   };
 
-  private onError(file: UploadFile<any>) {
+  private onError = (file: UploadFile<any>) => {
     const { onError } = this.props;
     if (onError) {
       onError(file);
     } else {
       message.error(`${file.name}上传失败`);
     }
-  }
+  };
 
   private validateFileList() {
     const { validateFile, onChange } = this.props;
@@ -192,9 +191,10 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   }
 
   public render(): ReactNode {
-    const { type, disabled, action, uploadProps, disableCredentials } = this.props;
+    const { type, disabled, action, uploadProps, disableCredentials, defaultFileList } = this.props;
     const { fileList } = this.state;
     const props: UploadProps = {
+      defaultFileList,
       fileList,
       disabled,
       accept: this.getAccept(),
