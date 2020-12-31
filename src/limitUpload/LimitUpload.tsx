@@ -88,9 +88,10 @@ interface ILimitUploadProps extends IComponentProps {
 class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   constructor(props: ILimitUploadProps) {
     super(props);
+    const { defaultFileList } = props;
     this.state = {
       loading: false,
-      fileList: [],
+      fileList: defaultFileList || [],
     };
   }
 
@@ -109,9 +110,9 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
 
   private renderChooseer() {
     const { loading, fileList } = this.state;
-    const { maxNumber, renderChooser, type, disabled, defaultFileList } = this.props;
+    const { maxNumber, renderChooser, type, disabled } = this.props;
 
-    const fileNumber = fileList.length + (defaultFileList ? defaultFileList.length : 0);
+    const fileNumber = fileList.length;
     const chooseEnable = !maxNumber || fileNumber < maxNumber;
     if (!chooseEnable) {
       return null;
@@ -168,14 +169,14 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
     this.setState({ loading });
   };
 
-  private onError = (file: UploadFile<any>) => {
+  private onError(file: UploadFile<any>) {
     const { onError } = this.props;
     if (onError) {
       onError(file);
     } else {
       message.error(`${file.name}上传失败`);
     }
-  };
+  }
 
   private validateFileList() {
     const { validateFile, onChange } = this.props;
@@ -191,10 +192,9 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   }
 
   public render(): ReactNode {
-    const { type, disabled, action, uploadProps, disableCredentials, defaultFileList } = this.props;
+    const { type, disabled, action, uploadProps, disableCredentials } = this.props;
     const { fileList } = this.state;
     const props: UploadProps = {
-      defaultFileList,
       fileList,
       disabled,
       accept: this.getAccept(),
