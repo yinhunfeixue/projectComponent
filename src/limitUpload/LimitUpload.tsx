@@ -47,11 +47,16 @@ interface ILimitUploadProps extends IComponentProps {
   onChange?: (value: UploadFile<any>[]) => void;
 
   /**
-   * 未操作时，默认的文件列表。
+   * 默认的文件列表。
    *
    * 通常在编辑时，需要使用，例如：之前上传过的文件，可使用此属性设置
    */
   defaultFileList?: UploadFile<any>[];
+
+  /**
+   * 文件列表
+   */
+  value?: UploadFile<any>[];
 
   /**
    * 选择元素的渲染函数，如果没有，使用默认方案
@@ -88,11 +93,27 @@ interface ILimitUploadProps extends IComponentProps {
 class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   constructor(props: ILimitUploadProps) {
     super(props);
-    const { defaultFileList } = props;
+    const { defaultFileList, value } = props;
     this.state = {
       loading: false,
-      fileList: defaultFileList || [],
+      fileList: value || defaultFileList || [],
     };
+  }
+
+  public componentDidUpdate() {
+    if ('value' in this.props) {
+      const value = this.props.value;
+      const { fileList } = this.state;
+      // 如果有值，且不相同，赋值；
+      // 如果无值，但是state有值，清除state的值
+      if (value) {
+        if (value !== fileList) {
+          this.setState({ fileList: value });
+        }
+      } else if (fileList && fileList.length) {
+        this.setState({ fileList: [] });
+      }
+    }
   }
 
   private getAccept() {
@@ -185,10 +206,11 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
       return validateFile(file);
     });
 
-    if (onChange) {
-      onChange(newFileList);
-    }
-    this.setState({ fileList: newFileList });
+    this.setState({ fileList: newFileList }, () => {
+      if (onChange) {
+        onChange(newFileList);
+      }
+    });
   }
 
   public render(): ReactNode {

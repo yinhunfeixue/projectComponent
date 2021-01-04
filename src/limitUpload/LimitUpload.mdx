@@ -11,7 +11,7 @@ import 'antd/dist/antd.css';
 import LimitUpload from './LimitUpload';
 import UploadType from '../enums/UploadType';
 import UploadAcceptType from '../enums/UploadAcceptType';
-import { Upload,Button } from 'antd';
+import { Upload,Button, Form } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 
@@ -42,9 +42,9 @@ import { UploadOutlined } from '@ant-design/icons';
 ### 默认，请观察开发者工具的输出，当文件"上传成功、移除"时，会触发onChange
 <Playground>
   <LimitUpload 
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76" 
+    action="https://jsonplaceholder.typicode.com/posts/" 
     validateFile={(file)=>{
-      if(file.response && file.response.status === 'done'){
+      if(file.response && file.response.id){
         return true;
       }
       else{
@@ -62,7 +62,7 @@ import { UploadOutlined } from '@ant-design/icons';
   <LimitUpload 
     action="./" 
     validateFile={(file)=>{
-      if(file.response && file.response.status === 'done'){
+      if(file.response && file.response.id){
         return true;
       }
       else{
@@ -80,7 +80,7 @@ import { UploadOutlined } from '@ant-design/icons';
       alert(`${file.name}上传失败`)
     }}
     validateFile={(file)=>{
-      if(file.response && file.response.status === 'done'){
+      if(file.response && file.response.id){
         return true;
       }
       else{
@@ -112,9 +112,9 @@ import { UploadOutlined } from '@ant-design/icons';
 <Playground>
   <LimitUpload 
     maxNumber={2} 
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    action="https://jsonplaceholder.typicode.com/posts/"
     validateFile={(file)=>{
-      if(file.response && file.response.status === 'done'){
+      if(file.response && file.response.id){
         return true;
       }
       else{
@@ -129,9 +129,9 @@ import { UploadOutlined } from '@ant-design/icons';
 <Playground>
   <LimitUpload 
     type={UploadType.IMAGE} 
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    action="https://jsonplaceholder.typicode.com/posts/"
     validateFile={(file)=>{
-        if(file.response && file.response.status === 'done'){
+        if(file.response && file.response.id){
           return true;
         }
         else{
@@ -145,9 +145,9 @@ import { UploadOutlined } from '@ant-design/icons';
 <Playground>
   <LimitUpload 
     accept={UploadAcceptType.OFFICE}
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    action="https://jsonplaceholder.typicode.com/posts/"
     validateFile={(file)=>{
-        if(file.response && file.response.status === 'done'){
+        if(file.response && file.response.id){
           return true;
         }
         else{
@@ -181,9 +181,9 @@ import { UploadOutlined } from '@ant-design/icons';
         },
       ]
     }
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    action="https://jsonplaceholder.typicode.com/posts/"
     validateFile={(file)=>{
-        if(file.response && file.response.status === 'done'){
+        if(file.response && file.response.id){
           return true;
         }
         else{
@@ -197,12 +197,13 @@ import { UploadOutlined } from '@ant-design/icons';
 ### 自定义渲染方法
 <Playground>
   <LimitUpload 
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    action="https://jsonplaceholder.typicode.com/posts/"
     renderChooser={(loading)=> {
       return <span style={{borderLeft: '3px solid red', paddingLeft:10}}>{loading? '上传中...' : '点我上传'}</span>
       }}
     validateFile={(file)=>{
-        if(file.response && file.response.status === 'done'){
+        console.log("file", file)
+        if(file.response && file.response.id){
           return true;
         }
         else{
@@ -222,9 +223,9 @@ import { UploadOutlined } from '@ant-design/icons';
     uploadProps={{
       method:'put'
     }}
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    action="https://jsonplaceholder.typicode.com/posts/"
     validateFile={(file)=>{
-        if(file.response && file.response.status === 'done'){
+        if(file.response && file.response.id){
           return true;
         }
         else{
@@ -232,6 +233,81 @@ import { UploadOutlined } from '@ant-design/icons';
         }
       }}
   />
+</Playground>
+
+### 结合表单
+
+<Playground>
+{
+   class Demo extends React.Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        columns:[],
+      }
+      this.formRef = React.createRef();
+    }
+
+     render(){
+       return (
+        <div>
+          <Form 
+            ref={this.formRef}
+            layout="inline" 
+            initialValues={{
+              myFile:[
+                {
+                  uid: '1',
+                  name: 'aaa.png',
+                  status: 'done',
+                  response: 'Server Error 500', // custom error message to show
+                  url: 'http://www.baidu.com/xxx.png',
+                }
+              ]
+            }}
+          >
+            <Form.Item label="文件" name="myFile">
+              <LimitUpload 
+                action="https://jsonplaceholder.typicode.com/posts/"
+                validateFile={(file)=>{
+                    if(file.response && file.response.id){
+                      return true;
+                    }
+                    else{
+                      return false;
+                    }
+                  }}
+              />
+            </Form.Item>
+          </Form>
+          <Button onClick={()=>{
+            this.formRef.current.setFieldsValue(
+            {
+              myFile:[
+                {
+                  uid: '1',
+                  name: 'bb.png',
+                  status: 'done',
+                  response: 'Server Error 500', // custom error message to show
+                  url: 'http://www.baidu.com/xxx.png',
+                }
+              ]
+            }
+            );
+          }}>
+            修改表单值
+          </Button>
+          <Button onClick={()=>{
+            this.formRef.current.setFieldsValue({});
+            this.formRef.current.resetFields()
+          }}>
+            重置表单值
+          </Button>
+        </div>
+       );
+     }
+   }
+}
 </Playground>
 
 ## 属性
