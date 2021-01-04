@@ -248,29 +248,37 @@ import { UploadOutlined } from '@ant-design/icons';
       this.formRef = React.createRef();
     }
 
+    componentDidMount(){
+      this.formRef.current.setFieldsValue(
+        {
+          myFile:[
+            {
+              uid: '1',
+              name: 'aaa.png',
+              status: 'done',
+              response:{id:2},
+              url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+              thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+            }
+          ]
+        }
+      );
+    }
+
      render(){
        return (
         <div>
           <Form 
             ref={this.formRef}
             layout="inline" 
-            initialValues={{
-              myFile:[
-                {
-                  uid: '1',
-                  name: 'aaa.png',
-                  status: 'done',
-                  response: 'Server Error 500', // custom error message to show
-                  url: 'http://www.baidu.com/xxx.png',
-                }
-              ]
-            }}
           >
             <Form.Item label="文件" name="myFile">
               <LimitUpload 
+                type={UploadType.IMAGE}
                 action="https://jsonplaceholder.typicode.com/posts/"
                 validateFile={(file)=>{
-                    if(file.response && file.response.id){
+                    console.log("file", file)
+                    if(file.response && file.status === "done" && file.response.id){
                       return true;
                     }
                     else{
@@ -282,17 +290,18 @@ import { UploadOutlined } from '@ant-design/icons';
           </Form>
           <Button onClick={()=>{
             this.formRef.current.setFieldsValue(
-            {
-              myFile:[
-                {
-                  uid: '1',
-                  name: 'bb.png',
-                  status: 'done',
-                  response: 'Server Error 500', // custom error message to show
-                  url: 'http://www.baidu.com/xxx.png',
-                }
-              ]
-            }
+              {
+                myFile:[
+                  {
+                    uid: '1',
+                    name: 'bb.png',
+                    status: 'done',
+                    response:{id:1},
+                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+                    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+                  }
+                ]
+              }
             );
           }}>
             修改表单值
