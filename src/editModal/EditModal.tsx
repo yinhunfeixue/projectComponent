@@ -1,11 +1,13 @@
-import { Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import { Store } from 'antd/lib/form/interface';
 import { ModalProps } from 'antd/lib/modal';
 import React, { Component, ReactNode } from 'react';
 import EditForm, { IEditFormProps } from '../editForm/EditForm';
 import IComponentProps from '../interfaces/IComponentProps';
 
-interface IEditModalState {}
+interface IEditModalState {
+  loading: boolean;
+}
 interface IEditModalProps<T> extends IComponentProps {
   /**
    * 窗口显示还是隐藏
@@ -34,12 +36,20 @@ interface IEditModalProps<T> extends IComponentProps {
 }
 
 class EditModal<T extends Store> extends Component<IEditModalProps<T>, IEditModalState> {
+  private editForm: EditForm<T> | null = null;
+
+  constructor(props: IEditModalProps<T>) {
+    super(props);
+    this.state = { loading: false };
+  }
+
   private close = () => {
     const { close } = this.props;
     if (close) {
       close();
     }
   };
+
   private renderTitle() {
     const { editFormProps, renderTitle } = this.props;
     if (renderTitle) {
@@ -54,6 +64,42 @@ class EditModal<T extends Store> extends Component<IEditModalProps<T>, IEditModa
       return '编辑';
     }
   }
+
+  private get readOnly() {
+    const { editFormProps } = this.props;
+    const { source, updateFunction } = editFormProps;
+    return source && !updateFunction;
+  }
+
+  private renderFooter() {
+    if (this.readOnly) {
+      return null;
+    }
+    return (
+      <>
+        <Button
+          onClick={() => {
+            if (this.editForm) {
+              this.editForm.cancel();
+            }
+          }}
+        >
+          取消
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            if (this.editForm) {
+              this.editForm.submit();
+            }
+          }}
+        >
+          保存
+        </Button>
+      </>
+    );
+  }
+
   public render(): ReactNode {
     const { visible, editFormProps, modalProps, className, style } = this.props;
     const { onOk } = editFormProps;
@@ -65,10 +111,16 @@ class EditModal<T extends Store> extends Component<IEditModalProps<T>, IEditModa
         title={this.renderTitle()}
         destroyOnClose
         visible={visible}
-        footer={null}
+        footer={this.renderFooter()}
         onCancel={this.close}
       >
         <EditForm
+          ref={target => {
+            if (this.editForm !== target) {
+              this.editForm = target;
+            }
+          }}
+          hideControls
           onCancel={this.close}
           {...editFormProps}
           onOk={() => {

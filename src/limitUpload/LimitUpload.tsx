@@ -17,7 +17,7 @@ interface ILimitUploadProps extends IComponentProps {
    *
    * @return 返回是否上传成功
    */
-  validateFile: (file: UploadFile<any>) => boolean;
+  validateFile?: (file: UploadFile<any>) => boolean;
 
   /**
    * 上传出错的处理函数，不传则使用默认处理方法：message.error()显示错误提示
@@ -163,6 +163,9 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   private onChange = (info: UploadChangeParam<UploadFile<any>>) => {
     const { validateFile } = this.props;
     // this.setState({ fileList: info.fileList });
+    if (!validateFile) {
+      throw new Error('need validateFile');
+    }
     let loading = false;
     const file = info.file;
 
@@ -207,6 +210,9 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
 
   private validateFileList(fileList: UploadFile<any>[]) {
     const { validateFile, onChange } = this.props;
+    if (!validateFile) {
+      throw new Error('need validateFile');
+    }
     const newFileList = fileList.filter(file => {
       return validateFile(file);
     });

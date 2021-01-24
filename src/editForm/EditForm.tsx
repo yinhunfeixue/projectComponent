@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import Form from 'antd/lib/form/Form';
+import Form, { FormInstance } from 'antd/lib/form/Form';
 import { Store } from 'antd/lib/form/interface';
 import L from 'lodash';
 import React, { Component, ReactNode } from 'react';
@@ -63,17 +63,39 @@ export interface IEditFormProps<T> extends IComponentProps {
    * 保存出错的事件
    */
   onError?: (error: any) => void;
+
+  /**
+   * 是否隐藏操作按钮，如果设置为true，需自定义控制按钮
+   */
+  hideControls?: Boolean;
+
+  onLoadingChange?: (value: boolean) => void;
 }
 
 /**
  * 编辑表单，支持：编辑，阅读两种模式；会自行判断是新增还是修改
  */
 class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormState<T>> {
+  private formRef = React.createRef<FormInstance>();
+
   constructor(props: IEditFormProps<T>) {
     super(props);
     this.state = {
       loading: false,
     };
+  }
+
+  public submit() {
+    if (this.formRef.current) {
+      this.formRef.current.submit();
+    }
+  }
+
+  public cancel() {
+    const { onCancel } = this.props;
+    if (onCancel) {
+      onCancel();
+    }
   }
 
   componentDidMount() {
@@ -88,7 +110,6 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
 
   private async updateStateSource() {
     const { source, getDetailFunction } = this.props;
-    const { source: stateSource } = this.state;
     if (!source) {
       this.setState({ source: undefined });
     } else if (getDetailFunction) {
@@ -96,6 +117,14 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
       this.setState({ source: data });
     } else {
       this.setState({ source });
+    }
+  }
+
+  private setLoading(loading: boolean) {
+    const { onLoadingChange } = this.props;
+    this.setState({ loading });
+    if (onLoadingChange) {
+      onLoadingChange(loading);
     }
   }
 
@@ -114,19 +143,20 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
     }
 
     if (promise) {
-      this.setState({ loading: true });
+      this.setLoading(true);
       promise
         .then(() => {
-          this.setState({ loading: false });
           if (onOk) {
             onOk();
           }
         })
         .catch(error => {
-          this.setState({ loading: false });
           if (onError) {
             onError(error);
           }
+        })
+        .finally(() => {
+          this.setLoading(false);
         });
     }
   }
@@ -136,40 +166,53 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
     return source && !updateFunction;
   }
 
-  private getControlList() {
+  private getControl = () => {
     const { loading } = this.state;
-    const { onCancel } = this.props;
+
+    if (this.readOnly) {
+      return null;
+    }
+
+    return (
+      <div className="fhControlGroup">
+        <Button type="primary" loading={loading} htmlType="submit">
+          保存
+        </Button>
+        <Button
+          disabled={loading}
+          onClick={() => {
+            this.cancel();
+          }}
+        >
+          取消
+        </Button>
+      </div>
+    );
+  };
+
+  private getControlFormItemList(): IFormItemData[] {
     if (this.readOnly) {
       return [];
     }
     return [
       {
         span: 24,
-        content: (
-          <div className="fhControlGroup">
-            <Button type="primary" loading={loading} htmlType="submit">
-              保存
-            </Button>
-            <Button
-              disabled={loading}
-              onClick={() => {
-                if (onCancel) {
-                  onCancel();
-                }
-              }}
-            >
-              取消
-            </Button>
-          </div>
-        ),
+        content: this.getControl(),
       },
     ];
   }
 
   public render(): ReactNode {
-    const { formItemList, columnsCount = 1, key = 'id', className, style } = this.props;
+    const {
+      formItemList,
+      columnsCount = 1,
+      key = 'id',
+      className,
+      style,
+      hideControls,
+    } = this.props;
     const { source } = this.state;
-    const controlList: IFormItemData[] = this.getControlList();
+    const controlList: IFormItemData[] = hideControls ? [] : this.getControlFormItemList();
     const readOnly = this.readOnly;
     if (readOnly) {
       formItemList.forEach(item => {
@@ -181,6 +224,7 @@ class EditForm<T extends Store> extends Component<IEditFormProps<T>, IEditFormSt
     return (
       <div className="fhEditForm">
         <Form
+          ref={this.formRef}
           className={className}
           style={style}
           key={source ? source[key] : ''}
