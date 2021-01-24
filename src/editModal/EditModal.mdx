@@ -38,18 +38,10 @@ EditModal为你处理了
     }
 
     addFunction(value){
-      Modal.confirm({
-        title:'新增',
-        content:JSON.stringify(value)
-      })
       return fetch('./add');
     }
 
      updateFunction(value){
-      Modal.confirm({
-        title:'编辑',
-        content:JSON.stringify(value)
-      })
       return fetch('./update');
     }
 
@@ -103,6 +95,12 @@ EditModal为你处理了
                   content:<InputNumber />
                 }
               ],
+              onCancel:()=>{
+                  message.info('取消');
+              },
+              onError:()=>{
+                message.error('保存出错');
+              },
               onOk:()=>{
                 message.success('保存成功');
               }

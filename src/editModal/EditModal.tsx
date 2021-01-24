@@ -72,12 +72,14 @@ class EditModal<T extends Store> extends Component<IEditModalProps<T>, IEditModa
   }
 
   private renderFooter() {
+    const { loading } = this.state;
     if (this.readOnly) {
       return null;
     }
     return (
       <>
         <Button
+          disabled={loading}
           onClick={() => {
             if (this.editForm) {
               this.editForm.cancel();
@@ -87,6 +89,7 @@ class EditModal<T extends Store> extends Component<IEditModalProps<T>, IEditModa
           取消
         </Button>
         <Button
+          loading={loading}
           type="primary"
           onClick={() => {
             if (this.editForm) {
@@ -103,16 +106,19 @@ class EditModal<T extends Store> extends Component<IEditModalProps<T>, IEditModa
   public render(): ReactNode {
     const { visible, editFormProps, modalProps, className, style } = this.props;
     const { onOk } = editFormProps;
+    const { loading } = this.state;
     return (
       <Modal
         className={className}
         style={style}
+        maskClosable={!loading}
         {...modalProps}
         title={this.renderTitle()}
         destroyOnClose
         visible={visible}
         footer={this.renderFooter()}
         onCancel={this.close}
+        closable={!loading}
       >
         <EditForm
           ref={target => {
@@ -120,9 +126,17 @@ class EditModal<T extends Store> extends Component<IEditModalProps<T>, IEditModa
               this.editForm = target;
             }
           }}
+          onLoadingChange={loading => {
+            this.setState({ loading });
+          }}
           hideControls
-          onCancel={this.close}
           {...editFormProps}
+          onCancel={() => {
+            this.close();
+            if (editFormProps.onCancel) {
+              editFormProps.onCancel();
+            }
+          }}
           onOk={() => {
             this.close();
             if (onOk) {
