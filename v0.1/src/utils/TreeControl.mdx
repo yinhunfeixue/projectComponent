@@ -1,0 +1,373 @@
+---
+name: TreeControl
+route: /TreeControl
+order: 0
+sidebar: true,
+menu: 辅助工具
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import TreeControl from './TreeControl';
+
+
+
+# TreeControl
+树相关的辅助工具
++ 一维数组转换为树结构
++ 搜索指定的结点
++ 搜索指定结点及其所有父结点
++ foreach
++ map
+
+### 数组转换为树
+`control.listToTree`
+<Playground>
+  <div>
+    {
+      (function renderTree(){
+         let list = [
+          {
+            id:1,
+          },
+          {
+            id:2,
+          },
+          {
+            id:3,
+          },
+          {
+            id:'1-1',
+            pid:1
+          },
+          {
+            id:'1-2',
+            pid:1
+          },
+          {
+            id:'2-1',
+            pid:2
+          },
+        ];
+        let control = new TreeControl("id", "children", "children");
+        let tree = control.listToTree(list.map(item=>({...item})), (node, parent)=>{
+          if(!parent){
+            return !node.pid;
+          }
+          return node.pid === parent.id;
+        });
+        return (
+          <div>
+            <h2>原始数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(list, null, 4)}</p>
+            <h2>树结构</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(tree, null, 4)}</p>
+          </div>
+        );
+       
+      })()
+    }
+  </div>
+</Playground>
+
+### 过滤出新的树
+
+挑选出name包含a的数据：`control.filter`
+<Playground>
+  <div>
+    {
+      (function renderTree(){
+         let list = [
+          {
+            id:1,
+          },
+          {
+            id:2,
+          },
+          {
+            id:3,
+          },
+          {
+            id:'1-1',
+            pid:1,
+          },
+          {
+            id:'1-1-2',
+            pid:'1-1',
+            name:'a111',
+          },
+          {
+            id:'1-2',
+            pid:1,
+          },
+          {
+            id:'2-1',
+            pid:2,
+            name:'a21'
+          },
+        ];
+        let control = new TreeControl("id", "children", "children");
+        let tree = control.listToTree(list.map(item=>({...item})), (node, parent)=>{
+          if(!parent){
+            return !node.pid;
+          }
+          return node.pid === parent.id;
+        });
+
+        let filterList = control.filter(tree, (node)=>{
+          return node.name && node.name.indexOf('a') >= 0;
+        })
+        return (
+          <div>
+            <h2>原始数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(list, null, 4)}</p>
+            <h2>树结构</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(tree, null, 4)}</p>
+            <h2>过滤出的数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(filterList, null, 4)}</p>
+          </div>
+        );
+       
+      })()
+    }
+  </div>
+</Playground>
+
+### 搜索指定结点
+
+挑选出name包含a的第一个数据：`control.search`
+<Playground>
+  <div>
+    {
+      (function renderTree(){
+         let list = [
+          {
+            id:1,
+          },
+          {
+            id:2,
+          },
+          {
+            id:3,
+          },
+          {
+            id:'1-1',
+            pid:1,
+          },
+          {
+            id:'1-1-2',
+            pid:'1-1',
+            name:'a111',
+          },
+          {
+            id:'1-2',
+            pid:1,
+          },
+          {
+            id:'2-1',
+            pid:2,
+            name:'a21'
+          },
+        ];
+        let control = new TreeControl("id", "children", "children");
+        let tree = control.listToTree(list.map(item=>({...item})), (node, parent)=>{
+          if(!parent){
+            return !node.pid;
+          }
+          return node.pid === parent.id;
+        });
+        let nodes = control.search(tree, (node)=>{
+          return node.name && node.name.indexOf('a') >= 0;
+        });
+        return (
+          <div>
+            <h2>原始数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(list, null, 4)}</p>
+            <h2>过滤出的数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(nodes, null, 4)}</p>
+          </div>
+         );
+        })()
+      }
+    </div>
+  </Playground>
+
+
+### 搜索指定结点
+
+挑选出name包含a的第一个数据及其所有父结点：`control.searchChain`
+<Playground>
+  <div>
+    {
+      (function renderTree(){
+         let list = [
+          {
+            id:1,
+          },
+          {
+            id:2,
+          },
+          {
+            id:3,
+          },
+          {
+            id:'1-1',
+            pid:1,
+          },
+          {
+            id:'1-1-2',
+            pid:'1-1',
+            name:'a111',
+          },
+          {
+            id:'1-2',
+            pid:1,
+          },
+          {
+            id:'2-1',
+            pid:2,
+            name:'a21'
+          },
+        ];
+        let control = new TreeControl("id", "children", "children");
+        let tree = control.listToTree(list.map(item=>({...item})), (node, parent)=>{
+          if(!parent){
+            return !node.pid;
+          }
+          return node.pid === parent.id;
+        });
+        let nodes = control.searchChain(tree, (node)=>{
+          return node.name && node.name.indexOf('a') >= 0;
+        });
+        return (
+          <div>
+            <h2>原始数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(list, null, 4)}</p>
+            <h2>过滤出的数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(nodes, null, 4)}</p>
+          </div>
+         );
+        })()
+      }
+    </div>
+  </Playground>
+
+
+  ### 搜索指定结点
+
+挑选出name包含a的第一个数据：`control.search`
+<Playground>
+  <div>
+    {
+      (function renderTree(){
+         let list = [
+          {
+            id:1,
+          },
+          {
+            id:2,
+          },
+          {
+            id:3,
+          },
+          {
+            id:'1-1',
+            pid:1,
+          },
+          {
+            id:'1-1-2',
+            pid:'1-1',
+            name:'a111',
+          },
+          {
+            id:'1-2',
+            pid:1,
+          },
+          {
+            id:'2-1',
+            pid:2,
+            name:'a21'
+          },
+        ];
+        let control = new TreeControl("id", "children", "children");
+        let tree = control.listToTree(list.map(item=>({...item})), (node, parent)=>{
+          if(!parent){
+            return !node.pid;
+          }
+          return node.pid === parent.id;
+        });
+        let nodes = control.search(tree, (node)=>{
+          return node.name && node.name.indexOf('a') >= 0;
+        });
+        return (
+          <div>
+            <h2>原始数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(list, null, 4)}</p>
+            <h2>过滤出的数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(nodes, null, 4)}</p>
+          </div>
+         );
+        })()
+      }
+    </div>
+  </Playground>
+
+
+### 遍历树
+
+给所有结点加上新属性
+<Playground>
+  <div>
+    {
+      (function renderTree(){
+         let list = [
+          {
+            id:1,
+          },
+          {
+            id:2,
+          },
+          {
+            id:3,
+          },
+          {
+            id:'1-1',
+            pid:1,
+          },
+          {
+            id:'1-1-2',
+            pid:'1-1',
+            name:'a111',
+          },
+          {
+            id:'1-2',
+            pid:1,
+          },
+          {
+            id:'2-1',
+            pid:2,
+            name:'a21'
+          },
+        ];
+        let control = new TreeControl("id", "children", "children");
+        let tree = control.listToTree(list.map(item=>({...item})), (node, parent)=>{
+          if(!parent){
+            return !node.pid;
+          }
+          return node.pid === parent.id;
+        });
+        control.forEach(tree, (node)=>{
+          node.newAtt = 'newAtt';
+        });
+        return (
+          <div>
+            <h2>原始数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(list, null, 4)}</p>
+            <h2>遍历的后的数据</h2>
+            <p style={{whiteSpace:'pre'}}>{JSON.stringify(tree, null, 4)}</p>
+          </div>
+         );
+        })()
+      }
+    </div>
+  </Playground>

@@ -1,0 +1,422 @@
+---
+name: FormUtil
+route: /FormUtil
+order: 0
+sidebar: true,
+menu: 辅助工具
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import FormUtil from './FormUtil';
+import { IFormItemDataC } from '../interfaces/Demo';
+import {Input, Form, Button, Checkbox} from 'antd';
+import PhoneFormItem from '../forms/PhoneFormItem';
+
+
+# FormUtil
+表单的辅助工具
+
+## 示例
+
+### 渲染表单
+
+目标是解决表单对齐，间距的问题。
+规则如下：
++ 默认一行2列，标签和内容的宽度为：1:4
++ 标签文字大于6个字，独占一行
++ 可手动修改：默认的列数、标签宽度
++ 可单独设置每一个表单项宽度、表单项标签的宽度
+
+### 一个标准示例
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          span:24,
+          content: <img style={{height:160, width: 120, border:'1px solid gray', display: 'inline-block'}} alt="头像"/>
+        },
+        {
+          label:'姓名',
+          name:'name',
+          content: <Input />,
+          rules:[
+            {
+              required:true,
+            }
+          ]
+        },
+        {
+          label:'启用',
+          name:'enable',
+          valuePropName:'checked',
+          content:<Checkbox />
+        },
+        {
+          label:'性别',
+          name:'sex',
+          content: <Input />
+        },
+        {
+          label:'公司地址',
+          name:'companyAddress',
+          content: <Input />
+        },
+        {
+          label:'身份证号码',
+          name:'idCard',
+          content: <Input />
+        },
+        {
+          label:'个人签名',
+          span: 24,
+          name:'sign',
+          content: <Input />
+        },
+        {
+          label:'紧急联系人',
+          span: 8,
+          name:'friend',
+          content: <Input />
+        },
+        {
+          label:'座机',
+          span: 8,
+          name:'phone',
+          content: <Input />
+        },
+        {
+          label:'座机',
+          span: 6,
+          name:'phone2',
+          content: <Input />
+        },
+        {
+          label:'座机',
+          span: 6,
+          content: <Input />
+        },
+        {
+          span:24,
+          content:<Button type="primary" htmlType="submit">保存，我是自动对齐</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal" onFinish={(value)=>{
+            console.log(value);
+          }}>
+          {
+            FormUtil.renderFormItems(list)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 使用特殊的formItem
+
+本示例，使用`<PhoneFormItem />` 做为content值，此时需设置`contentIsFormItem:true`
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'手机号',
+          span: 8,
+          contentIsFormItem:true,
+          content: <PhoneFormItem required name='mobilePhone' />
+        },
+        {
+          span:24,
+          content:<Button type="primary" htmlType="submit">保存</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal" onFinish={(value)=>{
+            console.log(value);
+          }}>
+          {
+            FormUtil.renderFormItems(list)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 一些特殊情况的处理
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          content: <img style={{height:160, width: 120, border:'1px solid gray', display: 'inline-block'}} alt="头像"/>
+        },
+        {
+          label:'姓名',
+          content: <Input />
+        },
+        {
+          label:'四个文字',
+          content: <Input />
+        },
+        {
+          label:'这里六个文字',
+          content: <Input />
+        },
+        {
+          label:'我是标签字数超过7，会自动独占一行，但可能需要手动调整labe占位，否则显示不全',
+          labelSpan: 15,
+          content: <Input value="我手动调整了标签占位"/>
+        },
+        {
+          label:'我也很长',
+          span: 12,
+          content: <Input value="我也很长，但手动设置了只占半行"/>
+        },
+        {
+          label:'标签',
+          span: 24,
+          content: <Input value="我标签文字不长，但手动设置了独占一行"/>
+        },
+        {
+          content:<Button type="primary">保存，我是自动对齐</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 渲染表单项--表单项为奇数时，按钮换行
+
+额外添加一个空项
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          content: null,
+        },
+        {
+          content:<Button type="primary">保存，我是自动对齐</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 渲染表单项--三列
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />,
+        },   
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          content:<Button type="primary">保存，我是自动对齐</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list, 3)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 渲染表单项--三列时，按钮另起一行
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          span:24,
+          content:<Button type="primary">保存</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list, 3)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 渲染表单项--三列
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />,
+        },   
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          content:<Button type="primary">保存，我是自动对齐</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list, 3)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+### 增加每列的间隔
+
+FormUtil.renderFormItems(list, 3, 6, **15**)
+通过设置renderFormItems的第4个参数,使labelSpan + wrapSpan < 24，达到增加每列间隔的目的
+
+同时，也可以给表单项单独设置wrawSpan
+<Playground>
+{
+  class Demo extends React.Component{
+    render(){
+      const list = [
+        {
+          label:'姓名',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input />
+        },
+        {
+          label:'年龄',
+          content: <Input />
+        },
+        {
+          label:'性别',
+          content: <Input value='我单独设置了wrapSpan'/>,
+          wrapSpan: 10
+        },
+        {
+          content:<Button type="primary">保存</Button>
+        }
+      ];
+      return (
+        <div>
+          <Form layout="Horizontal">
+          {
+            FormUtil.renderFormItems(list, 3, 6, 15)
+          }
+          </Form>
+        </div>
+      );
+    }
+  }
+}
+</Playground>
+
+## 参考 IFormItemData
+
+<Props of={IFormItemDataC} />
+
