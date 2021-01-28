@@ -1,0 +1,3150 @@
+{
+  "config": {
+    "title": "烽火工程组件",
+    "description": "My awesome app using docz",
+    "menu": [],
+    "version": "0.0.97",
+    "repository": false,
+    "native": false,
+    "codeSandbox": true,
+    "themeConfig": {},
+    "separator": "-",
+    "typescript": true,
+    "theme": "/Users/xujunjie/Documents/git/projectComponent/node_modules/docz-theme-umi/es/index.js",
+    "base": "/projectComponent/",
+    "htmlContext": {
+      "lang": "",
+      "head": {
+        "raw": "",
+        "links": [],
+        "meta": [],
+        "scripts": [
+          {
+            "src": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js"
+          },
+          {
+            "src": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js"
+          }
+        ]
+      }
+    },
+    "plugins": [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ]
+  },
+  "props": [
+    {
+      "key": "src/IdCardInput/IdCardInput.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "IdCardInput",
+          "methods": [],
+          "props": {
+            "value": {
+              "defaultValue": null,
+              "description": "身份证初始值",
+              "name": "value",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "onSuccess": {
+              "defaultValue": null,
+              "description": "输入正确身份证后的回调",
+              "name": "onSuccess",
+              "required": true,
+              "type": {
+                "name": "(values: any) => void"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onChange",
+              "required": true,
+              "type": {
+                "name": "(value: any) => void"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/CountUp/CountUp.tsx",
+      "value": [
+        {
+          "description": "计时器\n@param props",
+          "displayName": "CountUp",
+          "methods": [],
+          "props": {
+            "serverTimestamp": {
+              "defaultValue": null,
+              "description": "服务器时间戳，如果不传，以客户端时间为准",
+              "name": "serverTimestamp",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "startTime": {
+              "defaultValue": null,
+              "description": "计时开始时间",
+              "name": "startTime",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "format": {
+              "defaultValue": null,
+              "description": "显示时间的格式，最大只能格式化到天\ndd 表示天  hh 表示小时  mm表示分钟  ss表示秒\nHH可超过60小时  MM和SS同理\n如 25小时20分钟10秒  可用HH:mm:ss表示为25:20:10  也可用dd hh:mm:ss 表示为01 01:20:10",
+              "name": "format",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "countUpClassName": {
+              "defaultValue": null,
+              "description": "计时器显示的样式类名",
+              "name": "countUpClassName",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/TreeCurd/TreeCurd.tsx",
+      "value": [
+        {
+          "description": "一个可以增删改查的树\n@class TreeCurd\n@extends Component<ITreeCurdProps<T>, ITreeCurdState<T>>\n@template T",
+          "displayName": "TreeCurd",
+          "methods": [],
+          "props": {
+            "getKey": {
+              "defaultValue": null,
+              "description": "自定义标识",
+              "name": "getKey",
+              "required": false,
+              "type": {
+                "name": "string | ((item: T) => string) | undefined"
+              }
+            },
+            "getTitle": {
+              "defaultValue": null,
+              "description": "自定义节点名称",
+              "name": "getTitle",
+              "required": false,
+              "type": {
+                "name": "string | ((item: T) => ReactNode) | undefined"
+              }
+            },
+            "getChildren": {
+              "defaultValue": null,
+              "description": "自定义数据子节点集合属性名或者自定义子节点集合",
+              "name": "getChildren",
+              "required": false,
+              "type": {
+                "name": "string | ((item: T) => T[]) | undefined"
+              }
+            },
+            "onCheck": {
+              "defaultValue": null,
+              "description": "选中回调",
+              "name": "onCheck",
+              "required": false,
+              "type": {
+                "name": "((extraData: ITreeCurdExtra<T>, checkedInfo: { checkedNodes: DataNode[]; }) => void) | undefined"
+              }
+            },
+            "onExpand": {
+              "defaultValue": null,
+              "description": "展开回调",
+              "name": "onExpand",
+              "required": false,
+              "type": {
+                "name": "((expandedKeys: ReactText[]) => void) | undefined"
+              }
+            },
+            "width": {
+              "defaultValue": null,
+              "description": "树的宽度",
+              "name": "width",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "editEnable": {
+              "defaultValue": null,
+              "description": "是否是一个是否可编辑的树,默认为true",
+              "name": "editEnable",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "minHeight": {
+              "defaultValue": null,
+              "description": "树最小高度",
+              "name": "minHeight",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "treeContentClassName": {
+              "defaultValue": null,
+              "description": "树顶部操作区窗口的样式名",
+              "name": "treeContentClassName",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "editContentClassName": {
+              "defaultValue": null,
+              "description": "编辑顶部操作区窗口的样式名",
+              "name": "editContentClassName",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "optClassOName": {
+              "defaultValue": null,
+              "description": "操作顶部操作区窗口的样式名",
+              "name": "optClassOName",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "checkClassName": {
+              "defaultValue": null,
+              "description": "多选顶部操作区窗口的样式名",
+              "name": "checkClassName",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "treeProps": {
+              "defaultValue": null,
+              "description": "Tree组件自带的属性",
+              "name": "treeProps",
+              "required": false,
+              "type": {
+                "name": "Object | undefined"
+              }
+            },
+            "checkable": {
+              "defaultValue": null,
+              "description": "节点前添加 Checkbox 复选框",
+              "name": "checkable",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "getTreeData": {
+              "defaultValue": null,
+              "description": "获取树源数据",
+              "name": "getTreeData",
+              "required": true,
+              "type": {
+                "name": "(searchValue?: string | undefined) => Promise<T[]>"
+              }
+            },
+            "showSearch": {
+              "defaultValue": null,
+              "description": "是否可搜索",
+              "name": "showSearch",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "deleteFunction": {
+              "defaultValue": null,
+              "description": "删除节点",
+              "name": "deleteFunction",
+              "required": false,
+              "type": {
+                "name": "((ids: ReactText[]) => Promise<any>) | undefined"
+              }
+            },
+            "renderExtra": {
+              "defaultValue": null,
+              "description": "自定义操作",
+              "name": "renderExtra",
+              "required": false,
+              "type": {
+                "name": "((extraData: ITreeCurdExtra<T>, defaultRender: (extraData: ITreeCurdExtra<T>) => ReactNode) => ReactNode) | undefined"
+              }
+            },
+            "renderEditExtra": {
+              "defaultValue": null,
+              "description": "自定义编辑操作",
+              "name": "renderEditExtra",
+              "required": false,
+              "type": {
+                "name": "((extraData: ITreeCurdExtra<T>) => ReactNode) | undefined"
+              }
+            },
+            "defaultExpandedKeys": {
+              "defaultValue": null,
+              "description": "默认展开的节点",
+              "name": "defaultExpandedKeys",
+              "required": false,
+              "type": {
+                "name": "any[] | undefined"
+              }
+            },
+            "defaultCheckedKeys": {
+              "defaultValue": null,
+              "description": "默认选中的节点",
+              "name": "defaultCheckedKeys",
+              "required": false,
+              "type": {
+                "name": "any[] | undefined"
+              }
+            },
+            "getNodeProps": {
+              "defaultValue": null,
+              "description": "",
+              "name": "getNodeProps",
+              "required": false,
+              "type": {
+                "name": "((item: T) => DataNode) | undefined"
+              }
+            },
+            "renderCheckExtra": {
+              "defaultValue": null,
+              "description": "自定义多选的操作",
+              "name": "renderCheckExtra",
+              "required": false,
+              "type": {
+                "name": "((extraData: ITreeCurdExtra<T>) => ReactNode) | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/confirmButton/ConfirmButton.tsx",
+      "value": [
+        {
+          "description": "确认按钮",
+          "displayName": "ConfirmButton",
+          "methods": [],
+          "props": {
+            "onConfirm": {
+              "defaultValue": null,
+              "description": "确认成功后，触发的事件",
+              "name": "onConfirm",
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "validate": {
+              "defaultValue": null,
+              "description": "是否确认的方法，默认为弹窗并由用户选择。\n\n自定义验证函数须返回 Promise<boolean>，为true时，表示确认",
+              "name": "validate",
+              "required": false,
+              "type": {
+                "name": "(() => Promise<boolean>) | undefined"
+              }
+            },
+            "getElement": {
+              "defaultValue": null,
+              "description": "显示的元素",
+              "name": "getElement",
+              "required": false,
+              "type": {
+                "name": "((loading: boolean) => ReactNode) | undefined"
+              }
+            },
+            "text": {
+              "defaultValue": null,
+              "description": "按钮上的文字",
+              "name": "text",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "modalContent": {
+              "defaultValue": null,
+              "description": "如果使用默认的弹窗验证方式，且需要自定义文字，可使用此属性",
+              "name": "modalContent",
+              "required": false,
+              "type": {
+                "name": "{ title: string; content: ReactNode; } | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/core/TimeSpan.ts",
+      "value": [
+        {
+          "description": "表示一个时间段\n@author : xujunjie (yinhunfeixue\n@ 163.com)\n@Date : 2017-11-19 12:52:53",
+          "displayName": "TimeSpan",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "src/editForm/EditForm.tsx",
+      "value": [
+        {
+          "description": "编辑表单，支持：编辑，阅读两种模式；会自行判断是新增还是修改",
+          "displayName": "EditForm",
+          "methods": [],
+          "props": {
+            "addFunction": {
+              "defaultValue": null,
+              "description": "新增函数，then表示成功，catch表示异常",
+              "name": "addFunction",
+              "required": false,
+              "type": {
+                "name": "((value: Store) => Promise<any>) | undefined"
+              }
+            },
+            "updateFunction": {
+              "defaultValue": null,
+              "description": "编辑函数，then表示成功，catch表示异常",
+              "name": "updateFunction",
+              "required": false,
+              "type": {
+                "name": "((value: Store, source: T) => Promise<any>) | undefined"
+              }
+            },
+            "getDetailFunction": {
+              "defaultValue": null,
+              "description": "获取源数据完整信息的方法。\n当props.source只是部分信息，而表单中需要展示完整信息时，需通过此方法获取完整数据",
+              "name": "getDetailFunction",
+              "required": false,
+              "type": {
+                "name": "((source: T) => Promise<T>) | undefined"
+              }
+            },
+            "source": {
+              "defaultValue": null,
+              "description": "源数据，如果是“编辑模式”，且设置了“源数据”，保存时调用编辑函数",
+              "name": "source",
+              "required": false,
+              "type": {
+                "name": "T | undefined"
+              }
+            },
+            "formItemList": {
+              "defaultValue": null,
+              "description": "表单项列表",
+              "name": "formItemList",
+              "required": true,
+              "type": {
+                "name": "IFormItemData[]"
+              }
+            },
+            "columnsCount": {
+              "defaultValue": null,
+              "description": "列数",
+              "name": "columnsCount",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "key": {
+              "defaultValue": null,
+              "description": "主键名称",
+              "name": "key",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "onCancel": {
+              "defaultValue": null,
+              "description": "取消事件",
+              "name": "onCancel",
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "onOk": {
+              "defaultValue": null,
+              "description": "保存成功事件",
+              "name": "onOk",
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "onError": {
+              "defaultValue": null,
+              "description": "保存出错的事件",
+              "name": "onError",
+              "required": false,
+              "type": {
+                "name": "((error: any) => void) | undefined"
+              }
+            },
+            "hideControls": {
+              "defaultValue": null,
+              "description": "是否隐藏操作按钮，如果设置为true，需自定义控制按钮",
+              "name": "hideControls",
+              "required": false,
+              "type": {
+                "name": "Boolean | undefined"
+              }
+            },
+            "onLoadingChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onLoadingChange",
+              "required": false,
+              "type": {
+                "name": "((value: boolean) => void) | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/enums/FormRegExp.ts",
+      "value": []
+    },
+    {
+      "key": "src/enums/ImageFitType.ts",
+      "value": []
+    },
+    {
+      "key": "src/enums/UploadAcceptType.ts",
+      "value": []
+    },
+    {
+      "key": "src/enums/UploadType.ts",
+      "value": []
+    },
+    {
+      "key": "src/forms/EmailFormItem.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "EmailFormItem",
+          "methods": [],
+          "props": {
+            "name": {
+              "defaultValue": null,
+              "description": "key值",
+              "name": "name",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "label": {
+              "defaultValue": null,
+              "description": "名称",
+              "name": "label",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "required": {
+              "defaultValue": null,
+              "description": "是否必填",
+              "name": "required",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "fromItemProps": {
+              "defaultValue": null,
+              "description": "Form.Item属性设置",
+              "name": "fromItemProps",
+              "required": false,
+              "type": {
+                "name": "FormItemProps | undefined"
+              }
+            },
+            "emptyMsg": {
+              "defaultValue": null,
+              "description": "必填校验错误信息",
+              "name": "emptyMsg",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "errMsg": {
+              "defaultValue": null,
+              "description": "邮箱格式校验错误信息",
+              "name": "errMsg",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/forms/IdCardFormItem.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "IdCardFormItem",
+          "methods": [],
+          "props": {
+            "name": {
+              "defaultValue": null,
+              "description": "key值",
+              "name": "name",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "label": {
+              "defaultValue": null,
+              "description": "名称",
+              "name": "label",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "required": {
+              "defaultValue": null,
+              "description": "是否必填",
+              "name": "required",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "fromItemProps": {
+              "defaultValue": null,
+              "description": "Form.Item属性设置",
+              "name": "fromItemProps",
+              "required": false,
+              "type": {
+                "name": "FormItemProps | undefined"
+              }
+            },
+            "onSuccess": {
+              "defaultValue": null,
+              "description": "身份证校验通过，信息回调",
+              "name": "onSuccess",
+              "required": false,
+              "type": {
+                "name": "((values: any) => void) | undefined"
+              }
+            },
+            "idCardType": {
+              "defaultValue": null,
+              "description": "身份证类型，1.大陆身份证，2.港澳身份证，3.台湾身份证",
+              "name": "idCardType",
+              "required": false,
+              "type": {
+                "name": "1 | 2 | 3 | undefined"
+              }
+            },
+            "emptyMsg": {
+              "defaultValue": null,
+              "description": "必填校验错误信息",
+              "name": "emptyMsg",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "errMsg": {
+              "defaultValue": null,
+              "description": "身份证号码格式校验错误信息",
+              "name": "errMsg",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/forms/PhoneFormItem.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "PhoneFormItem",
+          "methods": [],
+          "props": {
+            "name": {
+              "defaultValue": null,
+              "description": "key值",
+              "name": "name",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "label": {
+              "defaultValue": null,
+              "description": "名称",
+              "name": "label",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "required": {
+              "defaultValue": null,
+              "description": "是否必填",
+              "name": "required",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "fromItemProps": {
+              "defaultValue": null,
+              "description": "Form.Item属性设置",
+              "name": "fromItemProps",
+              "required": false,
+              "type": {
+                "name": "FormItemProps | undefined"
+              }
+            },
+            "phoneType": {
+              "defaultValue": null,
+              "description": "电话类型，1.手机号码 2.固定电话",
+              "name": "phoneType",
+              "required": false,
+              "type": {
+                "name": "1 | 2 | undefined"
+              }
+            },
+            "emptyMsg": {
+              "defaultValue": null,
+              "description": "必填校验错误信息",
+              "name": "emptyMsg",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "errMsg": {
+              "defaultValue": null,
+              "description": "电话号码格式校验错误信息",
+              "name": "errMsg",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/interfaces/Demo.ts",
+      "value": [
+        {
+          "description": "",
+          "displayName": "IFormItemDataC",
+          "methods": [],
+          "props": {
+            "name": {
+              "defaultValue": null,
+              "description": "字段",
+              "name": "name",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "label": {
+              "defaultValue": null,
+              "description": "标签",
+              "name": "label",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "content": {
+              "defaultValue": null,
+              "description": "内容",
+              "name": "content",
+              "required": true,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "span": {
+              "defaultValue": null,
+              "description": "占用的列宽，不设置则自动计算",
+              "name": "span",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "labelSpan": {
+              "defaultValue": null,
+              "description": "当前项标签占用的列数，未设置则自动计算。\n通常，只有标签文字太多，显示不全时，需要设置此值",
+              "name": "labelSpan",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "wrapSpan": {
+              "defaultValue": null,
+              "description": "内容占用的列数，未设置则自动计算",
+              "name": "wrapSpan",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "rules": {
+              "defaultValue": null,
+              "description": "表单项规则",
+              "name": "rules",
+              "required": false,
+              "type": {
+                "name": "Rule[] | undefined"
+              }
+            },
+            "valuePropName": {
+              "defaultValue": null,
+              "description": "子节点的值的属性，如 Switch 的是 'checked'",
+              "name": "valuePropName",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "formItemProps": {
+              "defaultValue": null,
+              "description": "FormItem的props\n要传递给Form.Item的props",
+              "name": "formItemProps",
+              "required": false,
+              "type": {
+                "name": "FormItemProps | undefined"
+              }
+            },
+            "contentIsFormItem": {
+              "defaultValue": null,
+              "description": "content是否是FormItem，设置为true时，不会新创建一层formitem，而是使用content本身",
+              "name": "contentIsFormItem",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/interfaces/IFormItemData.ts",
+      "value": []
+    },
+    {
+      "key": "src/interfaces/IComponentProps.ts",
+      "value": []
+    },
+    {
+      "key": "src/limitUpload/LimitUpload.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "LimitUpload",
+          "methods": [],
+          "props": {
+            "validateFile": {
+              "defaultValue": null,
+              "description": "验证文件是否上传成功。\n@return 返回是否上传成功",
+              "name": "validateFile",
+              "required": false,
+              "type": {
+                "name": "((file: UploadFile<any>) => boolean) | undefined"
+              }
+            },
+            "onError": {
+              "defaultValue": null,
+              "description": "上传出错的处理函数，不传则使用默认处理方法：message.error()显示错误提示",
+              "name": "onError",
+              "required": false,
+              "type": {
+                "name": "((file: UploadFile<any>) => void) | undefined"
+              }
+            },
+            "maxNumber": {
+              "defaultValue": null,
+              "description": "最大允许上传的文件数量",
+              "name": "maxNumber",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "type": {
+              "defaultValue": null,
+              "description": "类型，是普通文件还是图像\n@see UploadType",
+              "name": "type",
+              "required": false,
+              "type": {
+                "name": "UploadType | undefined"
+              }
+            },
+            "disabled": {
+              "defaultValue": null,
+              "description": "是否禁用",
+              "name": "disabled",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "文件发生变化时触发的事件",
+              "name": "onChange",
+              "required": false,
+              "type": {
+                "name": "((value: UploadFile<any>[]) => void) | undefined"
+              }
+            },
+            "defaultFileList": {
+              "defaultValue": null,
+              "description": "默认的文件列表。\n\n通常在编辑时，需要使用，例如：之前上传过的文件，可使用此属性设置",
+              "name": "defaultFileList",
+              "required": false,
+              "type": {
+                "name": "UploadFile<any>[] | undefined"
+              }
+            },
+            "value": {
+              "defaultValue": null,
+              "description": "文件列表",
+              "name": "value",
+              "required": false,
+              "type": {
+                "name": "UploadFile<any>[] | undefined"
+              }
+            },
+            "renderChooser": {
+              "defaultValue": null,
+              "description": "选择元素的渲染函数，如果没有，使用默认方案",
+              "name": "renderChooser",
+              "required": false,
+              "type": {
+                "name": "((loading?: boolean | undefined) => ReactNode) | undefined"
+              }
+            },
+            "accept": {
+              "defaultValue": null,
+              "description": "可选的文件后缀。\n\n不设置，则根据type自动设置\n@example \".jpg, .png\"",
+              "name": "accept",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "action": {
+              "defaultValue": null,
+              "description": "上传接口路径",
+              "name": "action",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "disableCredentials": {
+              "defaultValue": null,
+              "description": "是否禁用cookie",
+              "name": "disableCredentials",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "uploadProps": {
+              "defaultValue": null,
+              "description": "其它要传给Upload的props，此属性的优先级高于其它属性。\n\n例如：在此属性设置了accept，则优先使用此处设置的accept",
+              "name": "uploadProps",
+              "required": false,
+              "type": {
+                "name": "UploadProps<any> | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/curd/Curd.tsx",
+      "value": [
+        {
+          "description": "包含增删改查的组件\n\n## 自带以下功能\n+ 列表--分页表格\n+ 增--表格上方操作区“新增按钮”-->打开新建弹窗\n+ 改--操作列“编辑按钮”-->打开编辑弹窗\n+ 删--操作列“删除按钮”-->删除操作\n\n## 必填属性\n+ columns--表格列\n+ getListFunction--获取列表的方法\n\n## 可选属性\n\n+ rowKey--标识符，默认ID。 删除会用以rowKey为参数\n+ 扩展操作列\n+ 扩展表格上方操作区\n+ searchItems--搜索表单项，如设置，则自动在表格上方显示搜索表单\n+ renderEdit--渲染编辑视图，如果设置，则自动自动显示编辑按钮和新建按钮。\n+ renderCreate--渲染新建视图，如果新建和编辑一样，可共享renderEdit方法\n+ deleteFunction--删除，如设置，则\n    + 自动显示“删除按钮”\n    + 自动使表格可选择\n+ 禁用：增、改、删\n+ 禁用：编辑列\n+ 自定义：编辑按钮、删除按钮、新建按钮",
+          "displayName": "Curd",
+          "methods": [],
+          "props": {
+            "columns": {
+              "defaultValue": null,
+              "description": "表格的列数据",
+              "name": "columns",
+              "required": true,
+              "type": {
+                "name": "(ColumnGroupType<T> | ColumnType<T>)[]"
+              }
+            },
+            "getListFunction": {
+              "defaultValue": null,
+              "description": "请求数据的方法，需返回指定格式的数据\n@param currentPage 当前页码，从1开始\n@param pageSize 一页显示的数据量\n@param searchParams 搜索参数",
+              "name": "getListFunction",
+              "required": true,
+              "type": {
+                "name": "(currentPage: number, pageSize: number, searchParams: any) => Promise<ITableResponse<T>>"
+              }
+            },
+            "rowKey": {
+              "defaultValue": null,
+              "description": "数据标识符，可以是属性名称或者一个函数，如果是函数，返回值表示标识符的值",
+              "name": "rowKey",
+              "required": false,
+              "type": {
+                "name": "string | ((record: T) => string) | undefined"
+              }
+            },
+            "pageSize": {
+              "defaultValue": null,
+              "description": "一页显示的数量",
+              "name": "pageSize",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "renderEditColumns": {
+              "defaultValue": null,
+              "description": "渲染编辑列\n@param record 数据项\n@param index 数据行序号\n@param defaultRender 默认的渲染方法，可调用此方法以插入默认渲染的元素",
+              "name": "renderEditColumns",
+              "required": false,
+              "type": {
+                "name": "((record: T, index: number, defaultRender: (record: T, params?: { disabledRecordDelete?: boolean | undefined; disabledRecordEdit?: boolean | undefined; disabledRecordPreview?: boolean | undefined; } | undefined) => ReactNode) => ReactNode) | undefined"
+              }
+            },
+            "renderTableExtra": {
+              "defaultValue": null,
+              "description": "渲染列表顶部操作区\n@param extraData 表格的扩展区可用的数据的方法，例如selectedRowKeys\n@param defaultRenderTableExtra 默认的渲染方法，可调用此方法以插入默认渲染的元素",
+              "name": "renderTableExtra",
+              "required": false,
+              "type": {
+                "name": "((extraData: ISearchTableExtra<T>, defaultRenderTableExtra: (extraData: ISearchTableExtra<T>) => ReactNode) => ReactNode) | undefined"
+              }
+            },
+            "searchItem": {
+              "defaultValue": null,
+              "description": "搜索表单的数据",
+              "name": "searchItem",
+              "required": false,
+              "type": {
+                "name": "IFormItemData[] | undefined"
+              }
+            },
+            "deleteFunction": {
+              "defaultValue": null,
+              "description": "删除函数",
+              "name": "deleteFunction",
+              "required": false,
+              "type": {
+                "name": "((idList: any[]) => Promise<any>) | undefined"
+              }
+            },
+            "renderEditer": {
+              "defaultValue": null,
+              "description": "渲染编辑页面，通常是一个弹窗\n@param visible 是否期望可见\n@param close 关闭的方法，调用此方法后，visible会变成false\n@extraData 表格对外扩展方法，如果需要刷新，可使用extraData.refresh()\n@record 当前编辑的源数据",
+              "name": "renderEditer",
+              "required": false,
+              "type": {
+                "name": "((visible: boolean, close: () => void, extraData: ISearchTableExtra<T>, record?: T | undefined) => ReactNode) | undefined"
+              }
+            },
+            "renderCreater": {
+              "defaultValue": null,
+              "description": "渲染新建页面\n@param visible 是否期望可见\n@param close 关闭的方法，调用此方法后，visible会变成false\n@extraData 表格对外扩展方法，如果需要刷新，可使用extraData.refresh()",
+              "name": "renderCreater",
+              "required": false,
+              "type": {
+                "name": "((visible: boolean, close: () => void, extraData: ISearchTableExtra<T>) => ReactNode) | undefined"
+              }
+            },
+            "renderPreviewer": {
+              "defaultValue": null,
+              "description": "渲染编辑页面，通常是一个弹窗\n@param visible 是否期望可见\n@param close 关闭的方法，调用此方法后，visible会变成false\n@extraData 表格对外扩展方法，如果需要刷新，可使用extraData.refresh()\n@record 要查看的源数据",
+              "name": "renderPreviewer",
+              "required": false,
+              "type": {
+                "name": "((visible: boolean, close: () => void, extraData: ISearchTableExtra<T>, record?: T | undefined) => ReactNode) | undefined"
+              }
+            },
+            "renderCreateElement": {
+              "defaultValue": null,
+              "description": "自定义新建操作的外观元素",
+              "name": "renderCreateElement",
+              "required": false,
+              "type": {
+                "name": "(() => ReactNode) | undefined"
+              }
+            },
+            "renderBatchDeleteElement": {
+              "defaultValue": null,
+              "description": "自定义批量删除的外观元素",
+              "name": "renderBatchDeleteElement",
+              "required": false,
+              "type": {
+                "name": "(() => ReactNode) | undefined"
+              }
+            },
+            "renderDeleteElement": {
+              "defaultValue": null,
+              "description": "自定义删除的外观元素",
+              "name": "renderDeleteElement",
+              "required": false,
+              "type": {
+                "name": "(() => ReactNode) | undefined"
+              }
+            },
+            "renderEditElement": {
+              "defaultValue": null,
+              "description": "自定义编辑的外观元素",
+              "name": "renderEditElement",
+              "required": false,
+              "type": {
+                "name": "(() => ReactNode) | undefined"
+              }
+            },
+            "renderEditPreviewElement": {
+              "defaultValue": null,
+              "description": "自定义预览（查看）的外观元素",
+              "name": "renderEditPreviewElement",
+              "required": false,
+              "type": {
+                "name": "(() => ReactNode) | undefined"
+              }
+            },
+            "selectedEnable": {
+              "defaultValue": null,
+              "description": "是否可选择",
+              "name": "selectedEnable",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "disabledCreate": {
+              "defaultValue": null,
+              "description": "是否禁用新建",
+              "name": "disabledCreate",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "disabledDelete": {
+              "defaultValue": null,
+              "description": "是否禁用删除",
+              "name": "disabledDelete",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "disabledEdit": {
+              "defaultValue": null,
+              "description": "是否禁用编辑",
+              "name": "disabledEdit",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "disabledPreview": {
+              "defaultValue": null,
+              "description": "是否禁用预览",
+              "name": "disabledPreview",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "disabledEditColumn": {
+              "defaultValue": null,
+              "description": "是否禁用编辑列",
+              "name": "disabledEditColumn",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "editColumnWidth": {
+              "defaultValue": null,
+              "description": "编辑列的宽度",
+              "name": "editColumnWidth",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "showSizeChanger": {
+              "defaultValue": null,
+              "description": "是否可切换每页显示的数量",
+              "name": "showSizeChanger",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "showQuickJumper": {
+              "defaultValue": null,
+              "description": "是否显示快速跳转页码的输入框",
+              "name": "showQuickJumper",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "showTotal": {
+              "defaultValue": null,
+              "description": "显示总数量的方法, false表示不显示",
+              "name": "showTotal",
+              "required": false,
+              "type": {
+                "name": "false | ((total: number, range: [number, number]) => ReactNode) | undefined"
+              }
+            },
+            "inlineMaxNumber": {
+              "defaultValue": null,
+              "description": "搜索表单项小于等于几时，使用inline，默认为3",
+              "name": "inlineMaxNumber",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "searchFormProps": {
+              "defaultValue": null,
+              "description": "传递给搜索表单的props",
+              "name": "searchFormProps",
+              "required": false,
+              "type": {
+                "name": "ISearchFormProps | undefined"
+              }
+            },
+            "tableProps": {
+              "defaultValue": null,
+              "description": "传递给表格的props",
+              "name": "tableProps",
+              "required": false,
+              "type": {
+                "name": "TableProps<T> | undefined"
+              }
+            },
+            "onSearchParamsChange": {
+              "defaultValue": null,
+              "description": "搜索参数变化时触发的事件",
+              "name": "onSearchParamsChange",
+              "required": false,
+              "type": {
+                "name": "((searchParams: any) => void) | undefined"
+              }
+            },
+            "onDataChange": {
+              "defaultValue": null,
+              "description": "数据源发生变化时触发的事件",
+              "name": "onDataChange",
+              "required": false,
+              "type": {
+                "name": "((data: ITableResponse<T>) => void) | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/powerImg/PowerImg.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "PowerImg",
+          "methods": [],
+          "props": {
+            "src": {
+              "defaultValue": null,
+              "description": "图片地址",
+              "name": "src",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "objectFit": {
+              "defaultValue": null,
+              "description": "图片填充模式",
+              "name": "objectFit",
+              "required": false,
+              "type": {
+                "name": "ImageFitType | undefined"
+              }
+            },
+            "width": {
+              "defaultValue": null,
+              "description": "图片宽度",
+              "name": "width",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "height": {
+              "defaultValue": null,
+              "description": "图片高度",
+              "name": "height",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "isPreview": {
+              "defaultValue": null,
+              "description": "是否预览，如果设置预览将占用点击事件",
+              "name": "isPreview",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "onClick": {
+              "defaultValue": null,
+              "description": "点击事件",
+              "name": "onClick",
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/searchForm/SearchForm.tsx",
+      "value": [
+        {
+          "description": "搜索表单",
+          "displayName": "SearchForm",
+          "methods": [],
+          "props": {
+            "itemList": {
+              "defaultValue": null,
+              "description": "表单项，参考：IFormItemData",
+              "name": "itemList",
+              "required": false,
+              "type": {
+                "name": "IFormItemData[] | undefined"
+              }
+            },
+            "onSubmit": {
+              "defaultValue": null,
+              "description": "提交数据时触发的方法",
+              "name": "onSubmit",
+              "required": false,
+              "type": {
+                "name": "((values: Store) => void) | undefined"
+              }
+            },
+            "columnNumber": {
+              "defaultValue": null,
+              "description": "每行默认的列数",
+              "name": "columnNumber",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "inlineMaxNumber": {
+              "defaultValue": null,
+              "description": "表单项小于等于几时，使用inline，默认为3",
+              "name": "inlineMaxNumber",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "renderSearchElement": {
+              "defaultValue": null,
+              "description": "渲染搜索元素",
+              "name": "renderSearchElement",
+              "required": false,
+              "type": {
+                "name": "(() => ReactNode) | undefined"
+              }
+            },
+            "renderResetElement": {
+              "defaultValue": null,
+              "description": "渲染重置元素",
+              "name": "renderResetElement",
+              "required": false,
+              "type": {
+                "name": "(() => ReactNode) | undefined"
+              }
+            },
+            "initialValues": {
+              "defaultValue": null,
+              "description": "Form的初始化",
+              "name": "initialValues",
+              "required": false,
+              "type": {
+                "name": "Store | undefined"
+              }
+            },
+            "disabled": {
+              "defaultValue": null,
+              "description": "禁用",
+              "name": "disabled",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "getFormInstance": {
+              "defaultValue": null,
+              "description": "获取表单实例，需要联动时，需要使用此方法",
+              "name": "getFormInstance",
+              "required": false,
+              "type": {
+                "name": "((form: FormInstance | null) => void) | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/text/Text.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Text",
+          "methods": [],
+          "props": {
+            "text": {
+              "defaultValue": null,
+              "description": "文本内容",
+              "name": "text",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "maxLen": {
+              "defaultValue": null,
+              "description": "文本长度，设置为0表示不显示",
+              "name": "maxLen",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "plainHtml": {
+              "defaultValue": null,
+              "description": "是否把富文本解析成纯文本",
+              "name": "plainHtml",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/utils/AntdUtil.tsx",
+      "value": []
+    },
+    {
+      "key": "src/utils/FormUtil.tsx",
+      "value": []
+    },
+    {
+      "key": "src/utils/HtmlUtil.ts",
+      "value": []
+    },
+    {
+      "key": "src/utils/TreeControl.ts",
+      "value": [
+        {
+          "description": "一个通用的树结构操作器，对源数据的结构没有要求\n@author yinhunfeixue\n@email yinhunfeixue\n@ 163.com",
+          "displayName": "TreeControl",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "src/searchTable/SearchTable.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "SearchTable",
+          "methods": [],
+          "props": {
+            "columns": {
+              "defaultValue": null,
+              "description": "表格的列数据",
+              "name": "columns",
+              "required": true,
+              "type": {
+                "name": "(ColumnGroupType<T> | ColumnType<T>)[]"
+              }
+            },
+            "getListFunction": {
+              "defaultValue": null,
+              "description": "请求数据的方法，需返回指定格式的数据\n@param currentPage 当前页码，从1开始\n@param pageSize 一页显示的数据量\n@param searchParams 搜索参数",
+              "name": "getListFunction",
+              "required": true,
+              "type": {
+                "name": "(currentPage: number, pageSize: number, searchParams: any) => Promise<ITableResponse<T>>"
+              }
+            },
+            "rowKey": {
+              "defaultValue": null,
+              "description": "",
+              "name": "rowKey",
+              "required": false,
+              "type": {
+                "name": "string | ((record: T) => string) | undefined"
+              }
+            },
+            "renderExtra": {
+              "defaultValue": null,
+              "description": "渲染表格附加的表单，通常用来放置批量删除，批量设置状态这样的按钮",
+              "name": "renderExtra",
+              "required": false,
+              "type": {
+                "name": "((extraData: ISearchTableExtra<T>) => ReactNode) | undefined"
+              }
+            },
+            "showQuickJumper": {
+              "defaultValue": null,
+              "description": "是否显示快速跳转页码的输入框",
+              "name": "showQuickJumper",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "showSizeChanger": {
+              "defaultValue": null,
+              "description": "是否可切换每页显示的数量",
+              "name": "showSizeChanger",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "showTotal": {
+              "defaultValue": null,
+              "description": "显示总数量的方法",
+              "name": "showTotal",
+              "required": false,
+              "type": {
+                "name": "false | ((total: number, range: [number, number]) => ReactNode) | undefined"
+              }
+            },
+            "tableClassName": {
+              "defaultValue": null,
+              "description": "表格的样式名",
+              "name": "tableClassName",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "tableStyle": {
+              "defaultValue": null,
+              "description": "表格的样式",
+              "name": "tableStyle",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            },
+            "pageSize": {
+              "defaultValue": null,
+              "description": "表格每页显示的数量",
+              "name": "pageSize",
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "disableAutoHidePage": {
+              "defaultValue": null,
+              "description": "是否禁用： 当不满一页时，是否自动隐藏分面器",
+              "name": "disableAutoHidePage",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "tableProps": {
+              "defaultValue": null,
+              "description": "需要额外设置给Table的props",
+              "name": "tableProps",
+              "required": false,
+              "type": {
+                "name": "TableProps<T> | undefined"
+              }
+            },
+            "selectedEnable": {
+              "defaultValue": null,
+              "description": "是否可选中",
+              "name": "selectedEnable",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "dragEnable": {
+              "defaultValue": null,
+              "description": "是否可拖动",
+              "name": "dragEnable",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "defaultSearchParams": {
+              "defaultValue": null,
+              "description": "默认搜索参数",
+              "name": "defaultSearchParams",
+              "required": false,
+              "type": {
+                "name": "any"
+              }
+            },
+            "onSearchParamsChange": {
+              "defaultValue": null,
+              "description": "搜索参数变化时触发的事件",
+              "name": "onSearchParamsChange",
+              "required": false,
+              "type": {
+                "name": "((searchParams: any) => void) | undefined"
+              }
+            },
+            "onDataChange": {
+              "defaultValue": null,
+              "description": "数据源发生变化时触发的事件",
+              "name": "onDataChange",
+              "required": false,
+              "type": {
+                "name": "((data: ITableResponse<T>) => void) | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/editModal/EditModal.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "EditModal",
+          "methods": [],
+          "props": {
+            "visible": {
+              "defaultValue": null,
+              "description": "窗口显示还是隐藏",
+              "name": "visible",
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "close": {
+              "defaultValue": null,
+              "description": "关闭Modal的方法，一般是外层页面的`setState({visibleModal: false})`",
+              "name": "close",
+              "required": true,
+              "type": {
+                "name": "() => void"
+              }
+            },
+            "editFormProps": {
+              "defaultValue": null,
+              "description": "透传给EditForm的props",
+              "name": "editFormProps",
+              "required": true,
+              "type": {
+                "name": "IEditFormProps<T>"
+              }
+            },
+            "modalProps": {
+              "defaultValue": null,
+              "description": "透传给Modal的props",
+              "name": "modalProps",
+              "required": false,
+              "type": {
+                "name": "ModalProps | undefined"
+              }
+            },
+            "renderTitle": {
+              "defaultValue": null,
+              "description": "自定义渲染标题的方法",
+              "name": "renderTitle",
+              "required": false,
+              "type": {
+                "name": "(() => ReactNode) | undefined"
+              }
+            },
+            "className": {
+              "defaultValue": null,
+              "description": "样式名",
+              "name": "className",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "内联样式",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "key": "JoinUs.mdx",
+      "value": {
+        "name": "加入我们",
+        "route": "/projectComponent/joinUs",
+        "order": -900,
+        "sidebar": true,
+        "id": "0c2ed60e6b1ebf458300e4a1bb55ab76",
+        "filepath": "JoinUs.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/JoinUs.mdx",
+        "slug": "join-us",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "欢迎来到王者荣耀，不对，欢迎加入我们。",
+            "depth": 1,
+            "value": "欢迎来到王者荣耀，不对，欢迎加入我们。"
+          },
+          {
+            "slug": "能做什么？",
+            "depth": 2,
+            "value": "能做什么？"
+          },
+          {
+            "slug": "请抽点时间先阅读以下内容",
+            "depth": 2,
+            "value": "请抽点时间先阅读以下内容"
+          },
+          {
+            "slug": "提交组件的工作流程",
+            "depth": 2,
+            "value": "提交组件的工作流程"
+          }
+        ]
+      }
+    },
+    {
+      "key": "HowToCreateComponent.md",
+      "value": {
+        "name": "如何创建一个组件",
+        "route": "/projectComponent/HowToCreateComponent",
+        "order": -800,
+        "sidebar": true,
+        "id": "141b868f69e5e6531108345946de8da9",
+        "filepath": "HowToCreateComponent.md",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/HowToCreateComponent.md",
+        "slug": "how-to-create-component",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "如何创建一个组件？",
+            "depth": 1,
+            "value": "如何创建一个组件？"
+          },
+          {
+            "slug": "一点思考",
+            "depth": 2,
+            "value": "一点思考"
+          },
+          {
+            "slug": "问题：组件是什么？",
+            "depth": 3,
+            "value": "问题：组件是什么？"
+          },
+          {
+            "slug": "组件的三要素为",
+            "depth": 4,
+            "value": "组件的三要素为"
+          },
+          {
+            "slug": "问题：提取组件的目的是什么？-为什么不（希望）每次写一遍？",
+            "depth": 3,
+            "value": "问题：提取组件的目的是什么？ 为什么不（希望）每次写一遍？"
+          },
+          {
+            "slug": "组件开发步骤",
+            "depth": 3,
+            "value": "组件开发步骤"
+          },
+          {
+            "slug": "以单选按钮组为例",
+            "depth": 2,
+            "value": "以单选按钮组为例"
+          },
+          {
+            "slug": "通过以上示例，可以进行一个总结",
+            "depth": 2,
+            "value": "通过以上示例，可以进行一个总结"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/index.mdx",
+      "value": {
+        "name": "首页",
+        "route": "/projectComponent/",
+        "order": -1000,
+        "sidebar": true,
+        "id": "6576455a124f9aaefd860597f03a8fe4",
+        "filepath": "src/index.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/index.mdx",
+        "slug": "src-index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "工程组件",
+            "depth": 1,
+            "value": "工程组件"
+          },
+          {
+            "slug": "npm-i-fb-project-component---save",
+            "depth": 2,
+            "value": "npm i fb-project-component --save"
+          },
+          {
+            "slug": "重点",
+            "depth": 2,
+            "value": "重点"
+          },
+          {
+            "slug": "使用方法",
+            "depth": 2,
+            "value": "使用方法"
+          },
+          {
+            "slug": "然后",
+            "depth": 2,
+            "value": "然后"
+          },
+          {
+            "slug": "欢迎且非常需要-加入我们",
+            "depth": 3,
+            "value": "欢迎且非常需要  加入我们"
+          },
+          {
+            "slug": "最后",
+            "depth": 2,
+            "value": "最后"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/IdCardInput/IdCardInput.mdx",
+      "value": {
+        "name": "IdCardInput",
+        "route": "/projectComponent/IdCardInput",
+        "order": -1,
+        "sidebar": true,
+        "menu": "组件",
+        "id": "46ef10895840053eb4be1dc92a7fce1a",
+        "filepath": "src/IdCardInput/IdCardInput.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/IdCardInput/IdCardInput.mdx",
+        "slug": "src-id-card-input-id-card-input",
+        "headings": [
+          {
+            "slug": "idcardinput",
+            "depth": 1,
+            "value": "IdCardInput"
+          },
+          {
+            "slug": "主要做了以下工作",
+            "depth": 3,
+            "value": "主要做了以下工作"
+          },
+          {
+            "slug": "你可以",
+            "depth": 3,
+            "value": "你可以"
+          },
+          {
+            "slug": "默认",
+            "depth": 2,
+            "value": "默认"
+          },
+          {
+            "slug": "初始化",
+            "depth": 2,
+            "value": "初始化"
+          },
+          {
+            "slug": "动态改变身份证获取具体信息",
+            "depth": 2,
+            "value": "动态改变身份证获取具体信息"
+          },
+          {
+            "slug": "form表单用法",
+            "depth": 2,
+            "value": "Form表单用法"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/CountUp/CountUp.mdx",
+      "value": {
+        "name": "CountUp",
+        "route": "/projectComponent/CountUp",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "组件",
+        "id": "c869817c37f7b15bd0be88049b12e85a",
+        "filepath": "src/CountUp/CountUp.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/CountUp/CountUp.mdx",
+        "slug": "src-count-up-count-up",
+        "headings": [
+          {
+            "slug": "countup",
+            "depth": 1,
+            "value": "CountUp"
+          },
+          {
+            "slug": "基本用法",
+            "depth": 2,
+            "value": "基本用法"
+          },
+          {
+            "slug": "自定义服务器时间",
+            "depth": 2,
+            "value": "自定义服务器时间"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/confirmButton/ConfirmButton.mdx",
+      "value": {
+        "name": "ConfirmButton",
+        "route": "/projectComponent/ConfirmButton",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "组件",
+        "id": "91af5c29a34ece8b5e68bf0a68ed647e",
+        "filepath": "src/confirmButton/ConfirmButton.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/confirmButton/ConfirmButton.mdx",
+        "slug": "src-confirm-button-confirm-button",
+        "headings": [
+          {
+            "slug": "confirmbutton",
+            "depth": 1,
+            "value": "ConfirmButton"
+          },
+          {
+            "slug": "主要做了以下工作",
+            "depth": 3,
+            "value": "主要做了以下工作"
+          },
+          {
+            "slug": "你可以",
+            "depth": 3,
+            "value": "你可以"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "默认",
+            "depth": 3,
+            "value": "默认"
+          },
+          {
+            "slug": "自定义按钮文字，弹窗文字",
+            "depth": 3,
+            "value": "自定义按钮文字，弹窗文字"
+          },
+          {
+            "slug": "自定义显示元素",
+            "depth": 3,
+            "value": "自定义显示元素"
+          },
+          {
+            "slug": "自定义验证方法",
+            "depth": 3,
+            "value": "自定义验证方法"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/TreeCurd/TreeCurd.mdx",
+      "value": {
+        "name": "TreeCurd",
+        "route": "/projectComponent/TreeCurd",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "组件",
+        "id": "70343e9f556bdb5cf916272270fac26f",
+        "filepath": "src/TreeCurd/TreeCurd.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/TreeCurd/TreeCurd.mdx",
+        "slug": "src-tree-curd-tree-curd",
+        "headings": [
+          {
+            "slug": "treecurd",
+            "depth": 1,
+            "value": "TreeCurd"
+          },
+          {
+            "slug": "主要做了以下工作",
+            "depth": 3,
+            "value": "主要做了以下工作"
+          },
+          {
+            "slug": "你可以",
+            "depth": 3,
+            "value": "你可以"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "基本用法",
+            "depth": 2,
+            "value": "基本用法"
+          },
+          {
+            "slug": "可以设置为可多选的树",
+            "depth": 2,
+            "value": "可以设置为可多选的树"
+          },
+          {
+            "slug": "自定义结点props",
+            "depth": 2,
+            "value": "自定义结点props"
+          },
+          {
+            "slug": "设置oncheck回调",
+            "depth": 2,
+            "value": "设置onCheck回调"
+          },
+          {
+            "slug": "自定义结点props-1",
+            "depth": 2,
+            "value": "自定义结点props"
+          },
+          {
+            "slug": "自定义获取子列表的方法",
+            "depth": 2,
+            "value": "自定义获取子列表的方法"
+          },
+          {
+            "slug": "扩展操作区",
+            "depth": 2,
+            "value": "扩展操作区"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/editForm/EditForm.mdx",
+      "value": {
+        "name": "EditForm",
+        "route": "/projectComponent/EditForm",
+        "order": -1,
+        "sidebar": true,
+        "menu": "组件",
+        "id": "a6efaf1e04293849423d1a68490bf4c4",
+        "filepath": "src/editForm/EditForm.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/editForm/EditForm.mdx",
+        "slug": "src-edit-form-edit-form",
+        "headings": [
+          {
+            "slug": "编辑表单",
+            "depth": 1,
+            "value": "编辑表单"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "新增",
+            "depth": 3,
+            "value": "新增"
+          },
+          {
+            "slug": "编辑",
+            "depth": 3,
+            "value": "编辑"
+          },
+          {
+            "slug": "阅读",
+            "depth": 3,
+            "value": "阅读"
+          },
+          {
+            "slug": "从后端获取完整数据",
+            "depth": 3,
+            "value": "从后端获取完整数据"
+          },
+          {
+            "slug": "一行设置多列",
+            "depth": 3,
+            "value": "一行设置多列"
+          },
+          {
+            "slug": "结合弹窗",
+            "depth": 3,
+            "value": "结合弹窗"
+          },
+          {
+            "slug": "处理保存成功、失败",
+            "depth": 3,
+            "value": "处理保存成功、失败"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/editModal/EditModal.mdx",
+      "value": {
+        "name": "EditModal",
+        "route": "/projectComponent/EditModal",
+        "order": -1,
+        "sidebar": true,
+        "menu": "组件",
+        "id": "f31bc252c3ff234e20401409ed59b0c0",
+        "filepath": "src/editModal/EditModal.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/editModal/EditModal.mdx",
+        "slug": "src-edit-modal-edit-modal",
+        "headings": [
+          {
+            "slug": "editmodal",
+            "depth": 1,
+            "value": "EditModal"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "默认",
+            "depth": 3,
+            "value": "默认"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/curd/Curd.mdx",
+      "value": {
+        "name": "Curd",
+        "route": "/projectComponent/Curd",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "组件",
+        "id": "5049f93b5722945a8e3e036ec152031c",
+        "filepath": "src/curd/Curd.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/curd/Curd.mdx",
+        "slug": "src-curd-curd",
+        "headings": [
+          {
+            "slug": "curd",
+            "depth": 2,
+            "value": "Curd"
+          },
+          {
+            "slug": "curd-结构",
+            "depth": 2,
+            "value": "Curd 结构"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "基本用法",
+            "depth": 3,
+            "value": "基本用法"
+          },
+          {
+            "slug": "禁用快速设置、pagesize设置",
+            "depth": 3,
+            "value": "禁用快速设置、pageSize设置"
+          },
+          {
+            "slug": "配置搜索功能",
+            "depth": 3,
+            "value": "配置搜索功能"
+          },
+          {
+            "slug": "配置增、删、改、预览",
+            "depth": 3,
+            "value": "配置增、删、改、预览"
+          },
+          {
+            "slug": "扩展表格顶部操作区，扩展操作列",
+            "depth": 3,
+            "value": "扩展表格顶部操作区，扩展操作列"
+          },
+          {
+            "slug": "禁用全部删除",
+            "depth": 3,
+            "value": "禁用全部删除"
+          },
+          {
+            "slug": "禁用指定项的删除",
+            "depth": 3,
+            "value": "禁用指定项的删除"
+          },
+          {
+            "slug": "设置搜索表单项小于等于4时，为内联",
+            "depth": 3,
+            "value": "设置搜索表单项小于等于4时，为内联"
+          },
+          {
+            "slug": "自定义搜索表单中，搜索、重置元素的外观",
+            "depth": 3,
+            "value": "自定义搜索表单中，搜索、重置元素的外观"
+          },
+          {
+            "slug": "动态修改columns",
+            "depth": 3,
+            "value": "动态修改Columns"
+          },
+          {
+            "slug": "设置搜索表单的初始值",
+            "depth": 3,
+            "value": "设置搜索表单的初始值"
+          },
+          {
+            "slug": "获取搜索参数、列表数据变化的事件",
+            "depth": 3,
+            "value": "获取搜索参数、列表数据变化的事件"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/forms/FeatureForm.mdx",
+      "value": {
+        "name": "FeatureForm",
+        "route": "/projectComponent/FeatureForm",
+        "order": -1,
+        "sidebar": true,
+        "menu": "组件",
+        "id": "324e6a41c8a7354ef8958c9b135bc82e",
+        "filepath": "src/forms/FeatureForm.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/forms/FeatureForm.mdx",
+        "slug": "src-forms-feature-form",
+        "headings": [
+          {
+            "slug": "idcardformitemphoneformitememailformitem",
+            "depth": 2,
+            "value": "IdCardFormItem/PhoneFormItem/EmailFormItem"
+          },
+          {
+            "slug": "三类特性表单组件",
+            "depth": 2,
+            "value": "三类特性表单组件"
+          },
+          {
+            "slug": "主要做了以下工作",
+            "depth": 3,
+            "value": "主要做了以下工作"
+          },
+          {
+            "slug": "你可以",
+            "depth": 3,
+            "value": "你可以"
+          },
+          {
+            "slug": "后期",
+            "depth": 3,
+            "value": "后期"
+          },
+          {
+            "slug": "身份证表单组件属性",
+            "depth": 2,
+            "value": "身份证表单组件属性"
+          },
+          {
+            "slug": "电话号码表单组件属性",
+            "depth": 2,
+            "value": "电话号码表单组件属性"
+          },
+          {
+            "slug": "邮箱表单组件属性",
+            "depth": 2,
+            "value": "邮箱表单组件属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/limitUpload/LimitUpload.mdx",
+      "value": {
+        "name": "LimitUpload",
+        "route": "/projectComponent/LimitUpload",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "组件",
+        "id": "b65b7a2249ed1fa8c95a41b0439dc84e",
+        "filepath": "src/limitUpload/LimitUpload.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/limitUpload/LimitUpload.mdx",
+        "slug": "src-limit-upload-limit-upload",
+        "headings": [
+          {
+            "slug": "limitupload",
+            "depth": 1,
+            "value": "LimitUpload"
+          },
+          {
+            "slug": "主要做了以下工作",
+            "depth": 3,
+            "value": "主要做了以下工作"
+          },
+          {
+            "slug": "你可以",
+            "depth": 3,
+            "value": "你可以"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "默认，请观察开发者工具的输出，当文件上传成功、移除时，会触发onchange",
+            "depth": 3,
+            "value": "默认，请观察开发者工具的输出，当文件\"上传成功、移除\"时，会触发onChange"
+          },
+          {
+            "slug": "上传异常时",
+            "depth": 3,
+            "value": "上传异常时"
+          },
+          {
+            "slug": "自定义上传异常的提示方法",
+            "depth": 3,
+            "value": "自定义上传异常的提示方法"
+          },
+          {
+            "slug": "禁用",
+            "depth": 3,
+            "value": "禁用"
+          },
+          {
+            "slug": "限制上传数量为2个，上传2个文件后，上传按钮会消失",
+            "depth": 3,
+            "value": "限制上传数量为2个，上传2个文件后，上传按钮会消失"
+          },
+          {
+            "slug": "图片上传",
+            "depth": 3,
+            "value": "图片上传"
+          },
+          {
+            "slug": "office文档上传，只能选择office文档",
+            "depth": 3,
+            "value": "office文档上传，只能选择office文档"
+          },
+          {
+            "slug": "设置已上传文件",
+            "depth": 3,
+            "value": "设置已上传文件"
+          },
+          {
+            "slug": "自定义渲染方法",
+            "depth": 3,
+            "value": "自定义渲染方法"
+          },
+          {
+            "slug": "自定义传递给upload的属性",
+            "depth": 3,
+            "value": "自定义传递给upload的属性"
+          },
+          {
+            "slug": "结合表单",
+            "depth": 3,
+            "value": "结合表单"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/powerImg/PowerImg.mdx",
+      "value": {
+        "name": "PowerImg",
+        "route": "/projectComponent/PowerImg",
+        "order": -1,
+        "sidebar": true,
+        "menu": "组件",
+        "id": "5873b1dcfe70b217a2ce49999c154b82",
+        "filepath": "src/powerImg/PowerImg.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/powerImg/PowerImg.mdx",
+        "slug": "src-power-img-power-img",
+        "headings": [
+          {
+            "slug": "powerimg",
+            "depth": 1,
+            "value": "PowerImg"
+          },
+          {
+            "slug": "主要做了以下工作",
+            "depth": 3,
+            "value": "主要做了以下工作"
+          },
+          {
+            "slug": "后期",
+            "depth": 3,
+            "value": "后期"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "默认",
+            "depth": 3,
+            "value": "默认"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/searchForm/SearchForm.mdx",
+      "value": {
+        "name": "SearchForm",
+        "route": "/projectComponent/SearchForm",
+        "order": -1,
+        "sidebar": true,
+        "menu": "组件",
+        "id": "02aff43bda91aacd064709312bafecb1",
+        "filepath": "src/searchForm/SearchForm.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/searchForm/SearchForm.mdx",
+        "slug": "src-search-form-search-form",
+        "headings": [
+          {
+            "slug": "搜索表单",
+            "depth": 1,
+            "value": "搜索表单"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "基本用法",
+            "depth": 3,
+            "value": "基本用法"
+          },
+          {
+            "slug": "表单项联动",
+            "depth": 2,
+            "value": "表单项联动"
+          },
+          {
+            "slug": "显式设置列数",
+            "depth": 2,
+            "value": "显式设置列数"
+          },
+          {
+            "slug": "设置表单项小于等于5时默认为3），使用内联",
+            "depth": 2,
+            "value": "设置表单项小于等于5时(默认为3），使用内联"
+          },
+          {
+            "slug": "自定义搜索、重置元素的外观",
+            "depth": 2,
+            "value": "自定义搜索、重置元素的外观"
+          },
+          {
+            "slug": "设置初始值",
+            "depth": 2,
+            "value": "设置初始值"
+          },
+          {
+            "slug": "禁用",
+            "depth": 2,
+            "value": "禁用"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/text/Text.mdx",
+      "value": {
+        "name": "Text",
+        "route": "/projectComponent/Text",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "组件",
+        "id": "3ffaae3e2f54d1bc201eceeccda3ddcf",
+        "filepath": "src/text/Text.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/text/Text.mdx",
+        "slug": "src-text-text",
+        "headings": [
+          {
+            "slug": "text",
+            "depth": 1,
+            "value": "Text"
+          },
+          {
+            "slug": "主要做了以下工作",
+            "depth": 3,
+            "value": "主要做了以下工作"
+          },
+          {
+            "slug": "你可以",
+            "depth": 3,
+            "value": "你可以"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "基本用法",
+            "depth": 3,
+            "value": "基本用法"
+          },
+          {
+            "slug": "自定义最大长度",
+            "depth": 3,
+            "value": "自定义最大长度"
+          },
+          {
+            "slug": "解析富文本",
+            "depth": 3,
+            "value": "解析富文本"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/searchTable/SearchTable.mdx",
+      "value": {
+        "name": "SearchTable",
+        "route": "/projectComponent/SearchTable",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "组件",
+        "id": "7ff8d6c50c0686aeb79677e0ddfcd215",
+        "filepath": "src/searchTable/SearchTable.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/searchTable/SearchTable.mdx",
+        "slug": "src-search-table-search-table",
+        "headings": [
+          {
+            "slug": "searchtable",
+            "depth": 1,
+            "value": "SearchTable"
+          },
+          {
+            "slug": "主要做了以下工作",
+            "depth": 3,
+            "value": "主要做了以下工作"
+          },
+          {
+            "slug": "你可以",
+            "depth": 3,
+            "value": "你可以"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "基本用法",
+            "depth": 2,
+            "value": "基本用法"
+          },
+          {
+            "slug": "设置表可拖动",
+            "depth": 2,
+            "value": "设置表可拖动"
+          },
+          {
+            "slug": "不自动隐藏分页器",
+            "depth": 2,
+            "value": "不自动隐藏分页器"
+          },
+          {
+            "slug": "自定义pagesize",
+            "depth": 2,
+            "value": "自定义pageSize"
+          },
+          {
+            "slug": "添加附加操作",
+            "depth": 2,
+            "value": "添加附加操作"
+          },
+          {
+            "slug": "结合form设置请求参数",
+            "depth": 2,
+            "value": "结合form设置请求参数"
+          },
+          {
+            "slug": "属性",
+            "depth": 2,
+            "value": "属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/utils/AntdUtil.mdx",
+      "value": {
+        "name": "AntdUtil",
+        "route": "/projectComponent/AntdUtil",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "辅助工具",
+        "id": "42c1fa61c69036f1abc50277db0236f0",
+        "filepath": "src/utils/AntdUtil.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/utils/AntdUtil.mdx",
+        "slug": "src-utils-antd-util",
+        "headings": [
+          {
+            "slug": "antdutil",
+            "depth": 1,
+            "value": "AntdUtil"
+          },
+          {
+            "slug": "渲染树",
+            "depth": 3,
+            "value": "渲染树"
+          },
+          {
+            "slug": "自定义渲染属性",
+            "depth": 3,
+            "value": "自定义渲染属性"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/utils/FormUtil.mdx",
+      "value": {
+        "name": "FormUtil",
+        "route": "/projectComponent/FormUtil",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "辅助工具",
+        "id": "b537b3fa49af78044f985125e014d589",
+        "filepath": "src/utils/FormUtil.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/utils/FormUtil.mdx",
+        "slug": "src-utils-form-util",
+        "headings": [
+          {
+            "slug": "formutil",
+            "depth": 1,
+            "value": "FormUtil"
+          },
+          {
+            "slug": "示例",
+            "depth": 2,
+            "value": "示例"
+          },
+          {
+            "slug": "渲染表单",
+            "depth": 3,
+            "value": "渲染表单"
+          },
+          {
+            "slug": "一个标准示例",
+            "depth": 3,
+            "value": "一个标准示例"
+          },
+          {
+            "slug": "使用特殊的formitem",
+            "depth": 3,
+            "value": "使用特殊的formItem"
+          },
+          {
+            "slug": "一些特殊情况的处理",
+            "depth": 3,
+            "value": "一些特殊情况的处理"
+          },
+          {
+            "slug": "渲染表单项--表单项为奇数时，按钮换行",
+            "depth": 3,
+            "value": "渲染表单项--表单项为奇数时，按钮换行"
+          },
+          {
+            "slug": "渲染表单项--三列",
+            "depth": 3,
+            "value": "渲染表单项--三列"
+          },
+          {
+            "slug": "渲染表单项--三列时，按钮另起一行",
+            "depth": 3,
+            "value": "渲染表单项--三列时，按钮另起一行"
+          },
+          {
+            "slug": "渲染表单项--三列-1",
+            "depth": 3,
+            "value": "渲染表单项--三列"
+          },
+          {
+            "slug": "增加每列的间隔",
+            "depth": 3,
+            "value": "增加每列的间隔"
+          },
+          {
+            "slug": "参考-iformitemdata",
+            "depth": 2,
+            "value": "参考 IFormItemData"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/utils/HtmlUtil.mdx",
+      "value": {
+        "name": "HtmlUtil",
+        "route": "/projectComponent/HtmlUtil",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "辅助工具",
+        "id": "0ec71e325942a0876964c938f25fb0f2",
+        "filepath": "src/utils/HtmlUtil.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/utils/HtmlUtil.mdx",
+        "slug": "src-utils-html-util",
+        "headings": [
+          {
+            "slug": "htmlutil",
+            "depth": 1,
+            "value": "HtmlUtil"
+          },
+          {
+            "slug": "富文本转换为纯文本",
+            "depth": 3,
+            "value": "富文本转换为纯文本"
+          },
+          {
+            "slug": "富文本转换为纯文本-1",
+            "depth": 3,
+            "value": "富文本转换为纯文本"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/utils/TreeControl.mdx",
+      "value": {
+        "name": "TreeControl",
+        "route": "/projectComponent/TreeControl",
+        "order": 0,
+        "sidebar": "true,",
+        "menu": "辅助工具",
+        "id": "d5202c406d2ef007a6dd9572b4de63a0",
+        "filepath": "src/utils/TreeControl.mdx",
+        "link": "https://github.com/yinhunfeixue/projectComponent/edit/master/src/utils/TreeControl.mdx",
+        "slug": "src-utils-tree-control",
+        "headings": [
+          {
+            "slug": "treecontrol",
+            "depth": 1,
+            "value": "TreeControl"
+          },
+          {
+            "slug": "数组转换为树",
+            "depth": 3,
+            "value": "数组转换为树"
+          },
+          {
+            "slug": "过滤出新的树",
+            "depth": 3,
+            "value": "过滤出新的树"
+          },
+          {
+            "slug": "搜索指定结点",
+            "depth": 3,
+            "value": "搜索指定结点"
+          },
+          {
+            "slug": "搜索指定结点-1",
+            "depth": 3,
+            "value": "搜索指定结点"
+          },
+          {
+            "slug": "搜索指定结点-2",
+            "depth": 3,
+            "value": "搜索指定结点"
+          },
+          {
+            "slug": "遍历树",
+            "depth": 3,
+            "value": "遍历树"
+          }
+        ]
+      }
+    }
+  ]
+}

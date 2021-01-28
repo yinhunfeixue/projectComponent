@@ -1,0 +1,18 @@
+.TreeCurd {
+  width: 100%;
+}
+.TreeCurd .optContent {
+  margin-bottom: 20px;
+}
+.TreeCurd .optContent > *:not(:last-child) {
+  margin-right: 10px;
+}
+.TreeCurd .treeCurdContent {
+  display: flex;
+}
+.TreeCurd .treeCurdContent .treeContent {
+  width: 300px;
+}
+.TreeCurd .treeCurdContent .editContent {
+  flex: 1 1;
+}
