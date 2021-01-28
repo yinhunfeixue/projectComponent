@@ -1,6 +1,0 @@
-.fhEditForm .fhControlGroup {
-  display: flex;
-}
-.fhEditForm .fhControlGroup > *:not(:last-child) {
-  margin-right: 10px;
-}

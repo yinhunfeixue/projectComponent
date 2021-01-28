@@ -1,1 +1,0 @@
-export var IFormItemDataC = function IFormItemDataC(props) {};
