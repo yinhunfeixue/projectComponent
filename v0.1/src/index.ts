@@ -2,7 +2,12 @@ import ConfirmButton from './confirmButton/ConfirmButton';
 import TimeSpan from './core/TimeSpan';
 import CountUp from './CountUp/CountUp';
 import Curd from './curd/Curd';
+import EditForm from './editForm/EditForm';
+import EditModal from './editModal/EditModal';
+import EmailFormItem from './forms/EmailFormItem';
+import IdCardFormItem from './forms/IdCardFormItem';
 import PhoneFormItem from './forms/PhoneFormItem';
+import IdCardInput from './IdCardInput/IdCardInput';
 import Text from './text/Text';
 import AntdUtil from './utils/AntdUtil';
 import FormUtil from './utils/FormUtil';
@@ -20,4 +25,9 @@ export {
   TimeSpan,
   CountUp,
   Curd,
+  EditForm,
+  EditModal,
+  IdCardFormItem,
+  EmailFormItem,
+  IdCardInput,
 };
