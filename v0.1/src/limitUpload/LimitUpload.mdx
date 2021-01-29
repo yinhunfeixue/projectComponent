@@ -1,0 +1,323 @@
+---
+name: LimitUpload
+route: /LimitUpload
+order: 0
+sidebar: true,
+menu: 组件
+---
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import LimitUpload from './LimitUpload';
+import UploadType from '../enums/UploadType';
+import UploadAcceptType from '../enums/UploadAcceptType';
+import { Upload,Button, Form } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+
+
+
+# LimitUpload
+可设置最大上传文件数量的组件，通常，在 **上传头像** 时，这个组件很有用。
+
+### 主要做了以下工作
+
++ 可自定义最大允许上传的文件数量
++ 上传错误的处理
++ 根据type自动设置accept
++ 根据type自动设置显示元素
+
+### 你可以
+
++ 自定义显示元素
++ 自定义最大允许上传的数量
++ 自定义错误处理方式
++ 设置type
++ 设置accept
++ 设置已存在的文件
++ 给antd的Upload透传props
+
+
+## 示例
+
+### 默认，请观察开发者工具的输出，当文件"上传成功、移除"时，会触发onChange
+<Playground>
+  <LimitUpload 
+    action="https://jsonplaceholder.typicode.com/posts/" 
+    validateFile={(file)=>{
+      if(file.response && file.response.id){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }}
+    onChange={(fileList)=>{
+      console.log('fileList', fileList);
+    }}
+  />
+</Playground>
+
+### 上传异常时
+<Playground>
+  <LimitUpload 
+    action="./" 
+    validateFile={(file)=>{
+      if(file.response && file.response.id){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }}
+  />
+</Playground>
+
+### 自定义上传异常的提示方法
+<Playground>
+  <LimitUpload 
+    action="./" 
+    onError={(file)=>{
+      alert(`${file.name}上传失败`)
+    }}
+    validateFile={(file)=>{
+      if(file.response && file.response.id){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }}
+  />
+</Playground>
+
+### 禁用
+<Playground>
+  <LimitUpload 
+    disabled action="./" 
+    validateFile={(file)=>{
+      if(file.response && file.response.success){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }} 
+  />
+  <hr />
+  <LimitUpload disabled type={UploadType.IMAGE} action="./" />
+</Playground>
+
+
+### 限制上传数量为2个，上传2个文件后，上传按钮会消失
+<Playground>
+  <LimitUpload 
+    maxNumber={2} 
+    action="https://jsonplaceholder.typicode.com/posts/"
+    validateFile={(file)=>{
+      if(file.response && file.response.id){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }}
+  />
+</Playground>
+
+
+### 图片上传
+<Playground>
+  <LimitUpload 
+    type={UploadType.IMAGE} 
+    action="https://jsonplaceholder.typicode.com/posts/"
+    validateFile={(file)=>{
+        if(file.response && file.response.id){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }}
+  />
+</Playground>
+
+### office文档上传，只能选择office文档
+<Playground>
+  <LimitUpload 
+    accept={UploadAcceptType.OFFICE}
+    action="https://jsonplaceholder.typicode.com/posts/"
+    validateFile={(file)=>{
+        if(file.response && file.response.id){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }}
+  />
+</Playground>
+
+### 设置已上传文件
+<Playground>
+  <LimitUpload 
+    defaultFileList={
+      [
+        {
+          uid: '1',
+          name: 'xxx.png',
+          status: 'done',
+          response: {
+            status:'done'
+          }, // custom error message to show
+          url: 'http://www.baidu.com/xxx.png',
+        },
+        {
+          uid: '2',
+          name: 'yyy.png',
+          response: {
+            status:'done'
+          },
+          url: 'http://www.baidu.com/yyy.png',
+        },
+      ]
+    }
+    action="https://jsonplaceholder.typicode.com/posts/"
+    validateFile={(file)=>{
+        if(file.response && file.response.id){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+    }
+  />
+</Playground>
+
+### 自定义渲染方法
+<Playground>
+  <LimitUpload 
+    action="https://jsonplaceholder.typicode.com/posts/"
+    renderChooser={(loading)=> {
+      return <span style={{borderLeft: '3px solid red', paddingLeft:10}}>{loading? '上传中...' : '点我上传'}</span>
+      }}
+    validateFile={(file)=>{
+        console.log("file", file)
+        if(file.response && file.response.id){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }}
+  />
+</Playground>
+
+
+### 自定义传递给upload的属性
+
+观察开发者工具，请求是PUT
+
+<Playground>
+ <LimitUpload 
+    uploadProps={{
+      method:'put'
+    }}
+    action="https://jsonplaceholder.typicode.com/posts/"
+    validateFile={(file)=>{
+        if(file.response && file.response.id){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }}
+  />
+</Playground>
+
+### 结合表单
+
+<Playground>
+{
+   class Demo extends React.Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        columns:[],
+      }
+      this.formRef = React.createRef();
+    }
+
+    componentDidMount(){
+      this.formRef.current.setFieldsValue(
+        {
+          myFile:[
+            {
+              uid: '1',
+              name: 'aaa.png',
+              status: 'done',
+              response:{id:2},
+              url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+              thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+            }
+          ]
+        }
+      );
+    }
+
+     render(){
+       return (
+        <div>
+          <Form 
+            ref={this.formRef}
+            layout="inline" 
+          >
+            <Form.Item label="文件" name="myFile">
+              <LimitUpload 
+                type={UploadType.IMAGE}
+                action="https://jsonplaceholder.typicode.com/posts/"
+                validateFile={(file)=>{
+                    console.log("file", file)
+                    if(file.response && file.status === "done" && file.response.id){
+                      return true;
+                    }
+                    else{
+                      return false;
+                    }
+                  }}
+              />
+            </Form.Item>
+          </Form>
+          <Button onClick={()=>{
+            this.formRef.current.setFieldsValue(
+              {
+                myFile:[
+                  {
+                    uid: '1',
+                    name: 'bb.png',
+                    status: 'done',
+                    response:{id:1},
+                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+                    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+                  }
+                ]
+              }
+            );
+          }}>
+            修改表单值
+          </Button>
+          <Button onClick={()=>{
+            this.formRef.current.setFieldsValue({});
+            this.formRef.current.resetFields()
+          }}>
+            重置表单值
+          </Button>
+        </div>
+       );
+     }
+   }
+}
+</Playground>
+
+## 属性
+<Props of={LimitUpload} />

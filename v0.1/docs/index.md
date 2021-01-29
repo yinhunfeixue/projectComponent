@@ -1,8 +1,12 @@
+---
+order: -2
+---
+
 # 项目介绍
 
-## `npm i fb-project-component --save`  
+## `npm i fb-project-component --save`
 
-npm地址：https://www.npmjs.com/package/fb-project-component
+npm 地址：https://www.npmjs.com/package/fb-project-component
 
 对于项目中遇到的共性需求，共性问题，我们期望通过技术方式来
 
@@ -13,16 +17,17 @@ npm地址：https://www.npmjs.com/package/fb-project-component
 <font color="red">不求多，**关键是可用性**，哪怕只有一个组件，能真正的能用起来就有价值</font>。
 因此，并不求功能繁复，求功能的严谨稳定、文档的清晰完整
 
-
 ## 重点
-+ 接口严谨
-  + 必须是强类型，不能使用any，一般要用any的地方，都可以用泛型处理
-+ 文档清晰完成
-  + 组件功能描述清楚
-  + 示例完整
-  + 接口描述完整
+
+- 接口严谨
+  - 必须是强类型，不能使用 any，一般要用 any 的地方，都可以用泛型处理
+- 文档清晰完成
+  - 组件功能描述清楚
+  - 示例完整
+  - 接口描述完整
 
 ## 使用方法
+
 1. `npm i fb-project-component --save`
 2. 按文档中示例使用
 3. 阅读属性列表，以发现更多用法

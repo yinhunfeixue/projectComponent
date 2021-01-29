@@ -1,0 +1,32 @@
+---
+name: CountUp
+route: /CountUp
+order: 0
+sidebar: true,
+menu: 组件
+---
+
+
+import { Playground, Props } from 'docz';
+import 'antd/dist/antd.css';
+import CountUp from './CountUp';
+
+# CountUp
+一个计时器组件
+
+## 基本用法
+<Playground>
+  <CountUp startTime="2020-5-13 00:30:00" format="dd天 hh时mm分ss秒" />
+</Playground>
+
+
+
+## 自定义服务器时间
+
+有时，为了防止客户端时间错误时，显示异常。需从服务器获取服务器时间。
+
+<Playground>
+  <CountUp startTime="2020-5-13 00:30:00" format="dd天 hh时mm分ss秒" serverTimestamp={new Date('2020-5-13 00:45:00').getTime()} />
+</Playground>
+
+
