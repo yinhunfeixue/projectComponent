@@ -23,9 +23,14 @@ class TimeSpan {
     this._milliseconds = milliseconds;
     this._milliseconds += seconds * SECOND_TO_MILLISECOND;
     this._milliseconds += minutes * MINUTE_TO_SECOND * SECOND_TO_MILLISECOND;
-    this._milliseconds += hours * HOUR_TO_MINUTE * MINUTE_TO_SECOND * SECOND_TO_MILLISECOND;
     this._milliseconds +=
-      days * DAY_TO_HOUR * HOUR_TO_MINUTE * MINUTE_TO_SECOND * SECOND_TO_MILLISECOND;
+      hours * HOUR_TO_MINUTE * MINUTE_TO_SECOND * SECOND_TO_MILLISECOND;
+    this._milliseconds +=
+      days *
+      DAY_TO_HOUR *
+      HOUR_TO_MINUTE *
+      MINUTE_TO_SECOND *
+      SECOND_TO_MILLISECOND;
   }
 
   /**
@@ -36,6 +41,16 @@ class TimeSpan {
    */
   add(ts: TimeSpan) {
     return new TimeSpan(0, 0, 0, 0, this._milliseconds + ts._milliseconds);
+  }
+
+  /**
+   * 此实例减去另一个TimeSpan
+   * @param {TimeSpan} ts
+   *
+   * @return {TimeSpan} 此实例的值与 ts 的值之和的新的 TimeSpan，不改变当前实例.
+   */
+  subtract(ts: TimeSpan) {
+    return new TimeSpan(0, 0, 0, 0, this._milliseconds - ts._milliseconds);
   }
 
   /**
@@ -60,7 +75,8 @@ class TimeSpan {
    * @type {number}
    */
   get hours() {
-    if (this._milliseconds >= 0) return Math.floor(this.totalHours) % DAY_TO_HOUR;
+    if (this._milliseconds >= 0)
+      return Math.floor(this.totalHours) % DAY_TO_HOUR;
     else return Math.ceil(this.totalHours) % DAY_TO_HOUR;
   }
 
@@ -69,7 +85,8 @@ class TimeSpan {
    * @type {number}
    */
   get minutes() {
-    if (this._milliseconds >= 0) return Math.floor(this.totalMinutes) % HOUR_TO_MINUTE;
+    if (this._milliseconds >= 0)
+      return Math.floor(this.totalMinutes) % HOUR_TO_MINUTE;
     else return Math.ceil(this.totalMinutes) % HOUR_TO_MINUTE;
   }
 
@@ -78,7 +95,8 @@ class TimeSpan {
    * @type {number}
    */
   get seconds() {
-    if (this._milliseconds >= 0) return Math.floor(this.totalSeconds) % MINUTE_TO_SECOND;
+    if (this._milliseconds >= 0)
+      return Math.floor(this.totalSeconds) % MINUTE_TO_SECOND;
     else return Math.ceil(this.totalSeconds) % MINUTE_TO_SECOND;
   }
 
@@ -87,7 +105,8 @@ class TimeSpan {
    * @type {number}
    */
   get milliseconds() {
-    if (this._milliseconds >= 0) return Math.floor(this._milliseconds) % SECOND_TO_MILLISECOND;
+    if (this._milliseconds >= 0)
+      return Math.floor(this._milliseconds) % SECOND_TO_MILLISECOND;
     else return Math.ceil(this._milliseconds) % SECOND_TO_MILLISECOND;
   }
 
@@ -168,7 +187,11 @@ class TimeSpan {
 
         let numberStr = number.toString();
         if (numberStr.length > currentRegStr.length) return numberStr;
-        else return currentRegStr.substr(0, currentRegStr.length - numberStr.length) + numberStr;
+        else
+          return (
+            currentRegStr.substr(0, currentRegStr.length - numberStr.length) +
+            numberStr
+          );
       }
     }
     return result;

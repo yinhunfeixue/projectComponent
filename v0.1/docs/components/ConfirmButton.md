@@ -99,3 +99,5 @@ export default () => {
   );
 };
 ```
+
+<API src='../../src/confirmButton/ConfirmButton.tsx'/>

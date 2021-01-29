@@ -1,4 +1,7 @@
 import ConfirmButton from './confirmButton/ConfirmButton';
+import TimeSpan from './core/TimeSpan';
+import CountUp from './CountUp/CountUp';
+import Curd from './curd/Curd';
 import PhoneFormItem from './forms/PhoneFormItem';
 import Text from './text/Text';
 import AntdUtil from './utils/AntdUtil';
@@ -14,4 +17,7 @@ export {
   TreeControl,
   Text,
   ConfirmButton,
+  TimeSpan,
+  CountUp,
+  Curd,
 };
