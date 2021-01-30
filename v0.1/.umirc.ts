@@ -16,7 +16,7 @@ export default defineConfig({
       'babel-plugin-import',
       {
         libraryName: 'antd',
-        libraryDirectory: 'es',
+        libraryDirectory: 'lib',
         style: 'css',
       },
       'antd',
