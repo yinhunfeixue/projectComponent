@@ -9,7 +9,7 @@ export default {
       {
         libraryName: 'antd',
         libraryDirectory: 'es',
-        style: true,
+        style: 'css',
       },
     ],
   ],
