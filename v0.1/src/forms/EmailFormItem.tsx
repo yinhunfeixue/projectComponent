@@ -35,7 +35,16 @@ interface IEmailFormItemProps extends IComponentProps {
 
 class EmailFormItem extends Component<IEmailFormItemProps, any> {
   public render(): ReactNode {
-    const { fromItemProps, className, required, style, name, label, emptyMsg, errMsg } = this.props;
+    const {
+      fromItemProps,
+      className,
+      required,
+      style,
+      name,
+      label,
+      emptyMsg,
+      errMsg,
+    } = this.props;
     return (
       <Form.Item
         className={classnames('email-from', className)}
