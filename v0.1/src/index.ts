@@ -12,19 +12,25 @@ import EmailFormItem from './forms/EmailFormItem';
 import IdCardFormItem from './forms/IdCardFormItem';
 import PhoneFormItem from './forms/PhoneFormItem';
 import IdCardInput from './IdCardInput/IdCardInput';
+import IFormItemData from './interfaces/IFormItemData';
 import LimitUpload from './limitUpload/LimitUpload';
 import PowerImg from './powerImg/PowerImg';
 import PromiseButton from './promiseButton/PromiseButton';
 import SearchForm from './searchForm/SearchForm';
-import SearchTable from './searchTable/SearchTable';
+import SearchTable, {
+  ISearchTableExtra,
+  ITableResponse,
+} from './searchTable/SearchTable';
 import Text from './text/Text';
 import TreeCurd, { EditType } from './TreeCurd/TreeCurd';
 import AntdUtil from './utils/AntdUtil';
 import FormUtil from './utils/FormUtil';
 import HtmlUtil from './utils/HtmlUtil';
 import TreeControl from './utils/TreeControl';
-
 export {
+  ISearchTableExtra,
+  ITableResponse,
+  IFormItemData,
   FormRegExp,
   PromiseButton,
   EditType,
