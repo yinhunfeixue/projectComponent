@@ -2,6 +2,91 @@
 
 Antd 组件相关的辅助工具
 
+### 数组渲染成下拉框
+
+```tsx
+import React from 'react';
+import { AntdUtil } from 'fb-project-component';
+export default () => {
+  return (
+    <div>
+      {AntdUtil.renderArrayToSelect([1, 2, 3], {
+        style: { width: 120 },
+        onChange: value => alert(value),
+      })}
+    </div>
+  );
+};
+```
+
+### 自定义数组渲染成下拉框
+
+自定义取值方法、渲染方法
+
+```tsx
+import React from 'react';
+import { AntdUtil } from 'fb-project-component';
+export default () => {
+  return (
+    <div>
+      {AntdUtil.renderArrayToSelect(
+        [1, 2, 3],
+        {
+          style: { width: 200 },
+          onChange: value => alert(value),
+        },
+        (item, index) => `第${index}项，label${item}`,
+        (item, index) => `第${index}项，vaue${item}`,
+      )}
+    </div>
+  );
+};
+```
+
+### 字典渲染成下拉框
+
+```tsx
+import React from 'react';
+import { AntdUtil } from 'fb-project-component';
+export default () => {
+  return (
+    <div>
+      {AntdUtil.renderObjectToSelect(
+        { 1: 'a', 2: 'b', x: 'xxx' },
+        {
+          style: { width: 120 },
+          onChange: value => alert(value),
+        },
+      )}
+    </div>
+  );
+};
+```
+
+### 自定义字典渲染成下拉框
+
+自定义取值方法、渲染方法
+
+```tsx
+import React from 'react';
+import { AntdUtil } from 'fb-project-component';
+export default () => {
+  return (
+    <div>
+      {AntdUtil.renderObjectToSelect(
+        { 1: 'a', 2: 'b', x: 'xxx' },
+        {
+          style: { width: 120 },
+          onChange: value => alert(value),
+        },
+        (key, item) => `value=${key}`,
+        (key, item) => `label=${item}`,
+      )}
+    </div>
+  );
+};
+```
+
 ### 渲染树
 
 ```tsx
@@ -49,7 +134,7 @@ export default () => {
 };
 ```
 
-### 自定义渲染属性
+### 自定义树渲染属性
 
 ```tsx
 import React from 'react';

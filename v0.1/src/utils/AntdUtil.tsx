@@ -1,7 +1,7 @@
-import { Select, Tree } from 'antd';
-import { TreeProps } from 'antd/lib/tree';
-import { DataNode } from 'rc-tree/lib/interface';
-import React, { ReactNode } from 'react';
+import { Select, SelectProps, Tree } from 'antd';
+import { SelectValue } from 'antd/lib/select';
+import { DataNode, TreeProps } from 'antd/lib/tree';
+import React, { ReactNode, ReactText } from 'react';
 
 class AntdUtil {
   /**
@@ -27,6 +27,78 @@ class AntdUtil {
       });
     }
     return [];
+  }
+
+  /**
+   * 数组渲染成下拉框
+   * @param dataSource 数据源
+   * @param selectProps 传递给select的props
+   * @param labelFunction 数组项转换成显示内容的方法
+   * @param valueFunction 数组项转换成值的方法
+   */
+  public static renderArrayToSelect<T extends Object>(
+    dataSource: T[],
+    selectProps?: SelectProps<SelectValue>,
+    labelFunction?: (item: T, index: number) => ReactNode,
+    valueFunction?: (item: T, index: number) => ReactText,
+  ): ReactNode {
+    if (!dataSource) {
+      return [];
+    }
+
+    return (
+      <Select {...selectProps}>
+        {dataSource.map((item, index) => {
+          const value = valueFunction
+            ? valueFunction(item, index)
+            : item.toString();
+          const label = labelFunction
+            ? labelFunction(item, index)
+            : item.toString();
+          return (
+            <Select.Option key={value} value={value}>
+              {label}
+            </Select.Option>
+          );
+        })}
+      </Select>
+    );
+  }
+
+  /**
+   * 字典渲染成下拉框
+   * @param data 字典数据
+   * @param selectProps 传递给select的props
+   * @param labelFunction 数组项转换成显示内容的方法
+   * @param valueFunction 数组项转换成值的方法
+   */
+  public static renderObjectToSelect<T extends Object>(
+    data: { [key in string | number]: T },
+    selectProps: SelectProps<SelectValue>,
+    labelFunction?: (key: string | number, item: T) => ReactNode,
+    valueFunction?: (key: string | number, item: T) => ReactText,
+  ) {
+    if (!data) {
+      return [];
+    }
+
+    return (
+      <Select {...selectProps}>
+        {Object.keys(data).map(key => {
+          const item = data[key];
+          const label = labelFunction ? labelFunction(key, item) : key;
+          const value = valueFunction
+            ? valueFunction(key, item)
+            : item.toString();
+
+          return (
+            <Select.Option key={value} value={value}>
+              {label}
+            </Select.Option>
+          );
+        })}
+      </Select>
+    );
   }
 
   /**
