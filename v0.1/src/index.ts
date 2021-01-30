@@ -13,6 +13,7 @@ import PhoneFormItem from './forms/PhoneFormItem';
 import IdCardInput from './IdCardInput/IdCardInput';
 import LimitUpload from './limitUpload/LimitUpload';
 import PowerImg from './powerImg/PowerImg';
+import PromiseButton from './promiseButton/PromiseButton';
 import SearchForm from './searchForm/SearchForm';
 import SearchTable from './searchTable/SearchTable';
 import Text from './text/Text';
@@ -23,6 +24,7 @@ import HtmlUtil from './utils/HtmlUtil';
 import TreeControl from './utils/TreeControl';
 
 export {
+  PromiseButton,
   EditType,
   TreeCurd,
   SearchTable,

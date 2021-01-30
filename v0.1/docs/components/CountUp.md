@@ -4,6 +4,8 @@
 
 ## 基本用法
 
+此示例计时依赖客户端时间
+
 ```tsx
 import React from 'react';
 import { CountUp } from 'fb-project-component';
@@ -14,7 +16,9 @@ export default () => {
 
 ## 自定义服务器时间
 
-有时，为了防止客户端时间错误时，显示异常。需从服务器获取服务器时间。
+此示例计时不依赖客户端时间
+
+为了防止客户端时间错误时，显示异常。需从服务器获取服务器时间。
 
 ```tsx
 import React from 'react';
