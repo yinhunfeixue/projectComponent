@@ -12,7 +12,7 @@ class FormRegExp {
    */
   static NINT = /-[1-9]\d*/;
   /**
-   * /中文
+   * 中文
    */
   static CHINESE = /^[\u4e00-\u9fa5]+$/;
   /**
@@ -34,8 +34,7 @@ class FormRegExp {
   /**
    * 手机号码
    */
-  // MOBILEPHONE='^1[0-9]{10}$|^+[0-9]{1,3}1[0-9]{10}$';
-  static MOBILE = /^1[3456789]\d{9}$/;
+  static MOBILE = /^1\d{10}$/;
   /**
    * 电话
    */

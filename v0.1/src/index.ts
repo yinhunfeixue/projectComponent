@@ -4,6 +4,7 @@ import CountUp from './CountUp/CountUp';
 import Curd from './curd/Curd';
 import EditForm from './editForm/EditForm';
 import EditModal from './editModal/EditModal';
+import FormRegExp from './enums/FormRegExp';
 import ImageFitType from './enums/ImageFitType';
 import UploadAcceptType from './enums/UploadAcceptType';
 import UploadType from './enums/UploadType';
@@ -24,6 +25,7 @@ import HtmlUtil from './utils/HtmlUtil';
 import TreeControl from './utils/TreeControl';
 
 export {
+  FormRegExp,
   PromiseButton,
   EditType,
   TreeCurd,
