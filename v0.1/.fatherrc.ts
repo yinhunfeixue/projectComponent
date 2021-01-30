@@ -8,7 +8,7 @@ export default {
       'babel-plugin-import',
       {
         libraryName: 'antd',
-        libraryDirectory: 'lib',
+        libraryDirectory: 'es',
         style: true,
       },
     ],
