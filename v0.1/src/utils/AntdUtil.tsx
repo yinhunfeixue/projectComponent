@@ -17,7 +17,10 @@ class AntdUtil {
     if (dataSource && dataSource.length) {
       return dataSource.map((item, i) => {
         return (
-          <Select.Option key={i.toString()} value={valueFunction ? valueFunction(item) : item}>
+          <Select.Option
+            key={i.toString()}
+            value={valueFunction ? valueFunction(item) : item}
+          >
             {labelFunction ? labelFunction(item) : item}
           </Select.Option>
         );
@@ -66,10 +69,15 @@ class AntdUtil {
   ): DataNode[] | undefined {
     return treeData.map(item => {
       const children =
-        typeof getChildren === 'string' ? (item as any)[getChildren] : getChildren(item);
-      const key = typeof getKey === 'string' ? (item as any)[getKey] : getKey(item);
+        typeof getChildren === 'string'
+          ? (item as any)[getChildren]
+          : getChildren(item);
+      const key =
+        typeof getKey === 'string' ? (item as any)[getKey] : getKey(item);
       const title =
-        typeof getTitle === 'string' ? ((item as any)[getTitle] as ReactNode) : getTitle(item);
+        typeof getTitle === 'string'
+          ? ((item as any)[getTitle] as ReactNode)
+          : getTitle(item);
       const otherProps = createNodeProps ? createNodeProps(item) : null;
       const result: DataNode = { key, title, ...otherProps };
       if (children) {

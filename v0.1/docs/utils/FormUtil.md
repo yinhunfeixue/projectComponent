@@ -358,4 +358,4 @@ export default class Demo extends React.Component {
 
 ## 参考 IFormItemData
 
-<API src="../interfaces/Demo.ts">
+<API src="../../src/interfaces/Demo.ts">

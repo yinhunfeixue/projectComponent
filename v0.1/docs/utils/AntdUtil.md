@@ -98,5 +98,3 @@ export default () => {
   );
 };
 ```
-
-<API src="../utils/AntdUtil.tsx"/>

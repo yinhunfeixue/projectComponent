@@ -13,13 +13,20 @@ import PhoneFormItem from './forms/PhoneFormItem';
 import IdCardInput from './IdCardInput/IdCardInput';
 import LimitUpload from './limitUpload/LimitUpload';
 import PowerImg from './powerImg/PowerImg';
+import SearchForm from './searchForm/SearchForm';
+import SearchTable from './searchTable/SearchTable';
 import Text from './text/Text';
+import TreeCurd, { EditType } from './TreeCurd/TreeCurd';
 import AntdUtil from './utils/AntdUtil';
 import FormUtil from './utils/FormUtil';
 import HtmlUtil from './utils/HtmlUtil';
 import TreeControl from './utils/TreeControl';
 
 export {
+  EditType,
+  TreeCurd,
+  SearchTable,
+  SearchForm,
   ImageFitType,
   PowerImg,
   HtmlUtil,

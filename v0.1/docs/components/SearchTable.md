@@ -1,0 +1,361 @@
+import { Button, Form, Input } from 'antd';
+
+# SearchTable
+
+一个带搜索流程控制的表格组件
+
+### 主要做了以下工作
+
+- 处理分页操作
+- 处理了请求中动画
+- 处理了选择操作
+- 请求参数变化时，自动发出请求
+- 数据不满一页时，自动隐藏分页器
+
+### 你可以
+
+- 全局设置 pageSize，每个表格单独设置 pageSize
+- 自定义一页的数量
+- 自定义是否使用“自动隐藏分页器”
+- 自定义请求方法
+- 自定义表格的附件元素，例如批量删除，搜索表单
+- 自定义搜索参数
+- 自定义数据不满一页时，是否显示分页器
+- 自定义是否可选择
+- 自定义表格样式，类名
+- 透传 props 给 antd 的 Table
+
+## 示例
+
+涉及网络操作，建议在开发者工具中限制后观察示例
+
+## 基本用法
+
+```tsx
+import React from 'react';
+import { SearchTable } from 'fb-project-component';
+
+export default () => {
+  return (
+    <SearchTable
+      columns={[
+        {
+          title: '姓名',
+          dataIndex: 'name',
+        },
+      ]}
+      getListFunction={() => {
+        return fetch('./').then(() => {
+          return {
+            total: 3,
+            dataSource: [
+              {
+                id: 1,
+                name: 'a',
+              },
+              {
+                id: 2,
+                name: 'b',
+              },
+              {
+                id: 3,
+                name: 'c',
+              },
+            ],
+          };
+        });
+      }}
+    />
+  );
+};
+```
+
+## 设置表可拖动
+
+```tsx
+import React from 'react';
+import { SearchTable } from 'fb-project-component';
+
+export default () => {
+  return (
+    <SearchTable
+      columns={[
+        {
+          title: '姓名',
+          dataIndex: 'name',
+        },
+        {
+          title: '年龄',
+          dataIndex: 'age',
+        },
+      ]}
+      dragEnable
+      getListFunction={() => {
+        return fetch('./').then(() => {
+          return {
+            total: 1,
+            dataSource: [
+              {
+                id: 1,
+                name: 'a',
+                age: 25,
+              },
+              {
+                id: 2,
+                name: 'b',
+                age: 28,
+              },
+              {
+                id: 3,
+                name: 'c',
+                age: 23,
+              },
+            ],
+          };
+        });
+      }}
+    />
+  );
+};
+```
+
+## 不自动隐藏分页器
+
+```tsx
+import React from 'react';
+import { SearchTable } from 'fb-project-component';
+
+export default () => {
+  return (
+    <SearchTable
+      disableAutoHidePage
+      columns={[
+        {
+          title: '姓名',
+          dataIndex: 'name',
+        },
+      ]}
+      getListFunction={() => {
+        return fetch('./').then(() => {
+          return {
+            total: 3,
+            dataSource: [
+              {
+                id: 1,
+                name: 'a',
+              },
+              {
+                id: 2,
+                name: 'b',
+              },
+              {
+                id: 3,
+                name: 'c',
+              },
+            ],
+          };
+        });
+      }}
+    />
+  );
+};
+```
+
+## 自定义 pageSize
+
+```tsx
+import React from 'react';
+import { SearchTable } from 'fb-project-component';
+
+export default () => {
+  return (
+    <SearchTable
+      pageSize={2}
+      columns={[
+        {
+          title: '姓名',
+          dataIndex: 'name',
+        },
+      ]}
+      getListFunction={(current, pageSize) => {
+        console.log(current, pageSize);
+        return fetch('./').then(() => {
+          return {
+            total: 134,
+            dataSource: new Array(pageSize).fill(0).map((item, index) => {
+              const id = (current - 1) * pageSize + index;
+              return {
+                id,
+                name: `name${id}`,
+              };
+            }),
+          };
+        });
+      }}
+    />
+  );
+};
+```
+
+## 添加附加操作
+
+```tsx
+import React from 'react';
+import { SearchTable } from 'fb-project-component';
+import { Button } from 'antd';
+
+export default () => {
+  return (
+    <SearchTable
+      pageSize={3}
+      selectedEnable
+      renderExtra={data => {
+        const { selectedRowKeys, selectedRows, loading, refresh } = data;
+        return (
+          <div style={{ padding: '10px 0' }}>
+            <Button
+              disabled={!selectedRowKeys || !selectedRowKeys.length}
+              style={{ marginRight: 10 }}
+              loading={loading}
+              danger
+              onClick={() => {
+                alert(
+                  selectedRowKeys ? selectedRowKeys.join() : '请选择要删除的行',
+                );
+              }}
+            >
+              删除全部
+            </Button>
+            <Button
+              loading={loading}
+              onClick={() => {
+                refresh();
+              }}
+            >
+              刷新
+            </Button>
+          </div>
+        );
+      }}
+      columns={[
+        {
+          title: '姓名',
+          dataIndex: 'name',
+        },
+      ]}
+      getListFunction={(current, pageSize) => {
+        return fetch('./').then(() => {
+          return {
+            total: 5,
+            dataSource: new Array(pageSize).fill(0).map((item, index) => {
+              const id = (current - 1) * pageSize + index;
+              return {
+                id,
+                name: `name${id}`,
+              };
+            }),
+          };
+        });
+      }}
+    />
+  );
+};
+```
+
+## 结合 form 设置请求参数
+
+在输入框输入文字，然后点击搜索按钮，观察请求参数
+
+```tsx
+import React from 'react';
+import { SearchTable } from 'fb-project-component';
+import { Form, Button, Input } from 'antd';
+
+export default class Demo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.formInstance = null;
+    this.state = {
+      formValue: null,
+      tableLoading: false,
+    };
+  }
+
+  renderExtra = props => {
+    const { loading, setSearchParams } = props;
+    return (
+      <Form
+        ref={target => {
+          this.formInstance = target;
+        }}
+        layout="inline"
+        onFinish={value => {
+          setSearchParams(value);
+        }}
+        style={{ marginBottom: 10 }}
+      >
+        <Form.Item label="用户名" name="userName">
+          <Input />
+        </Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={loading}
+          style={{ marginRight: 10 }}
+        >
+          搜索
+        </Button>
+        <Button
+          loading={loading}
+          onClick={() => {
+            if (this.formInstance) {
+              this.formInstance.resetFields();
+              setSearchParams({});
+            }
+          }}
+        >
+          重置
+        </Button>
+      </Form>
+    );
+  };
+
+  render() {
+    const { tableLoading, formValue } = this.state;
+    return (
+      <div>
+        <SearchTable
+          renderExtra={this.renderExtra}
+          columns={[
+            {
+              title: '姓名',
+              dataIndex: 'name',
+            },
+          ]}
+          onLoadingChange={loading => {
+            this.setState({ tableLoading: loading });
+          }}
+          getListFunction={(current, pageSize, params) => {
+            return fetch(
+              `./?current=${current}&pageSize=${pageSize}&key=${
+                params && params.userName ? params.userName : ''
+              }`,
+            ).then(() => {
+              return {
+                total: 134,
+                dataSource: new Array(pageSize).fill(0).map((item, index) => {
+                  const id = (current - 1) * pageSize + index;
+                  return {
+                    id,
+                    name: `name${id}`,
+                  };
+                }),
+              };
+            });
+          }}
+        />
+      </div>
+    );
+  }
+}
+```
