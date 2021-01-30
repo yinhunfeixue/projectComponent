@@ -10,9 +10,11 @@ interface IConfirmButtonState {
 }
 interface IConfirmButtonProps extends IComponentProps {
   /**
-   * 确认成功后，触发的事件
+   * 确认成功后，触发的方法
+   *
+   * 此方法可返回promise，此时，loading将保持到promise结束
    */
-  onConfirm?: () => void;
+  onConfirm?: () => void | Promise<any>;
 
   /**
    * 是否确认的方法，默认为弹窗并由用户选择。
@@ -50,7 +52,10 @@ interface IConfirmButtonProps extends IComponentProps {
 /**
  * 确认按钮
  */
-class ConfirmButton extends Component<IConfirmButtonProps, IConfirmButtonState> {
+class ConfirmButton extends Component<
+  IConfirmButtonProps,
+  IConfirmButtonState
+> {
   constructor(props: IConfirmButtonProps) {
     super(props);
     this.state = {
@@ -77,9 +82,17 @@ class ConfirmButton extends Component<IConfirmButtonProps, IConfirmButtonState> 
 
     this.setState({ loading: true });
     isConfirm = await this.validate();
-    this.setState({ loading: false });
     if (isConfirm && onConfirm) {
-      onConfirm();
+      const result = onConfirm();
+      if (result instanceof Promise) {
+        result.finally(() => {
+          this.setState({ loading: false });
+        });
+      } else {
+        this.setState({ loading: false });
+      }
+    } else {
+      this.setState({ loading: false });
     }
   };
 
@@ -97,7 +110,9 @@ class ConfirmButton extends Component<IConfirmButtonProps, IConfirmButtonState> 
       const { modalContent } = this.props;
       Modal.confirm({
         title: modalContent ? modalContent.title : '操作不可恢复',
-        content: modalContent ? modalContent.content : '此操作不可恢复，请确认是否继续',
+        content: modalContent
+          ? modalContent.content
+          : '此操作不可恢复，请确认是否继续',
         onOk: () => {
           resolve(true);
         },

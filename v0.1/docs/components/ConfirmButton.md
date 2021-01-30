@@ -78,6 +78,8 @@ export default () => {
 
 ### 自定义验证方法
 
+点我会发出一个网络请求，并随机通过和拒绝
+
 ```tsx
 import React from 'react';
 import { ConfirmButton } from 'fb-project-component';
@@ -93,9 +95,29 @@ export default () => {
       onConfirm={() => {
         alert('确认');
       }}
-    >
-      点我会发出一个网络请求，并随机通过和拒绝
-    </ConfirmButton>
+    />
+  );
+};
+```
+
+### onConfirm 返回 promise
+
+当 onConfirm 返回 promise 时，在执行中，始终保持 loading
+
+```tsx
+import React from 'react';
+import { ConfirmButton } from 'fb-project-component';
+export default () => {
+  return (
+    <ConfirmButton
+      onConfirm={() => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve();
+          }, 2000);
+        });
+      }}
+    />
   );
 };
 ```
