@@ -92,7 +92,9 @@ interface ISearchTableProps<T> extends IComponentProps {
   /**
    * 显示总数量的方法
    */
-  showTotal?: ((total: number, range: [number, number]) => React.ReactNode) | false;
+  showTotal?:
+    | ((total: number, range: [number, number]) => React.ReactNode)
+    | false;
 
   /**
    * 表格的样式名
@@ -152,7 +154,12 @@ class SearchTable<T extends object = any> extends Component<
   static defaultPageSize = 10;
 
   private get pageSize() {
-    return this.state.pageSize || this.props.pageSize || SearchTable.defaultPageSize || 10;
+    return (
+      this.state.pageSize ||
+      this.props.pageSize ||
+      SearchTable.defaultPageSize ||
+      10
+    );
   }
 
   private get maxPageIndex() {
@@ -237,7 +244,10 @@ class SearchTable<T extends object = any> extends Component<
     );
   }
 
-  private defaultShowTotal(total: number, range: [number, number]): React.ReactNode {
+  private defaultShowTotal(
+    total: number,
+    range: [number, number],
+  ): React.ReactNode {
     return `共${total}项`;
   }
 
@@ -304,14 +314,19 @@ class SearchTable<T extends object = any> extends Component<
                   onShowSizeChange: (_, size: number) => {
                     const oldIndex = current * pageSize;
                     const newIndex = Math.ceil(oldIndex / size);
-                    this.setState({ pageSize: size }, () => this.changePage(newIndex));
+                    this.setState({ pageSize: size }, () =>
+                      this.changePage(newIndex),
+                    );
                   },
                 }
           }
           rowSelection={
             selectedEnable
               ? {
-                  onChange: (selectedRowKeys: React.ReactText[], selectedRows: T[]) => {
+                  onChange: (
+                    selectedRowKeys: React.ReactText[],
+                    selectedRows: T[],
+                  ) => {
                     this.setState({ selectedRowKeys, selectedRows });
                   },
                 }

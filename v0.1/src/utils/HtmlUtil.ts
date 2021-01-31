@@ -62,6 +62,17 @@ class HtmlUtil {
     }
     return result;
   }
+
+  static async getCopyText(): Promise<string | undefined> {
+    return navigator.clipboard
+      .readText()
+      .then(res => {
+        return res;
+      })
+      .catch(error => {
+        return undefined;
+      });
+  }
 }
 
 export default HtmlUtil;
