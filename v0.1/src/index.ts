@@ -17,10 +17,9 @@ import LimitUpload from './limitUpload/LimitUpload';
 import PowerImg from './powerImg/PowerImg';
 import PromiseButton from './promiseButton/PromiseButton';
 import SearchForm from './searchForm/SearchForm';
-import SearchTable, {
-  ISearchTableExtra,
-  ITableResponse,
-} from './searchTable/SearchTable';
+import { ISearchTableExtra } from './searchTable/ISearchTableExtra';
+import { ITableResponse } from './searchTable/ITableResponse';
+import SearchTable from './searchTable/SearchTable';
 import Text from './text/Text';
 import TreeCurd, { EditType } from './TreeCurd/TreeCurd';
 import AntdUtil from './utils/AntdUtil';
