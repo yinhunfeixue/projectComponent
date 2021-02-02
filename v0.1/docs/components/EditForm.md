@@ -24,7 +24,7 @@
 ```tsx
 import React from 'react';
 import { EditForm } from 'fb-project-component';
-import { Input, InputNumber } from 'antd';
+import { Input, InputNumber, Modal } from 'antd';
 
 export default () => {
   return (
@@ -66,7 +66,7 @@ export default () => {
 ```tsx
 import React from 'react';
 import { EditForm } from 'fb-project-component';
-import { Input } from 'antd';
+import { Input, Modal } from 'antd';
 
 export default () => {
   return (
