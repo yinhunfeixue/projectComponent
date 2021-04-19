@@ -169,9 +169,7 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   }
 
   private onChange = (info: UploadChangeParam<UploadFile<any>>) => {
-    console.log('info', info);
     const { validateFile } = this.props;
-    // this.setState({ fileList: info.fileList });
     if (!validateFile) {
       throw new Error('need validateFile');
     }
@@ -179,7 +177,6 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
     const file = info.file;
 
     const fileList = info.fileList;
-    console.log('info', info);
     switch (file.status) {
       case 'done':
         this.validateFileList(fileList);
@@ -190,7 +187,7 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
         break;
       case 'uploading':
         loading = true;
-        this.setState({ fileList });
+        this.setFileList(fileList);
         break;
       case 'error':
         this.validateFileList(fileList);
@@ -222,13 +219,17 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
     if (!validateFile) {
       throw new Error('need validateFile');
     }
-    console.log('validateFileList', fileList);
     const newFileList = fileList.filter(file => {
       return validateFile(file);
     });
-    this.setState({ fileList: newFileList }, () => {
+    this.setFileList(newFileList);
+  }
+
+  private setFileList(fileList: UploadFile<any>[]) {
+    const { onChange } = this.props;
+    this.setState({ fileList }, () => {
       if (onChange) {
-        onChange(newFileList);
+        onChange(fileList);
       }
     });
   }
