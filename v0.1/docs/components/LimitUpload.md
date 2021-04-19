@@ -32,6 +32,7 @@ export default () => {
     <LimitUpload
       action="https://jsonplaceholder.typicode.com/posts/"
       validateFile={file => {
+        console.log('validateFile', file);
         if (file.response && file.response.id) {
           return true;
         } else {

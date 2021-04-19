@@ -40,12 +40,12 @@ interface IConfirmButtonProps extends IComponentProps {
     /**
      * 弹窗标题
      */
-    title: string;
+    title?: string;
 
     /**
      * 弹窗内容
      */
-    content: string | ReactNode;
+    content?: string | ReactNode;
   };
 }
 
@@ -109,10 +109,8 @@ class ConfirmButton extends Component<
     return new Promise(resolve => {
       const { modalContent } = this.props;
       Modal.confirm({
-        title: modalContent ? modalContent.title : '操作不可恢复',
-        content: modalContent
-          ? modalContent.content
-          : '此操作不可恢复，请确认是否继续',
+        title: modalContent?.title || '操作不可恢复',
+        content: modalContent?.content || '此操作不可恢复，请确认是否继续',
         onOk: () => {
           resolve(true);
         },

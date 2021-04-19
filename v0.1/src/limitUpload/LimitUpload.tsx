@@ -1,4 +1,8 @@
-import { LoadingOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+  LoadingOutlined,
+  PlusOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile, UploadProps } from 'antd/lib/upload/interface';
@@ -153,7 +157,11 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
         );
       default:
         return (
-          <Button loading={loading} disabled={disabled} icon={<UploadOutlined />}>
+          <Button
+            loading={loading}
+            disabled={disabled}
+            icon={<UploadOutlined />}
+          >
             上传
           </Button>
         );
@@ -161,6 +169,7 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   }
 
   private onChange = (info: UploadChangeParam<UploadFile<any>>) => {
+    console.log('info', info);
     const { validateFile } = this.props;
     // this.setState({ fileList: info.fileList });
     if (!validateFile) {
@@ -170,18 +179,18 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
     const file = info.file;
 
     const fileList = info.fileList;
-
+    console.log('info', info);
     switch (file.status) {
       case 'done':
+        this.validateFileList(fileList);
         const success = validateFile(file);
-        if (success) {
-          this.validateFileList(fileList);
-        } else {
+        if (!success) {
           this.onError(file);
         }
         break;
       case 'uploading':
         loading = true;
+        this.setState({ fileList });
         break;
       case 'error':
         this.validateFileList(fileList);
@@ -213,6 +222,7 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
     if (!validateFile) {
       throw new Error('need validateFile');
     }
+    console.log('validateFileList', fileList);
     const newFileList = fileList.filter(file => {
       return validateFile(file);
     });
@@ -224,7 +234,13 @@ class LimitUpload extends Component<ILimitUploadProps, ILimitUploadState> {
   }
 
   public render(): ReactNode {
-    const { type, disabled, action, uploadProps, disableCredentials } = this.props;
+    const {
+      type,
+      disabled,
+      action,
+      uploadProps,
+      disableCredentials,
+    } = this.props;
     const { fileList } = this.state;
     const props: UploadProps = {
       fileList,
