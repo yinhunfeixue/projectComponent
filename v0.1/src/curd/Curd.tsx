@@ -6,7 +6,9 @@ import ConfirmButton from '../confirmButton/ConfirmButton';
 import IComponentProps from '../interfaces/IComponentProps';
 import IFormItemData from '../interfaces/IFormItemData';
 import SearchForm, { ISearchFormProps } from '../searchForm/SearchForm';
-import SearchTable, { ISearchTableExtra, ITableResponse } from '../searchTable/SearchTable';
+import { ISearchTableExtra } from '../searchTable/ISearchTableExtra';
+import { ITableResponse } from '../searchTable/ITableResponse';
+import SearchTable from '../searchTable/SearchTable';
 import './Curd.less';
 
 const classnames = require('classnames');
@@ -209,7 +211,9 @@ interface ICurdProps<T> extends IComponentProps {
   /**
    * 显示总数量的方法, false表示不显示
    */
-  showTotal?: ((total: number, range: [number, number]) => React.ReactNode) | false;
+  showTotal?:
+    | ((total: number, range: [number, number]) => React.ReactNode)
+    | false;
 
   /**
    * 搜索表单项小于等于几时，使用inline，默认为3
@@ -265,7 +269,10 @@ interface ICurdProps<T> extends IComponentProps {
  * + 禁用：编辑列
  * + 自定义：编辑按钮、删除按钮、新建按钮
  */
-class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T>> {
+class Curd<T extends object = any> extends Component<
+  ICurdProps<T>,
+  ICurdState<T>
+> {
   private extraData?: ISearchTableExtra<T>;
 
   constructor(props: ICurdProps<T>) {
@@ -389,7 +396,11 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
     const showEdit = this._showEdit && !disabledRecordEdit;
     const showPreview = this._showPreview && !disabledRecordPreview;
     const key = this.getRecordKey(record);
-    const { renderDeleteElement, renderEditElement, renderEditPreviewElement } = this.props;
+    const {
+      renderDeleteElement,
+      renderEditElement,
+      renderEditPreviewElement,
+    } = this.props;
     return (
       <React.Fragment>
         {showDelete && (
@@ -440,7 +451,11 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
   };
 
   private getEditColumn(): ColumnType<T> | null {
-    const { disabledEditColumn, renderEditColumns, editColumnWidth = 120 } = this.props;
+    const {
+      disabledEditColumn,
+      renderEditColumns,
+      editColumnWidth = 120,
+    } = this.props;
     if (disabledEditColumn) {
       return null;
     }
@@ -479,7 +494,10 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
       const { selectedRowKeys } = this.extraData;
       const { disabledDelete, deleteFunction } = this.props;
       return Boolean(
-        !disabledDelete && deleteFunction && selectedRowKeys && selectedRowKeys.length,
+        !disabledDelete &&
+          deleteFunction &&
+          selectedRowKeys &&
+          selectedRowKeys.length,
       );
     }
     return false;
@@ -511,7 +529,12 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
       style,
       showTotal,
     } = this.props;
-    const { visibleCreate, visibleEdit, editRecord, visiblePreview } = this.state;
+    const {
+      visibleCreate,
+      visibleEdit,
+      editRecord,
+      visiblePreview,
+    } = this.state;
     const tableSelectedEnable = Boolean(
       selectedEnable === true ||
         (selectedEnable === undefined && !disabledDelete && deleteFunction),
@@ -563,17 +586,31 @@ class Curd<T extends object = any> extends Component<ICurdProps<T>, ICurdState<T
               </div>
               {!disabledCreate &&
                 renderCreater &&
-                renderCreater(Boolean(visibleCreate), this.closeCreate, extraData)}
+                renderCreater(
+                  Boolean(visibleCreate),
+                  this.closeCreate,
+                  extraData,
+                )}
 
               {this._showEdit &&
                 editRecord &&
                 renderEditer &&
-                renderEditer(Boolean(visibleEdit), this.closeEdit, extraData, editRecord)}
+                renderEditer(
+                  Boolean(visibleEdit),
+                  this.closeEdit,
+                  extraData,
+                  editRecord,
+                )}
 
               {this._showPreview &&
                 editRecord &&
                 renderPreviewer &&
-                renderPreviewer(Boolean(visiblePreview), this.closePreview, extraData, editRecord)}
+                renderPreviewer(
+                  Boolean(visiblePreview),
+                  this.closePreview,
+                  extraData,
+                  editRecord,
+                )}
             </React.Fragment>
           );
         }}
