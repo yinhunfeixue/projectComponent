@@ -1,6 +1,6 @@
 {
   "name": "fb-project-component",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
