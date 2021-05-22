@@ -189,25 +189,29 @@ class SearchTable<T extends object = any> extends Component<
     const { current } = this.state;
 
     this.setLoading(true);
-    const res = await getListFunction(current, this.pageSize, searchParams);
-    this.setLoading(false);
-    const data: ITableResponse<T> = {
-      dataSource: res.dataSource,
-      total: res.total,
-    };
-    this.setState(
-      {
-        ...data,
-      },
-      () => {
-        if (onDataChange) {
-          onDataChange(data);
-        }
-        if (this.state.current > this.maxPageIndex) {
-          this.changePage();
-        }
-      },
-    );
+    try {
+      const res = await getListFunction(current, this.pageSize, searchParams);
+      const data: ITableResponse<T> = {
+        dataSource: res.dataSource,
+        total: res.total,
+      };
+      this.setState(
+        {
+          ...data,
+        },
+        () => {
+          if (onDataChange) {
+            onDataChange(data);
+          }
+          if (this.state.current > this.maxPageIndex) {
+            this.changePage();
+          }
+        },
+      );
+    } catch (error) {
+    } finally {
+      this.setLoading(false);
+    }
   }
 
   private defaultShowTotal(

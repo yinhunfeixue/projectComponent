@@ -341,10 +341,13 @@ class Curd<T extends object = any> extends Component<
       return;
     }
     this.setState({ deletingKeyList: idList });
-    await deleteFunction(idList);
-    this.setState({ deletingKeyList: [] });
-    if (this.extraData) {
-      this.extraData.refresh();
+    try {
+      await deleteFunction(idList);
+      if (this.extraData) {
+        this.extraData.refresh();
+      }
+    } catch (error) {
+      this.setState({ deletingKeyList: [] });
     }
   }
 
@@ -409,7 +412,7 @@ class Curd<T extends object = any> extends Component<
               this.remove([this.getRecordKey(record)]);
             }}
             getElement={loading => {
-              const { deletingKeyList: loadingDelete } = this.state;
+              const { deletingKeyList } = this.state;
               return renderDeleteElement ? (
                 renderDeleteElement()
               ) : (
@@ -418,7 +421,7 @@ class Curd<T extends object = any> extends Component<
                     type="link"
                     danger
                     icon={<DeleteOutlined />}
-                    loading={loading || loadingDelete.indexOf(key) >= 0}
+                    loading={loading || deletingKeyList.indexOf(key) >= 0}
                   />
                 </Tooltip>
               );

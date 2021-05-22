@@ -114,7 +114,7 @@ class AntdUtil {
   public static rendeTree<T extends any>(
     dataSource: T[],
     treeProps?: TreeProps,
-    getKey: ((item: T) => string) | string = 'id',
+    getKey: ((item: T) => string | number) | string = 'id',
     getTitle: ((item: T) => ReactNode) | string = 'name',
     getChildren: ((item: T) => T[]) | string = 'children',
     createNodeProps?: (item: T) => DataNode,
@@ -132,9 +132,9 @@ class AntdUtil {
     return null;
   }
 
-  private static loopTreeNode<T extends any>(
+  public static loopTreeNode<T extends any>(
     treeData: T[],
-    getKey: ((item: T) => string) | string = 'id',
+    getKey: ((item: T) => string | number) | string = 'id',
     getTitle: ((item: T) => ReactNode) | string = 'name',
     getChildren: ((item: T) => T[]) | string = 'children',
     createNodeProps?: (item: T) => DataNode,
